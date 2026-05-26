@@ -1,0 +1,296 @@
+{
+  "common": {
+    "header": {
+      "homepage": "Homepage",
+      "services": "What We Do",
+      "sunnitai": "SunnitAI",
+      "about": "About Us",
+      "blog": "Blog",
+      "contact": "Contact",
+      "cta": "Richiedi consulenza"
+    },
+    "footer": {
+      "newsletterSub": "READY TO BUILD",
+      "newsletterTitle": "Say hello to SUNNIT!",
+      "newsletterDesc": "Raccontaci il progetto e ricevi una proposta di percorso entro pochi giorni.",
+      "emailPlaceholder": "Email aziendale",
+      "signUp": "Sign up",
+      "brandDesc": "Providing creative ideas for your business.",
+      "community": "Community",
+      "quickLinks": "Quick Links",
+      "contact": "Contatti",
+      "rights": "Tutti i diritti riservati"
+    }
+  },
+  "home": {
+    "hero": {
+      "titleStart": "Soluzioni ",
+      "titleEnd": " per aziende che scalano.",
+      "subtitle": "SUNNIT progetta e sviluppa soluzioni digitali su misura, integrando software custom, cloud, dati e intelligenza artificiale.",
+      "ctaPrimary": "Scopri i servizi",
+      "ctaSecondary": "Contattaci",
+      "metric1": "utenti attivi",
+      "metric2": "workflow",
+      "metric3": "supporto",
+      "visualMainTitle": "Next-gen delivery",
+      "visualMainDesc": "Discovery, design, sviluppo, cloud e AI in un unico percorso.",
+      "visualCard1": "processi serviti",
+      "visualCard2": "document intelligence",
+      "visualCard3": "tailored stack"
+    },
+    "highlights": {
+      "eyebrow": "Digital products",
+      "title": "Next-gen solutions to elevate operations, data and customer experience.",
+      "desc": "Strategia, UX, codice, cloud e automazione in un sistema scalabile.",
+      "cta": "Discover more",
+      "kpi1Text": "Utenti serviti da piattaforme e portali enterprise.",
+      "kpi2Text": "Automazioni e workflow digitali supportati.",
+      "aiTitle": "SunnitAI, knowledge work globally ready.",
+      "aiDesc": "Documenti, contratti, policy e knowledge base interrogabili in linguaggio naturale.",
+      "aiCta": "Explore AI"
+    },
+    "howWeWork": {
+      "eyebrow": "How we work",
+      "titleStart": "Delivering ",
+      "titleHighlight": "smart solutions",
+      "titleEnd": " tailored to your unique goals.",
+      "desc": "Dalla discovery al rilascio, costruiamo sistemi chiari, performanti e pronti per evolvere: dal software custom alle pipeline DevOps, dai dati alla document intelligence.",
+      "list1": "Software Development",
+      "list2": "Cloud Consulting",
+      "list3": "Database & Analytics",
+      "list4": "AI Solutions"
+    },
+    "services": {
+      "eyebrow": "What we do",
+      "title": "Software, cloud e AI in un sistema visivo full-width.",
+      "desc": "Grandi card bento, angoli tagliati, gradienti morbidi, testi oversize e micro-animazioni su hover.",
+      "cta": "Discover more",
+      "rail1": "Cloud",
+      "rail2": "AI"
+    },
+    "serviceShowcase": {
+      "eyebrow": "Our Services",
+      "title": "Servizi principali già pronti come card animate.",
+      "desc": "Ogni card ha hover lift, shadow morbida, reveal on scroll e struttura modulare per i contenuti SUNNIT."
+    },
+    "process": {
+      "eyebrow": "How we do it",
+      "title": "Metodo, competenze e partnership."
+    },
+    "stats": {
+      "quote": "AI innovation is transforming industries, redefining connections with technology and opening new avenues for business.",
+      "author": "Technology partner",
+      "growthLabel": "Average growth",
+      "growthDesc": "Strategia digitale, automazioni e performance misurabili."
+    },
+    "cases": {
+      "eyebrow": "Recent cases",
+      "title": "Recent cases in stile portfolio.",
+      "filterAll": "All",
+      "filterAi": "AI Design",
+      "filterCloud": "Cloud",
+      "filterData": "Data",
+      "filterUx": "UX Technologies"
+    },
+    "blog": {
+      "eyebrow": "Recent News",
+      "title": "News e insight con card pulite.",
+      "readMore": "Read more"
+    },
+    "cta": {
+      "eyebrow": "Get in touch",
+      "title": "Siamo qui per aiutarti con le tue domande.",
+      "email": "Email: info@sunnit.it",
+      "phone": "Phone: +39 06 45251 300",
+      "placeholderName": "Nome",
+      "placeholderEmail": "E-mail",
+      "placeholderMessage": "Messaggio",
+      "send": "Invia messaggio"
+    }
+  },
+  "about": {
+    "hero": {
+      "title": "About Us",
+      "crumb": "About Us"
+    },
+    "intro": {
+      "eyebrow": "ABOUT US",
+      "title": "Migliora il traffico del tuo sito web e la tua offerta digitale.",
+      "desc": "SUNNIT è una software company italiana che supporta aziende e organizzazioni nella progettazione, sviluppo e gestione di soluzioni digitali personalizzate.",
+      "cta": "Scopri di più"
+    },
+    "values": [
+      { "title": "Marketing", "text": "Creiamo sistemi digitali capaci di connettere brand e audience." },
+      { "title": "Design", "text": "Progettiamo interfacce accessibili, moderne e facili da evolvere." },
+      { "title": "Support", "text": "Affianchiamo il team cliente in manutenzione, crescita e rilascio." }
+    ],
+    "visualWide": {
+      "title": "Eccezionale Esperienza Digitale",
+      "desc": "Interfacce, piattaforme e automazioni per prodotti digitali migliori."
+    },
+    "stats": {
+      "stat1": "Aumento tasso conversione",
+      "stat2": "Utenti attivi mensili",
+      "stat3": "Follower attivi"
+    },
+    "story": {
+      "eyebrow": "La nostra storia",
+      "title": "La storia di SUNNIT",
+      "events": [
+        { "left": "Ideazione del business", "year": "2019", "right": "Idea del progetto" },
+        { "left": "Progettazione infrastruttura", "year": "2021", "right": "Revisione legale" },
+        { "left": "Fondazione azienda", "year": "2022", "right": "Espansione digitale" },
+        { "left": "Progetti enterprise", "year": "2024", "right": "Soluzioni AI" }
+      ],
+      "descLeft": "Momento chiave nella crescita del percorso.",
+      "descRight": "Nuove competenze, partnership e servizi."
+    },
+    "team": {
+      "eyebrow": "Il nostro team",
+      "title": "I Nostri Professionisti"
+    },
+    "whyUs": {
+      "eyebrow": "PERCHÉ SCEGLIERCI",
+      "title": "Risparmia tempo e risorse con l'approccio SUNNIT.",
+      "desc": "Un mix di competenze, governance e rapidità per passare dall'idea al rilascio."
+    },
+    "quote": {
+      "text": "L'innovazione AI sta trasformando le industrie, ridefinendo le interazioni con la tecnologia e aprendo nuove opportunità di business.",
+      "author": "Cosa dicono le persone"
+    }
+  },
+  "contact": {
+    "hero": {
+      "title": "Contact Us",
+      "crumb": "Contact",
+      "text": "Raccontaci il tuo progetto: capiremo insieme come trasformarlo in una soluzione digitale scalabile."
+    },
+    "intro": {
+      "title": "Siamo qui per rispondere alle tue domande.",
+      "desc": "Ti risponderemo entro 1-2 giorni lavorativi con una prima valutazione."
+    },
+    "form": {
+      "name": "Nome e cognome",
+      "email": "Email aziendale",
+      "company": "Azienda",
+      "service": "Servizio di interesse",
+      "services": [
+        "Custom Software",
+        "Website Development",
+        "Database & Analytics",
+        "Cloud Consulting",
+        "DevOps",
+        "SunnitAI"
+      ],
+      "message": "Messaggio",
+      "submit": "Invia messaggio"
+    },
+    "info": {
+      "email": "Email",
+      "phone": "Telefono",
+      "office": "Sede",
+      "officeAddress": "Via Stamira 63, Roma, 00162",
+      "cta": "Scopri i servizi"
+    }
+  },
+  "services": {
+    "hero": {
+      "title": "Services",
+      "crumb": "Services"
+    },
+    "banner": {
+      "eyebrow": "COSA OFFRIAMO",
+      "title": "Aumenta le visite al sito e migliora i tuoi prodotti digitali.",
+      "desc": "Servizi basati su AI, SEO, sviluppo custom e automazioni per rendere la tua strategia più efficiente.",
+      "list": ["Servizi SEO", "Social Media Marketing", "Content Marketing", "UI/UX Design"],
+      "cta": "Scopri di più"
+    },
+    "marquee": "CASI RECENTI CASI RECENTI",
+    "faq": {
+      "eyebrow": "OFFERTA INNOVATIVA",
+      "titleStart": "Offriamo i più eccezionali ",
+      "titleHighlight": "servizi SEO",
+      "titleEnd": " disponibili.",
+      "desc": "SEO potenziata dall'AI e sviluppo custom per farti risparmiare tempo, migliorare il ranking e l'efficienza."
+    },
+    "pricing": {
+      "title": "Scegli il piano più adatto a te",
+      "monthly": "Mensile",
+      "yearly": "Annuale",
+      "starterTitle": "STARTER",
+      "starterPrice": "9",
+      "starterPeriod": "/mese",
+      "starterDesc": "Per landing, contenuti e piccoli interventi UX.",
+      "starterList": ["3 Account Social Media", "Accesso gratuito piattaforma", "Supporto clienti 24/7"],
+      "starterCta": "Scopri di più",
+      "businessTitle": "BUSINESS",
+      "businessPrice": "29",
+      "businessPeriod": "/mese",
+      "businessDesc": "Per aziende che vogliono crescita, automazione e supporto.",
+      "businessList": ["3 Account Social Media", "Accesso gratuito piattaforma", "Supporto clienti 24/7"],
+      "businessCta": "Scopri di più"
+    }
+  },
+  "sunnitai": {
+    "hero": {
+      "title": "SunnitAI",
+      "crumb": "SunnitAI",
+      "headline": "Trasforma documenti e conoscenza aziendale in risposte operative.",
+      "desc": "Una soluzione AI per analizzare documenti, interrogare knowledge base, confrontare informazioni e supportare decisioni rapide.",
+      "cta1": "Richiedi una demo",
+      "cta2": "Scopri i servizi"
+    },
+    "features": {
+      "eyebrow": "Cosa fa",
+      "title": "Cosa fa SunnitAI",
+      "items": [
+        { "title": "Analizza documenti complessi", "text": "Estrae concetti, dati, relazioni e contenuti rilevanti." },
+        { "title": "Interroga la conoscenza", "text": "Permette domande in linguaggio naturale sulle fonti aziendali." },
+        { "title": "Confronta informazioni", "text": "Evidenzia differenze, somiglianze e incoerenze tra documenti." }
+      ]
+    },
+    "faq": {
+      "eyebrow": "LISTA FUNZIONALITÀ",
+      "title": "Document intelligence con accordion interattivo.",
+      "desc": "Ogni feature può includere descrizione, esempio pratico e beneficio business."
+    },
+    "useCases": {
+      "eyebrow": "Casi d'uso",
+      "title": "Le opportunità",
+      "items": [
+        { "title": "Legal", "text": "Analisi contratti, confronto versioni e ricerca normativa." },
+        { "title": "Operations", "text": "Knowledge base interna e supporto ai processi complessi." },
+        { "title": "HR", "text": "Policy, manuali e documenti aziendali interrogabili." },
+        { "title": "Procurement", "text": "Capitolati, bandi, offerte e due diligence documentale." },
+        { "title": "IT", "text": "Documentazione tecnica, runbook e troubleshooting assistito." },
+        { "title": "Customer care", "text": "Risposte coerenti partendo da fonti validate e aggiornate." }
+      ]
+    },
+    "download": {
+      "eyebrow": "DOWNLOAD RISORSE",
+      "title": "Scarica brochure, one-pager e schede use case.",
+      "desc": "Collega questo blocco al tuo CRM o al sistema di lead capture per misurare demo, download e richieste.",
+      "cta": "Richiedi una demo"
+    }
+  },
+  "blog": {
+    "hero": {
+      "title": "Blog",
+      "crumb": "Blog"
+    },
+    "list": {
+      "suffix": " Questa è una pratica assolutamente essenziale per qualsiasi progetto digitale che desideri un impatto misurabile.",
+      "readMore": "Leggi di più"
+    },
+    "sidebar": {
+      "authorQuote": "Sono stato fortunato perché non ho mai smesso di cercare. Ti stai arrendendo troppo presto?",
+      "searchPlaceholder": "Cerca...",
+      "recentPosts": "Post Recenti",
+      "categories": "Categorie",
+      "cat1": "Animazione",
+      "cat2": "Motion",
+      "cat3": "Web",
+      "tags": "Tag Popolari"
+    }
+  }
+}
