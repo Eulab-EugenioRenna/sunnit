@@ -3,17 +3,26 @@
 import { useEffect, useState, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Search, FileText, CornerDownLeft, Laptop, Info, Mail, Award, Cpu, BookOpen } from "lucide-react";
-import { posts } from "@/lib/data";
 
 interface SearchItem {
   title: string;
   subtitle: string;
+  searchText: string;
   category: "pagine" | "articoli";
   href: string;
   icon: React.ReactNode;
 }
 
-export default function SpotlightSearch() {
+type SpotlightArticle = {
+  title: string;
+  excerpt: string;
+  content: string;
+  createdAtLabel: string;
+  href: string;
+  tags: string[];
+};
+
+export default function SpotlightSearch({ articles }: { articles: SpotlightArticle[] }) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
@@ -33,6 +42,7 @@ export default function SpotlightSearch() {
       {
         title: isEn ? "Homepage" : "Homepage",
         subtitle: isEn ? "Back to home page" : "Torna alla pagina principale",
+        searchText: `${isEn ? "Homepage" : "Homepage"} ${isEn ? "Back to home page" : "Torna alla pagina principale"}`.toLowerCase(),
         category: "pagine",
         href: `/${lang}`,
         icon: <Laptop className="search-icon-svg" size={18} />
@@ -40,6 +50,7 @@ export default function SpotlightSearch() {
       {
         title: isEn ? "Services & Expertise" : "Servizi & Competenze",
         subtitle: isEn ? "What we do: Software, cloud, DevOps, AI" : "Cosa facciamo: Software, cloud, DevOps, AI",
+        searchText: `${isEn ? "Services & Expertise" : "Servizi & Competenze"} ${isEn ? "What we do: Software, cloud, DevOps, AI" : "Cosa facciamo: Software, cloud, DevOps, AI"}`.toLowerCase(),
         category: "pagine",
         href: `/${lang}/services`,
         icon: <Award className="search-icon-svg" size={18} />
@@ -47,6 +58,7 @@ export default function SpotlightSearch() {
       {
         title: "SunnitAI",
         subtitle: isEn ? "Document intelligence & generative AI solutions" : "Soluzioni AI e document intelligence avanzata",
+        searchText: `SunnitAI ${isEn ? "Document intelligence & generative AI solutions" : "Soluzioni AI e document intelligence avanzata"}`.toLowerCase(),
         category: "pagine",
         href: `/${lang}/sunnitai`,
         icon: <Cpu className="search-icon-svg" size={18} />
@@ -54,6 +66,7 @@ export default function SpotlightSearch() {
       {
         title: isEn ? "About Us" : "Chi Siamo",
         subtitle: isEn ? "Our history, team, and digital philosophy" : "La nostra storia, il team e la filosofia digitale",
+        searchText: `${isEn ? "About Us" : "Chi Siamo"} ${isEn ? "Our history, team, and digital philosophy" : "La nostra storia, il team e la filosofia digitale"}`.toLowerCase(),
         category: "pagine",
         href: `/${lang}/about`,
         icon: <Info className="search-icon-svg" size={18} />
@@ -61,6 +74,7 @@ export default function SpotlightSearch() {
       {
         title: "Blog & Insights",
         subtitle: isEn ? "Articles, news, and technical guides" : "Articoli, news e guide tecniche",
+        searchText: `Blog & Insights ${isEn ? "Articles, news, and technical guides" : "Articoli, news e guide tecniche"}`.toLowerCase(),
         category: "pagine",
         href: `/${lang}/blog`,
         icon: <BookOpen className="search-icon-svg" size={18} />
@@ -68,33 +82,33 @@ export default function SpotlightSearch() {
       {
         title: isEn ? "Contact Us" : "Contattaci",
         subtitle: isEn ? "Get in touch for a technical assessment" : "Entra in contatto per una valutazione tecnica",
+        searchText: `${isEn ? "Contact Us" : "Contattaci"} ${isEn ? "Get in touch for a technical assessment" : "Entra in contatto per una valutazione tecnica"}`.toLowerCase(),
         category: "pagine",
         href: `/${lang}/contact`,
         icon: <Mail className="search-icon-svg" size={18} />
       }
     ];
 
-    const articles: SearchItem[] = posts.map(post => ({
+    const articleItems: SearchItem[] = articles.map((post) => ({
       title: post.title,
-      subtitle: `${post.date} • ${post.category} - ${post.text.substring(0, 60)}...`,
+      subtitle: `${post.createdAtLabel}${post.tags[0] ? ` • ${post.tags[0]}` : ""} - ${post.excerpt.substring(0, 60)}...`,
+      searchText: [post.title, post.excerpt, post.content, post.tags.join(" ")].join(" ").toLowerCase(),
       category: "articoli",
-      href: `/${lang}/blog?search=${encodeURIComponent(post.title)}`,
+      href: post.href,
       icon: <FileText className="search-icon-svg" size={18} />
     }));
 
-    return [...pages, ...articles];
+    return [...pages, ...articleItems];
   };
 
   const allItems = getSearchItems();
 
   // Filter items based on user input
-  const filteredItems = query.trim() === "" 
-    ? allItems.slice(0, 6) // Show pages by default when input is empty
-    : allItems.filter(item => 
-        item.title.toLowerCase().includes(query.toLowerCase()) ||
-        item.subtitle.toLowerCase().includes(query.toLowerCase()) ||
-        item.category.toLowerCase().includes(query.toLowerCase())
-      );
+  const normalizedQuery = query.trim().toLowerCase();
+
+  const filteredItems = normalizedQuery === ""
+    ? allItems.slice(0, 6)
+    : allItems.filter((item) => item.searchText.includes(normalizedQuery));
 
   // Reset active index when query changes
   useEffect(() => {

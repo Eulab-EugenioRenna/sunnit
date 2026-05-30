@@ -4,7 +4,6 @@ import FAQ from "@/components/faq";
 import PageHero from "@/components/page-hero";
 import GsapReveal from "@/components/gsap-reveal";
 import SectionTitle from "@/components/section-title";
-import { aiFeatures } from "@/lib/data";
 import { getDictionary } from "@/lib/dictionaries";
 
 export const metadata: Metadata = {
@@ -53,7 +52,7 @@ export default async function SunnitAIPage({
           <h2>{dict.sunnitai.faq.title}</h2>
           <p>{dict.sunnitai.faq.desc}</p>
         </div>
-        <FAQ items={aiFeatures} />
+        <FAQ items={(dict as any).sunnitai.faq.items} />
       </section>
 
       <section className="container">

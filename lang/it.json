@@ -10,78 +10,326 @@
       "cta": "Richiedi consulenza"
     },
     "footer": {
-      "newsletterSub": "READY TO BUILD",
-      "newsletterTitle": "Say hello to SUNNIT!",
-      "newsletterDesc": "Raccontaci il progetto e ricevi una proposta di percorso entro pochi giorni.",
-      "emailPlaceholder": "Email aziendale",
-      "signUp": "Sign up",
+      "newsletterSub": "RICEVI GLI AGGIORNAMENTI",
+      "newsletterTitle": "Newsletter",
+      "newsletterDesc": "Ricevi approfondimenti, casi studio e notizie direttamente nella tua inbox.",
+      "emailPlaceholder": "La tua email",
+      "signUp": "ISCRIVITI",
       "brandDesc": "Providing creative ideas for your business.",
       "community": "Community",
       "quickLinks": "Quick Links",
       "contact": "Contatti",
       "rights": "Tutti i diritti riservati"
+    },
+    "content": {
+      "heroSlides": [
+        {
+          "word": "Software",
+          "kicker": "Custom software / Web application",
+          "text": "Progettiamo piattaforme digitali su misura, portali e applicazioni enterprise pronte per crescere con processi, team e clienti."
+        },
+        {
+          "word": "Cloud",
+          "kicker": "Cloud consulting / Infrastructure",
+          "text": "Disegniamo architetture scalabili, migrazioni controllate, backup e continuita operativa con una delivery orientata ai costi."
+        },
+        {
+          "word": "AI",
+          "kicker": "SunnitAI / Document intelligence",
+          "text": "Trasformiamo documenti, policy e knowledge base in risposte operative, confronti intelligenti e insight accessibili in linguaggio naturale."
+        },
+        {
+          "word": "Data",
+          "kicker": "Database / Analytics / BI",
+          "text": "Costruiamo database, ETL, dashboard e sistemi di reporting per rendere il dato leggibile, affidabile e utile alle decisioni."
+        },
+        {
+          "word": "DevOps",
+          "kicker": "CI/CD / Automation / Monitoring",
+          "text": "Automatizziamo build, test, deploy e infrastruttura per rilasci piu rapidi, ambienti replicabili e controllo continuo."
+        }
+      ],
+      "serviceCards": [
+        {
+          "title": "Custom Software",
+          "eyebrow": "01",
+          "text": "Applicazioni su misura per digitalizzare processi, integrare sistemi e accelerare il business.",
+          "bullets": ["Web app", "API integration", "Workflow automation"]
+        },
+        {
+          "title": "Website Development",
+          "eyebrow": "02",
+          "text": "Siti, portali e piattaforme web performanti, accessibili e facili da evolvere.",
+          "bullets": ["Corporate site", "CMS", "Security audit"]
+        },
+        {
+          "title": "Database & Analytics",
+          "eyebrow": "03",
+          "text": "Database, data warehouse, ETL e dashboard per trasformare i dati in decisioni.",
+          "bullets": ["ETL", "BI reporting", "SQL optimization"]
+        },
+        {
+          "title": "Cloud Consulting",
+          "eyebrow": "04",
+          "text": "Assessment, migrazioni e architetture cloud scalabili, resilienti e ottimizzate.",
+          "bullets": ["Migration", "Backup", "Disaster recovery"]
+        },
+        {
+          "title": "DevOps Services",
+          "eyebrow": "05",
+          "text": "Pipeline, automazioni e ambienti replicabili per rilasci rapidi e controllati.",
+          "bullets": ["CI/CD", "IaC", "Monitoring"]
+        },
+        {
+          "title": "AI & Document Intelligence",
+          "eyebrow": "06",
+          "text": "Soluzioni AI per interrogare documenti, knowledge base e contenuti aziendali.",
+          "bullets": ["Document analysis", "Q&A", "Comparison"]
+        }
+      ],
+      "processCards": [
+        {
+          "title": "Estensione del tuo team",
+          "text": "Entriamo nei flussi del cliente con roadmap condivisa, sprint brevi e comunicazione chiara."
+        },
+        {
+          "title": "Competenze full-stack",
+          "text": "Frontend, backend, cloud, database, DevOps e AI in un unico percorso di delivery."
+        },
+        {
+          "title": "Approccio agile",
+          "text": "Prototipi, rilasci progressivi e miglioramento continuo per ridurre rischi e tempi."
+        },
+        {
+          "title": "Partnership durature",
+          "text": "Manutenzione, evoluzione e supporto per accompagnare il prodotto nel tempo."
+        }
+      ],
+      "cases": [
+        { "title": "Future Mobility", "tag": "AI robotics / Data", "tone": "blue" },
+        { "title": "Green AI Robots", "tag": "AI design / Robotics", "tone": "green" },
+        { "title": "Document Intelligence", "tag": "SunnitAI / Legal", "tone": "purple" },
+        { "title": "People Meet AI", "tag": "AI design / UX", "tone": "dark" }
+      ],
+      "clients": [
+        {
+          "name": "Infocert",
+          "url": "https://www.infocert.it/",
+          "logo": "/images/clients/infocert.png"
+        },
+        {
+          "name": "Generali",
+          "url": "https://www.generali.it/",
+          "logo": "/images/clients/generali.png"
+        },
+        {
+          "name": "Aruba.it",
+          "url": "https://www.aruba.it/",
+          "logo": "/images/clients/aruba.png"
+        },
+        {
+          "name": "Initweb",
+          "url": "https://www.initweb.it/",
+          "logo": "/images/clients/initweb.webp"
+        },
+        {
+          "name": "Exprivia",
+          "url": "https://www.exprivia.it/" ,
+          "logo": "/images/clients/exprivia.webp"
+        },
+        {
+          "name": "WeWorld",
+          "url": "https://www.weworld.it/",
+          "logo": "/images/clients/weworld.png"
+        },
+        {
+          "name": "ENI",
+          "url": "https://www.eni.com/",
+          "logo": "/images/clients/eni.png"
+        },
+        {
+          "name": "CDP",
+          "url": "https://www.cdp.it/",
+          "logo": "/images/clients/cdp.png"
+        },
+        {
+          "name": "S2E",
+          "url": "https://solutions2enterprises.com/",
+          "logo": "/images/clients/s2e.png"
+        },
+        {
+          "name": "Lottomatica",
+          "url": "https://www.lottomatica.it/",
+          "logo": "/images/clients/lottomatica.png"
+        }
+      ],
+      "aiFaqItems": [
+        {
+          "title": "Intelligent Document Analysis",
+          "text": "Analizza contratti, report, manuali e policy estraendo contenuti rilevanti e relazioni."
+        },
+        {
+          "title": "Natural Language Querying",
+          "text": "Permette domande in linguaggio naturale sui documenti e sulle fonti informative interne."
+        },
+        {
+          "title": "Advanced Document Comparison",
+          "text": "Confronta versioni, capitolati e policy per evidenziare differenze e incongruenze."
+        },
+        {
+          "title": "Secure Access Control",
+          "text": "Rispetta permessi e ruoli per rendere la conoscenza accessibile solo a chi deve usarla."
+        }
+      ],
+      "team": ["Marco Landa", "Alessia Morrison", "Luca Rinaldi", "Angela Lago", "Sara Vale", "Marta Silvestri"]
     }
   },
   "home": {
     "hero": {
       "titleStart": "Soluzioni ",
-      "titleEnd": " per aziende che scalano.",
+      "titleEnd": " per aziende evolute",
       "subtitle": "SUNNIT progetta e sviluppa soluzioni digitali su misura, integrando software custom, cloud, dati e intelligenza artificiale.",
+      "slides": [
+        {
+          "word": "Software",
+          "kicker": "Custom software / Web application",
+          "text": "Progettiamo piattaforme digitali su misura, portali e applicazioni enterprise pronte per crescere con processi, team e clienti."
+        },
+        {
+          "word": "Cloud",
+          "kicker": "Cloud consulting / Infrastructure",
+          "text": "Disegniamo architetture scalabili, migrazioni controllate, backup e continuita operativa con una delivery orientata ai costi."
+        },
+        {
+          "word": "AI",
+          "kicker": "SunnitAI / Document intelligence",
+          "text": "Trasformiamo documenti, policy e knowledge base in risposte operative, confronti intelligenti e insight accessibili in linguaggio naturale."
+        },
+        {
+          "word": "Data",
+          "kicker": "Database / Analytics / BI",
+          "text": "Costruiamo database, ETL, dashboard e sistemi di reporting per rendere il dato leggibile, affidabile e utile alle decisioni."
+        },
+        {
+          "word": "DevOps",
+          "kicker": "CI/CD / Automation / Monitoring",
+          "text": "Automatizziamo build, test, deploy e infrastruttura per rilasci piu rapidi, ambienti replicabili e controllo continuo."
+        }
+      ],
       "ctaPrimary": "Scopri i servizi",
       "ctaSecondary": "Contattaci",
-      "metric1": "utenti attivi",
-      "metric2": "workflow",
-      "metric3": "supporto",
-      "visualMainTitle": "Next-gen delivery",
-      "visualMainDesc": "Discovery, design, sviluppo, cloud e AI in un unico percorso.",
+      "visualMainTitle": "AI & CLOUD",
+      "visualMainDesc": "Scopri come possiamo trasformare il potenziale tecnologico della tua azienda.",
       "visualCard1": "processi serviti",
       "visualCard2": "document intelligence",
-      "visualCard3": "tailored stack"
+      "visualCard3": "stack su misura"
     },
     "highlights": {
       "eyebrow": "Digital products",
-      "title": "Next-gen solutions to elevate operations, data and customer experience.",
+      "title": "Next-gen solutions con idee creative e innovative",
       "desc": "Strategia, UX, codice, cloud e automazione in un sistema scalabile.",
-      "cta": "Discover more",
+      "cta": "Scopri di piu",
       "kpi1Text": "Utenti serviti da piattaforme e portali enterprise.",
+      "kpi1Number": "+70k",
       "kpi2Text": "Automazioni e workflow digitali supportati.",
-      "aiTitle": "SunnitAI, knowledge work globally ready.",
+      "kpi2Number": "1.3k",
+      "aiTitle": "SunnitAI, knowledge & innovation",
       "aiDesc": "Documenti, contratti, policy e knowledge base interrogabili in linguaggio naturale.",
       "aiCta": "Explore AI"
     },
     "howWeWork": {
       "eyebrow": "How we work",
-      "titleStart": "Delivering ",
-      "titleHighlight": "smart solutions",
-      "titleEnd": " tailored to your unique goals.",
+      "titleStart": "Rilasciamo ",
+      "titleHighlight": "soluzioni smart",
+      "titleEnd": " su misura per i tuoi obiettivi.",
       "desc": "Dalla discovery al rilascio, costruiamo sistemi chiari, performanti e pronti per evolvere: dal software custom alle pipeline DevOps, dai dati alla document intelligence.",
-      "list1": "Software Development",
-      "list2": "Cloud Consulting",
+      "list1": "Sviluppo software",
+      "list2": "Cloud consulting",
       "list3": "Database & Analytics",
       "list4": "AI Solutions"
     },
     "services": {
       "eyebrow": "What we do",
-      "title": "Software, cloud e AI in un sistema visivo full-width.",
-      "desc": "Grandi card bento, angoli tagliati, gradienti morbidi, testi oversize e micro-animazioni su hover.",
+      "title": "Sviluppo di software personalizzato",
+      "desc": "I nostri servizi di sviluppo software personalizzato rispondono a un'esigenza fondamentale, offrendo una soluzione a una vasta gamma di problemi aziendali complessi. Siamo un'azienda di sviluppo software personalizzato con sede a Roma, che pone l'accento sulla collaborazione con il cliente, sulla comunicazione e sulla passione per la creazione di applicazioni software personalizzate di alta qualità.",
       "cta": "Discover more",
       "rail1": "Cloud",
-      "rail2": "AI"
+      "rail2": "AI",
+      "cloudTitle": "Architetture cloud progettate per scalare",
+      "cloudDesc": "Offriamo servizi di consulenza Azure, Google e AWS, tra cui migrazioni al cloud, disaster recovery, backup su cloud e Microsoft Virtual Desktop. A differenza della maggior parte delle società di consulenza Azure, Google e AWS, il nostro team va ben oltre la semplice migrazione, vantando esperienza nello sviluppo di applicazioni cloud-native e nella riprogettazione di software legacy per l'abilitazione al cloud. Ottimizziamo il vostro cloud Azure, Google e AWS per massimizzare l'efficienza dei costi, la sicurezza e l'adozione delle migliori pratiche.",
+      "aiTitle": "Document intelligence e automazione guidata da AI.",
+      "aiDesc": "SunnitAI è un'iniziativa innovativa di Sunnit, progettata per rivoluzionare la gestione della conoscenza aziendale. Questa soluzione basata sull'intelligenza artificiale si integra perfettamente con i sistemi di gestione della conoscenza esistenti (KMS e sistemi di gestione documentale) o ne installa uno completo qualora la vostra organizzazione non ne possieda ancora uno."
     },
     "serviceShowcase": {
       "eyebrow": "Our Services",
       "title": "Servizi principali già pronti come card animate.",
-      "desc": "Ogni card ha hover lift, shadow morbida, reveal on scroll e struttura modulare per i contenuti SUNNIT."
+      "desc": "Ogni card ha hover lift, shadow morbida, reveal on scroll e struttura modulare per i contenuti SUNNIT.",
+      "cards": [
+        {
+          "title": "Custom Software",
+          "eyebrow": "01",
+          "text": "Applicazioni su misura per digitalizzare processi, integrare sistemi e accelerare il business.",
+          "bullets": ["Web app", "API integration", "Workflow automation"]
+        },
+        {
+          "title": "Website Development",
+          "eyebrow": "02",
+          "text": "Siti, portali e piattaforme web performanti, accessibili e facili da evolvere.",
+          "bullets": ["Corporate site", "CMS", "Security audit"]
+        },
+        {
+          "title": "Database & Analytics",
+          "eyebrow": "03",
+          "text": "Database, data warehouse, ETL e dashboard per trasformare i dati in decisioni.",
+          "bullets": ["ETL", "BI reporting", "SQL optimization"]
+        },
+        {
+          "title": "Cloud Consulting",
+          "eyebrow": "04",
+          "text": "Assessment, migrazioni e architetture cloud scalabili, resilienti e ottimizzate.",
+          "bullets": ["Migration", "Backup", "Disaster recovery"]
+        },
+        {
+          "title": "DevOps Services",
+          "eyebrow": "05",
+          "text": "Pipeline, automazioni e ambienti replicabili per rilasci rapidi e controllati.",
+          "bullets": ["CI/CD", "IaC", "Monitoring"]
+        },
+        {
+          "title": "AI & Document Intelligence",
+          "eyebrow": "06",
+          "text": "Soluzioni AI per interrogare documenti, knowledge base e contenuti aziendali.",
+          "bullets": ["Document analysis", "Q&A", "Comparison"]
+        }
+      ]
     },
     "process": {
       "eyebrow": "How we do it",
-      "title": "Metodo, competenze e partnership."
+      "title": "Metodo, competenze e partnership.",
+      "cards": [
+        {
+          "title": "Estensione del tuo team",
+          "text": "Entriamo nei flussi del cliente con roadmap condivisa, sprint brevi e comunicazione chiara."
+        },
+        {
+          "title": "Competenze full-stack",
+          "text": "Frontend, backend, cloud, database, DevOps e AI in un unico percorso di delivery."
+        },
+        {
+          "title": "Approccio agile",
+          "text": "Prototipi, rilasci progressivi e miglioramento continuo per ridurre rischi e tempi."
+        },
+        {
+          "title": "Partnership durature",
+          "text": "Manutenzione, evoluzione e supporto per accompagnare il prodotto nel tempo."
+        }
+      ]
     },
     "stats": {
-      "quote": "AI innovation is transforming industries, redefining connections with technology and opening new avenues for business.",
-      "author": "Technology partner",
+      "quote": "La scienza di oggi è la tecnologia di domani. ",
+      "author": "Edward Teller",
       "growthLabel": "Average growth",
-      "growthDesc": "Strategia digitale, automazioni e performance misurabili."
+      "growthDesc": "Dal 2020 serviamo aziende e organizzazioni con soluzioni digitali su misura: software, cloud, dati e AI."
     },
     "cases": {
       "eyebrow": "Recent cases",
@@ -90,7 +338,13 @@
       "filterAi": "AI Design",
       "filterCloud": "Cloud",
       "filterData": "Data",
-      "filterUx": "UX Technologies"
+      "filterUx": "UX Technologies",
+      "items": [
+        { "title": "Future Mobility", "tag": "AI robotics / Data", "tone": "blue" },
+        { "title": "Green AI Robots", "tag": "AI design / Robotics", "tone": "green" },
+        { "title": "Document Intelligence", "tag": "SunnitAI / Legal", "tone": "purple" },
+        { "title": "People Meet AI", "tag": "AI design / UX", "tone": "dark" }
+      ]
     },
     "blog": {
       "eyebrow": "Recent News",
@@ -147,7 +401,8 @@
     },
     "team": {
       "eyebrow": "Il nostro team",
-      "title": "I Nostri Professionisti"
+      "title": "I Nostri Professionisti",
+      "members": ["Marco Landa", "Alessia Morrison", "Luca Rinaldi", "Angela Lago", "Sara Vale", "Marta Silvestri"]
     },
     "whyUs": {
       "eyebrow": "PERCHÉ SCEGLIERCI",
@@ -229,8 +484,58 @@
       "businessDesc": "Per aziende che vogliono crescita, automazione e supporto.",
       "businessList": ["3 Account Social Media", "Accesso gratuito piattaforma", "Supporto clienti 24/7"],
       "businessCta": "Scopri di più"
-    }
-  },
+    },
+    "cards": [
+      {
+        "title": "Custom Software",
+        "eyebrow": "01",
+        "text": "Applicazioni su misura per digitalizzare processi, integrare sistemi e accelerare il business.",
+        "bullets": ["Web app", "API integration", "Workflow automation"]
+      },
+      {
+        "title": "Website Development",
+        "eyebrow": "02",
+        "text": "Siti, portali e piattaforme web performanti, accessibili e facili da evolvere.",
+        "bullets": ["Corporate site", "CMS", "Security audit"]
+      },
+      {
+        "title": "Database & Analytics",
+        "eyebrow": "03",
+        "text": "Database, data warehouse, ETL e dashboard per trasformare i dati in decisioni.",
+        "bullets": ["ETL", "BI reporting", "SQL optimization"]
+      },
+      {
+        "title": "Cloud Consulting",
+        "eyebrow": "04",
+        "text": "Assessment, migrazioni e architetture cloud scalabili, resilienti e ottimizzate.",
+        "bullets": ["Migration", "Backup", "Disaster recovery"]
+      },
+      {
+        "title": "DevOps Services",
+        "eyebrow": "05",
+        "text": "Pipeline, automazioni e ambienti replicabili per rilasci rapidi e controllati.",
+        "bullets": ["CI/CD", "IaC", "Monitoring"]
+      },
+      {
+        "title": "AI & Document Intelligence",
+        "eyebrow": "06",
+        "text": "Soluzioni AI per interrogare documenti, knowledge base e contenuti aziendali.",
+        "bullets": ["Document analysis", "Q&A", "Comparison"]
+      }
+    ],
+    "cases": [
+      { "title": "Future Mobility", "tag": "AI robotics / Data", "tone": "blue" },
+      { "title": "Green AI Robots", "tag": "AI design / Robotics", "tone": "green" },
+      { "title": "Document Intelligence", "tag": "SunnitAI / Legal", "tone": "purple" },
+      { "title": "People Meet AI", "tag": "AI design / UX", "tone": "dark" }
+    ],
+    "faqItems": [
+      { "title": "Lorem ad minim veniam exercitation ullamco?", "text": "Partiamo da discovery, priorita e roadmap. Ogni servizio puo essere attivato come progetto singolo o come percorso continuativo." },
+      { "title": "Our developers are committed to quality?", "text": "Usiamo revisioni, milestone, ambienti controllati e documentazione per garantire un delivery trasparente." },
+      { "title": "Excepteur sint occaecat cupidatat?", "text": "Sviluppiamo integrazioni API, automazioni, dashboard e sistemi custom in modo modulare." },
+      { "title": "Consectetur adipiscing incididunt?", "text": "Il team puo affiancare IT, operation, marketing, legal o direzione business." }
+    ]
+    },
   "sunnitai": {
     "hero": {
       "title": "SunnitAI",
@@ -252,7 +557,13 @@
     "faq": {
       "eyebrow": "LISTA FUNZIONALITÀ",
       "title": "Document intelligence con accordion interattivo.",
-      "desc": "Ogni feature può includere descrizione, esempio pratico e beneficio business."
+      "desc": "Ogni feature può includere descrizione, esempio pratico e beneficio business.",
+      "items": [
+        { "title": "Intelligent Document Analysis", "text": "Analizza contratti, report, manuali e policy estraendo contenuti rilevanti e relazioni." },
+        { "title": "Natural Language Querying", "text": "Permette domande in linguaggio naturale sui documenti e sulle fonti informative interne." },
+        { "title": "Advanced Document Comparison", "text": "Confronta versioni, capitolati e policy per evidenziare differenze e incongruenze." },
+        { "title": "Secure Access Control", "text": "Rispetta permessi e ruoli per rendere la conoscenza accessibile solo a chi deve usarla." }
+      ]
     },
     "useCases": {
       "eyebrow": "Casi d'uso",

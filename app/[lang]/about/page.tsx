@@ -3,7 +3,6 @@ import Link from "next/link";
 import PageHero from "@/components/page-hero";
 import GsapReveal from "@/components/gsap-reveal";
 import SectionTitle from "@/components/section-title";
-import { team } from "@/lib/data";
 import { getDictionary } from "@/lib/dictionaries";
 
 export const metadata: Metadata = {
@@ -72,7 +71,7 @@ export default async function AboutPage({
       <section className="container">
         <SectionTitle eyebrow={dict.about.team.eyebrow} title={dict.about.team.title} />
         <div className="team-grid">
-          {team.map((person, index) => (
+          {dict.about.team.members.map((person: string, index: number) => (
             <GsapReveal className="team-card" key={person} delay={index * 70}>
               <span>{person}</span>
             </GsapReveal>

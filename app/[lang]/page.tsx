@@ -3,7 +3,10 @@ import HeroDynamicCopy from "@/components/hero-dynamic-copy";
 import GsapReveal from "@/components/gsap-reveal";
 import ScrollVideo from "@/components/scroll-video";
 import SectionTitle from "@/components/section-title";
-import { cases, clients, posts, processCards, serviceCards } from "@/lib/data";
+import NewsSlider from "@/components/news-slider";
+import ServiceScrollPanels from "@/components/service-scroll-panels";
+import RotaryServices from "@/components/rotary-services";
+import { getAllBlogPosts, type BlogLang } from "@/lib/blog";
 import { getDictionary } from "@/lib/dictionaries";
 
 export default async function Home({
@@ -13,6 +16,14 @@ export default async function Home({
 }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
+  const content = (dict as any).common.content;
+  const posts = getAllBlogPosts(lang as BlogLang).slice(0, 3);
+
+  type client = {
+    name: string;
+    url: string;
+    logo: string;
+  }
 
   return (
     <>
@@ -23,11 +34,7 @@ export default async function Home({
             <Link href={`/${lang}/services`} className="solid-btn">{dict.home.hero.ctaPrimary}</Link>
             <Link href={`/${lang}/contact`} className="outline-btn">{dict.home.hero.ctaSecondary}</Link>
           </div>
-          <div className="hero-mini-metrics" aria-label="Metriche principali">
-            <span><strong>+16K</strong> {dict.home.hero.metric1}</span>
-            <span><strong>+70K</strong> {dict.home.hero.metric2}</span>
-            <span><strong>24/7</strong> {dict.home.hero.metric3}</span>
-          </div>
+
         </div>
 
         <div className="hero-visual" aria-hidden="true">
@@ -45,7 +52,13 @@ export default async function Home({
 
       <ScrollVideo />
 
-      <section className="container bento-grid" aria-label="Highlights">
+      <section className="container">
+        <div className="logo-row">
+          {content.clients.map((client: client) => <div className="logo-pill" key={client.name}><img src={client.logo} alt={client.name} /></div>)}
+        </div>
+      </section>
+
+      {/* <section className="container bento-grid" aria-label="Highlights">
         <GsapReveal className="bento-card bento-main">
           <span className="arrow-floating">/</span>
           <p className="card-eyebrow">{dict.home.highlights.eyebrow}</p>
@@ -55,12 +68,12 @@ export default async function Home({
         </GsapReveal>
 
         <GsapReveal className="bento-card bento-small bento-kpi-one" delay={100} direction="left">
-          <strong>+150k</strong>
+          <strong>{dict.home.highlights.kpi1Number}</strong>
           <p>{dict.home.highlights.kpi1Text}</p>
         </GsapReveal>
 
         <GsapReveal className="bento-card bento-small bento-kpi-two" delay={180} direction="left">
-          <strong>+70k</strong>
+          <strong>{dict.home.highlights.kpi2Number}</strong>
           <p>{dict.home.highlights.kpi2Text}</p>
         </GsapReveal>
 
@@ -71,7 +84,7 @@ export default async function Home({
           <p>{dict.home.highlights.aiDesc}</p>
           <Link href={`/${lang}/sunnitai`} className="outline-btn">{dict.home.highlights.aiCta}</Link>
         </GsapReveal>
-      </section>
+      </section> */}
 
       <GsapReveal className="container split-panel full-slab" distance={50}>
         <div>
@@ -89,17 +102,36 @@ export default async function Home({
         </div>
       </GsapReveal>
 
-      <GsapReveal className="ghost-marquee" scrub={true} direction="none" distance={0}>SOFTWARE CLOUD DATA AI DEVOPS</GsapReveal>
-
-      <section className="container service-showcase">
-        <GsapReveal className="service-feature">
-          <p className="card-eyebrow">{dict.home.services.eyebrow}</p>
-          <h3>{dict.home.services.title}</h3>
-          <p>{dict.home.services.desc}</p>
-          <Link href={`/${lang}/services`} className="outline-btn">{dict.home.services.cta}</Link>
-        </GsapReveal>
-        <GsapReveal className="service-rail" delay={120} direction="left"><h3>{dict.home.services.rail1}</h3></GsapReveal>
-        <GsapReveal className="service-rail" delay={220} direction="left"><h3>{dict.home.services.rail2}</h3></GsapReveal>
+      <section className="service-scroll-stage">
+        <ServiceScrollPanels
+          marquee="SOFTWARE CLOUD DATA AI DEVOPS"
+          panels={[
+            {
+              label: "Development",
+              title: dict.home.services.title,
+              desc: dict.home.services.desc,
+              cta: dict.home.services.cta,
+              href: `/${lang}/services`,
+              tone: "development",
+            },
+            {
+              label: dict.home.services.rail1,
+              title: (dict.home.services as any).cloudTitle,
+              desc: (dict.home.services as any).cloudDesc,
+              cta: dict.home.services.cta,
+              href: `/${lang}/services`,
+              tone: "cloud",
+            },
+            {
+              label: dict.home.services.rail2,
+              title: (dict.home.services as any).aiTitle,
+              desc: (dict.home.services as any).aiDesc,
+              cta: dict.home.services.cta,
+              href: `/${lang}/sunnitai`,
+              tone: "ai",
+            },
+          ]}
+        />
       </section>
 
       <section className="container">
@@ -108,25 +140,13 @@ export default async function Home({
           title={dict.home.serviceShowcase.title}
           text={dict.home.serviceShowcase.desc}
         />
-        <div className="service-grid service-grid-full">
-          {serviceCards.map((service, index) => (
-            <GsapReveal key={service.title} delay={index * 80}>
-              <article className={`service-tile ${index === 0 ? "dark" : ""}`} data-index={service.eyebrow}>
-                <h3>{service.title}</h3>
-                <p>{service.text}</p>
-                <ul>
-                  {service.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
-                </ul>
-              </article>
-            </GsapReveal>
-          ))}
-        </div>
+        <RotaryServices cards={dict.home.serviceShowcase.cards} />
       </section>
 
       <section className="container">
         <SectionTitle eyebrow={dict.home.process.eyebrow} title={dict.home.process.title} />
         <div className="process-grid">
-          {processCards.map((card, index) => (
+          {dict.home.process.cards.map((card: any, index: number) => (
             <GsapReveal key={card.title} delay={index * 90}>
               <article className="process-card">
                 <h3>{card.title}</h3>
@@ -137,7 +157,7 @@ export default async function Home({
         </div>
       </section>
 
-      <section className="container testimonial-stats">
+      {/* <section className="container testimonial-stats">
         <GsapReveal className="quote-card">
           <p>{dict.home.stats.quote}</p>
           <strong>{dict.home.stats.author}</strong>
@@ -148,7 +168,7 @@ export default async function Home({
           <p>{dict.home.stats.growthDesc}</p>
           <div className="dot-chart" aria-hidden="true">{Array.from({ length: 55 }).map((_, i) => <i key={i} />)}</div>
         </GsapReveal>
-      </section>
+      </section> */}
 
       <section className="container">
         <SectionTitle eyebrow={dict.home.cases.eyebrow} title={dict.home.cases.title} align="center" />
@@ -160,7 +180,7 @@ export default async function Home({
           <button>{dict.home.cases.filterUx}</button>
         </div>
         <div className="case-grid case-grid-full">
-          {cases.map((item, index) => (
+          {dict.home.cases.items.map((item: any, index: number) => (
             <GsapReveal key={item.title} delay={index * 90}>
               <article className={`case-card ${item.tone}`}>
                 <small>{item.tag}</small>
@@ -173,27 +193,12 @@ export default async function Home({
 
       <section className="container blog-section">
         <SectionTitle eyebrow={dict.home.blog.eyebrow} title={dict.home.blog.title} />
-        <div className="blog-grid">
-          {posts.map((post, index) => (
-            <GsapReveal key={post.title} delay={index * 90}>
-              <article className="blog-card">
-                <div>
-                  <small>{post.date} by SUNNIT / {post.category}</small>
-                  <h3>{post.title}</h3>
-                  <p>{post.text}</p>
-                </div>
-                <Link href={`/${lang}/blog`} className="outline-btn tiny">{dict.home.blog.readMore}</Link>
-              </article>
-            </GsapReveal>
-          ))}
+        <div style={{ marginTop: 18 }}>
+          <NewsSlider posts={posts as any} lang={lang} />
         </div>
       </section>
 
-      <section className="container">
-        <div className="logo-row">
-          {clients.map((client) => <div className="logo-pill" key={client}>{client}</div>)}
-        </div>
-      </section>
+
 
       <section className="container cta-band">
         <div>

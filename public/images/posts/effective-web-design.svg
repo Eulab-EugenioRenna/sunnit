@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Effective web design</title>
+  <desc id="desc">Abstract gradient cover for a blog post about effective web design.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#12203b"/>
+      <stop offset="55%" stop-color="#d85b47"/>
+      <stop offset="100%" stop-color="#f0b3a7"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)" rx="48"/>
+  <circle cx="1220" cy="220" r="160" fill="#ffffff" fill-opacity="0.16"/>
+  <circle cx="360" cy="640" r="220" fill="#3799ff" fill-opacity="0.22"/>
+  <rect x="220" y="210" width="560" height="380" rx="36" fill="#ffffff" fill-opacity="0.12"/>
+  <text x="220" y="710" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="92" font-weight="800">Web Design</text>
+</svg>

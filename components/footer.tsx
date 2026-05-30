@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Dictionary } from "@/lib/dictionaries";
 
@@ -17,11 +18,7 @@ export default function Footer({ dict, lang }: { dict: Dictionary; lang: string 
       <div className="footer-card">
         <div className="footer-brand">
           <Link href={`/${lang}`} className="brand light" aria-label="SUNNIT home">
-            <span className="brand-mark">
-              <i />
-              <b />
-            </span>
-            <span>SUNNIT</span>
+            <Image src="/logo.png" alt="SUNNIT" width={152} height={44} className="brand-logo brand-logo--footer" />
           </Link>
           <p>{dict.common.footer.brandDesc}</p>
         </div>

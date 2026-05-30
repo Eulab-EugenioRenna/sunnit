@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import BlogSidebar from "@/components/blog-sidebar";
 import PageHero from "@/components/page-hero";
 import GsapReveal from "@/components/gsap-reveal";
-import { posts } from "@/lib/data";
+import { getAllBlogPosts, type BlogLang } from "@/lib/blog";
 import { getDictionary } from "@/lib/dictionaries";
 
 export const metadata: Metadata = {
@@ -15,28 +16,27 @@ export default async function BlogPage({
   searchParams,
 }: {
   params: Promise<{ lang: 'en' | 'it' }>;
-  searchParams: Promise<{ search?: string; page?: string; category?: string }>;
+  searchParams: Promise<{ search?: string; page?: string; tag?: string }>;
 }) {
   const { lang } = await params;
-  const { search = "", page = "1", category = "" } = await searchParams;
+  const { search = "", page = "1", tag = "" } = await searchParams;
   const dict = await getDictionary(lang);
+  const posts = getAllBlogPosts(lang as BlogLang);
 
-  // Filter posts dynamically
   const filteredPosts = posts.filter((post) => {
     const matchesSearch =
       search === "" ||
       post.title.toLowerCase().includes(search.toLowerCase()) ||
-      post.text.toLowerCase().includes(search.toLowerCase()) ||
-      post.category.toLowerCase().includes(search.toLowerCase());
+      post.excerpt.toLowerCase().includes(search.toLowerCase()) ||
+      post.tags.some((item) => item.toLowerCase().includes(search.toLowerCase()));
 
-    const matchesCategory =
-      category === "" ||
-      post.category.toLowerCase() === category.toLowerCase();
+    const matchesTag =
+      tag === "" ||
+      post.tags.some((item) => item.toLowerCase() === tag.toLowerCase());
 
-    return matchesSearch && matchesCategory;
+    return matchesSearch && matchesTag;
   });
 
-  // Pagination calculations (2 posts per page to show pagination)
   const postsPerPage = 2;
   const currentPage = parseInt(page) || 1;
   const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
@@ -45,19 +45,15 @@ export default async function BlogPage({
     currentPage * postsPerPage
   );
 
-  // URL Helper to preserve other search parameters
-  const getFilterUrl = (newCategory?: string, newPage?: number, newSearch?: string) => {
+  const getFilterUrl = (newTag?: string, newPage?: number, newSearch?: string) => {
     const params = new URLSearchParams();
     
-    // Category parameter
-    const activeCat = newCategory !== undefined ? newCategory : category;
-    if (activeCat) params.set("category", activeCat);
+    const activeTag = newTag !== undefined ? newTag : tag;
+    if (activeTag) params.set("tag", activeTag);
     
-    // Search parameter
     const activeSearch = newSearch !== undefined ? newSearch : search;
     if (activeSearch) params.set("search", activeSearch);
     
-    // Page parameter
     const activePage = newPage !== undefined ? newPage : 1;
     if (activePage > 1) params.set("page", activePage.toString());
 
@@ -65,8 +61,9 @@ export default async function BlogPage({
     return `/${lang}/blog${queryString ? `?${queryString}` : ""}`;
   };
 
-  // Get all unique categories dynamically
-  const allCategories = Array.from(new Set(posts.map((p) => p.category)));
+  const allTags = Array.from(new Set(posts.flatMap((post) => post.tags))).sort((left, right) =>
+    left.localeCompare(right)
+  );
 
   return (
     <>
@@ -77,11 +74,24 @@ export default async function BlogPage({
           {displayedPosts.length > 0 ? (
             displayedPosts.map((post, index) => (
               <GsapReveal className="article-preview" key={post.title} delay={index * 120}>
-                <div className="article-image" />
-                <small>{post.date} by SUNNIT / {post.category}</small>
-                <h2>{post.title}</h2>
-                <p>{post.text} {dict.blog.list.suffix}</p>
-                <Link href={getFilterUrl(post.category)} className="outline-btn tiny">{dict.blog.list.readMore}</Link>
+                <Link href={`/${lang}/blog/${post.slug}`} className="article-preview-link">
+                  {post.image ? (
+                    <div className="article-image">
+                      <img src={post.image} alt={post.title} loading="lazy" />
+                    </div>
+                  ) : (
+                    <div className="article-image" aria-hidden="true" />
+                  )}
+                  <small>
+                    {post.createdAtLabel} by SUNNIT
+                    {post.tags[0] ? ` / ${post.tags[0]}` : ""}
+                  </small>
+                  <h2>{post.title}</h2>
+                  <p>{post.excerpt} {dict.blog.list.suffix}</p>
+                  <span className="article-preview-action">
+                    {lang === "en" ? "Open article" : "Apri articolo"}
+                  </span>
+                </Link>
               </GsapReveal>
             ))
           ) : (
@@ -132,72 +142,7 @@ export default async function BlogPage({
           )}
         </div>
 
-        <aside className="sidebar">
-          <div className="author-card">
-            <div className="author-avatar" />
-            <p>{dict.blog.sidebar.authorQuote}</p>
-            <div className="filter-row" style={{ justifyContent: "flex-start", margin: 0 }}>
-              <button className="active">X</button>
-              <button>f</button>
-              <button>in</button>
-            </div>
-          </div>
-
-          <form action="" method="GET" className="blog-search-form">
-            {category && <input type="hidden" name="category" value={category} />}
-            <input 
-              name="search" 
-              defaultValue={search} 
-              className="search-input" 
-              placeholder={dict.blog.sidebar.searchPlaceholder} 
-            />
-          </form>
-
-          <div className="sidebar-card">
-            <h3>{dict.blog.sidebar.recentPosts}</h3>
-            {posts.slice(0, 3).map((post) => (
-              <Link 
-                key={post.title} 
-                href={getFilterUrl(post.category, 1, post.title)} 
-                style={{ display: "block", margin: "14px 0", fontWeight: 900 }}
-              >
-                {post.title}
-              </Link>
-            ))}
-          </div>
-
-          <div className="sidebar-card">
-            <h3>{dict.blog.sidebar.categories}</h3>
-            <div className="category-list">
-              <Link 
-                href={getFilterUrl("")} 
-                className={`category-item ${category === "" ? "active" : ""}`}
-              >
-                {lang === "en" ? "All Categories" : "Tutte le categorie"}
-              </Link>
-              {allCategories.map((cat) => (
-                <Link
-                  key={cat}
-                  href={getFilterUrl(cat)}
-                  className={`category-item ${category.toLowerCase() === cat.toLowerCase() ? "active" : ""}`}
-                >
-                  {cat}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <div className="sidebar-card">
-            <h3>{dict.blog.sidebar.tags}</h3>
-            <div className="tag-cloud">
-              {['branding', 'digital', 'marketing', 'planning', 'seo', 'web'].map((tag) => (
-                <Link key={tag} href={getFilterUrl(undefined, 1, tag)}>
-                  <span>{tag}</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </aside>
+        <BlogSidebar lang={lang} posts={posts} allTags={allTags} activeTag={tag} search={search} />
       </section>
     </>
   );

@@ -4,20 +4,12 @@ import FAQ from "@/components/faq";
 import PageHero from "@/components/page-hero";
 import GsapReveal from "@/components/gsap-reveal";
 import SectionTitle from "@/components/section-title";
-import { cases, serviceCards } from "@/lib/data";
 import { getDictionary } from "@/lib/dictionaries";
 
 export const metadata: Metadata = {
   title: "Services",
   description: "Servizi software, cloud, data, DevOps e AI con layout bento."
 };
-
-const faqItems = [
-  { title: "Lorem ad minim veniam exercitation ullamco?", text: "Partiamo da discovery, priorita e roadmap. Ogni servizio puo essere attivato come progetto singolo o come percorso continuativo." },
-  { title: "Our developers are committed to quality?", text: "Usiamo revisioni, milestone, ambienti controllati e documentazione per garantire un delivery trasparente." },
-  { title: "Excepteur sint occaecat cupidatat?", text: "Sviluppiamo integrazioni API, automazioni, dashboard e sistemi custom in modo modulare." },
-  { title: "Consectetur adipiscing incididunt?", text: "Il team puo affiancare IT, operation, marketing, legal o direzione business." }
-];
 
 export default async function ServicesPage({
   params,
@@ -26,6 +18,9 @@ export default async function ServicesPage({
 }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
+  const cards = (dict as any).services.cards;
+  const cases = (dict as any).services.cases;
+  const faqItems = (dict as any).services.faqItems;
 
   return (
     <>
@@ -46,7 +41,7 @@ export default async function ServicesPage({
       </section>
 
       <section className="container dark-grid">
-        {serviceCards.slice(0, 3).map((service, index) => (
+        {cards.slice(0, 3).map((service: any, index: number) => (
           <GsapReveal key={service.title} delay={index * 90}>
             <article className="dark-feature">
               <div>
@@ -71,7 +66,7 @@ export default async function ServicesPage({
           <button>UAV Technologies</button>
         </div>
         <div className="case-grid">
-          {cases.map((item, index) => (
+          {cases.map((item: any, index: number) => (
             <GsapReveal key={item.title} delay={index * 90} direction="left">
               <article className={`case-card ${item.tone}`}>
                 <small>{item.tag}</small>

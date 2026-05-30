@@ -1,35 +1,42 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { heroSlides } from "@/lib/data";
 import { gsap } from "gsap";
 import type { Dictionary } from "@/lib/dictionaries";
 
 export default function HeroDynamicCopy({ dict }: { dict: Dictionary }) {
   const [index, setIndex] = useState(0);
-  const slide = heroSlides[index];
+  const home = (dict as any).home;
+  const slides = home.hero.slides;
+  const slide = slides[index];
 
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      setIndex((current) => (current + 1) % heroSlides.length);
+      setIndex((current) => (current + 1) % slides.length);
     }, 2600);
 
     return () => window.clearInterval(timer);
-  }, []);
+  }, [slides.length]);
 
   useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const kicker = container.querySelector(".hero-kicker");
+    const heading = container.querySelector("h1");
+    const subcopy = container.querySelector(".hero-subcopy");
+    if (!kicker || !heading || !subcopy) return;
+
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-      
-      tl.from(".hero-kicker", { opacity: 0, y: 15, duration: 0.6 })
-        .from("h1", { opacity: 0, y: 30, duration: 0.8 }, "-=0.4")
-        .from(".hero-subcopy", { opacity: 0, y: 15, duration: 0.6 }, "-=0.6")
-        .from(".hero-actions", { opacity: 0, y: 15, duration: 0.6 }, "-=0.5");
-        
-    }, containerRef);
-    
+
+      tl.from(kicker, { opacity: 0, y: 15, duration: 0.6 })
+        .from(heading, { opacity: 0, y: 30, duration: 0.8 }, "-=0.4")
+        .from(subcopy, { opacity: 0, y: 15, duration: 0.6 }, "-=0.6");
+    }, container);
+
     return () => ctx.revert();
   }, []);
 
@@ -44,15 +51,15 @@ export default function HeroDynamicCopy({ dict }: { dict: Dictionary }) {
       </p>
 
       <h1>
-        {dict.home.hero.titleStart}
+        {home.hero.titleStart}
         <span className="animated-word" aria-live="polite">
           <span key={`word-${slide.word}`}>{slide.word}</span>
         </span>{" "}
-        {dict.home.hero.titleEnd}
+        {home.hero.titleEnd}
       </h1>
 
       <p className="hero-subcopy" key={`copy-${slide.word}`}>
-        {dict.home.hero.subtitle}
+        {slide.text || home.hero.subtitle}
       </p>
     </div>
   );
