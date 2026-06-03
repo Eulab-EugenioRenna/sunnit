@@ -29,6 +29,7 @@ export default function ServiceScrollPanels({
   const stageRef = useRef<HTMLElement | null>(null);
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
+  const mobileCardsRef = useRef<Array<HTMLElement | null>>([]);
   const [isMobile, setIsMobile] = useState(false);
   const [activeMobilePanel, setActiveMobilePanel] = useState(0);
 
@@ -97,7 +98,43 @@ export default function ServiceScrollPanels({
     }
   }, [activeMobilePanel, panels.length]);
 
-  const mobilePanel = panels[activeMobilePanel] || panels[0];
+  useEffect(() => {
+    if (!isMobile || panels.length === 0) return;
+
+    const cards = mobileCardsRef.current.filter(Boolean) as HTMLElement[];
+    if (cards.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntries = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visibleEntries.length === 0) return;
+
+        const nextIndex = Number(visibleEntries[0].target.getAttribute("data-mobile-index"));
+        if (!Number.isNaN(nextIndex)) {
+          setActiveMobilePanel(nextIndex);
+        }
+      },
+      {
+        threshold: [0.4, 0.6, 0.8],
+        rootMargin: "-10% 0px -35% 0px",
+      }
+    );
+
+    cards.forEach((card) => observer.observe(card));
+
+    return () => observer.disconnect();
+  }, [isMobile, panels]);
+
+  const scrollToMobilePanel = (index: number) => {
+    const card = mobileCardsRef.current[index];
+    if (!card) return;
+
+    setActiveMobilePanel(index);
+    card.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
     <section className="service-scroll-stage" ref={stageRef}>
@@ -112,28 +149,34 @@ export default function ServiceScrollPanels({
                   key={panel.label}
                   type="button"
                   className={`service-mobile-tab ${index === activeMobilePanel ? "is-active" : ""}`}
-                  onClick={() => setActiveMobilePanel(index)}
+                  onClick={() => scrollToMobilePanel(index)}
                 >
                   {panel.label}
                 </button>
               ))}
             </div>
 
-            {mobilePanel ? (
+            <div className="service-mobile-stack">
+              {panels.map((panel, index) => (
               <article
-                key={mobilePanel.label}
-                className={`service-mobile-card service-scroll-panel--${mobilePanel.tone}`}
+                key={panel.label}
+                ref={(node) => {
+                  mobileCardsRef.current[index] = node;
+                }}
+                data-mobile-index={index}
+                className={`service-mobile-card service-scroll-panel--${panel.tone} ${index === activeMobilePanel ? "is-active" : ""}`}
               >
                 <div className="service-mobile-card__inner">
-                  <p className="card-eyebrow">{mobilePanel.label}</p>
-                  <h3>{mobilePanel.title}</h3>
-                  <TextLines text={mobilePanel.desc} />
-                  <Link href={mobilePanel.href} className="outline-btn">
-                    {mobilePanel.cta}
+                  <p className="card-eyebrow">{panel.label}</p>
+                  <h3>{panel.title}</h3>
+                  <TextLines text={panel.desc} />
+                  <Link href={panel.href} className="outline-btn">
+                    {panel.cta}
                   </Link>
                 </div>
               </article>
-            ) : null}
+              ))}
+            </div>
           </div>
         ) : (
           <div className="service-scroll-track" ref={trackRef}>

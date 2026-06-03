@@ -836,6 +836,12 @@ main {
   flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 14px;
+  position: sticky;
+  top: 84px;
+  z-index: 4;
+  padding: 8px 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.72));
+  backdrop-filter: blur(12px);
 }
 
 .service-mobile-tab {
@@ -864,6 +870,17 @@ main {
   overflow: hidden;
   box-shadow: var(--shadow-soft);
   animation: serviceMobileCardIn 260ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.service-mobile-stack {
+  display: grid;
+  gap: 14px;
+}
+
+.service-mobile-card.is-active {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
 }
 
 .service-mobile-card__inner {
@@ -4811,6 +4828,16 @@ svg {
 
   .service-mobile-shell {
     display: block;
+  }
+
+  .service-mobile-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+  }
+
+  .service-mobile-tabs::-webkit-scrollbar {
+    display: none;
   }
 
   .nav-wrap {
