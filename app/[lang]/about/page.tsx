@@ -70,6 +70,7 @@ export default async function AboutPage({
             <TextLines text={dict.about.team.story.desc} />
             <Link href={`/${lang}/contact`} className="outline-btn">{dict.about.team.story.cta}</Link>
           </GsapReveal>
+          {/* Team cards temporarily hidden until final team assets/content are ready.
           <div className="team-grid team-grid--compact">
             {dict.about.team.members.map((person: string, index: number) => (
               <GsapReveal className="team-card" key={person} delay={index * 70} direction="left">
@@ -77,6 +78,7 @@ export default async function AboutPage({
               </GsapReveal>
             ))}
           </div>
+          */}
         </div>
       </section>
 
