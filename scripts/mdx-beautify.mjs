@@ -24,6 +24,61 @@ function splitFrontmatter(source) {
   };
 }
 
+function escapeYamlDoubleQuoted(value) {
+  return String(value || '')
+    .replace(/\\/g, '\\\\')
+    .replace(/"/g, '\\"');
+}
+
+function upsertExcerpt(frontmatter, excerpt) {
+  if (!frontmatter || !excerpt) {
+    return frontmatter;
+  }
+
+  const lines = frontmatter.trimEnd().split('\n');
+  const bodyLines = lines.slice(1, -1);
+  const excerptLine = `excerpt: "${escapeYamlDoubleQuoted(excerpt)}"`;
+  const excerptIndex = bodyLines.findIndex((line) => /^excerpt\s*:/.test(line.trim()));
+
+  if (excerptIndex >= 0) {
+    bodyLines[excerptIndex] = excerptLine;
+  } else {
+    const titleIndex = bodyLines.findIndex((line) => /^title\s*:/.test(line.trim()));
+    const insertAt = titleIndex >= 0 ? titleIndex + 1 : bodyLines.length;
+    bodyLines.splice(insertAt, 0, excerptLine);
+  }
+
+  return `---\n${bodyLines.join('\n')}\n---\n`;
+}
+
+async function ollamaChat({ messages, slug, action, baseUrl = process.env.OLLAMA_URL || DEFAULT_OLLAMA_URL }) {
+  const response = await fetch(`${baseUrl.replace(/\/$/, '')}/api/chat`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: DEFAULT_OLLAMA_MODEL,
+      stream: false,
+      messages,
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Ollama ${action} ha risposto con ${response.status} per ${slug}: ${errorText}`);
+  }
+
+  const data = await response.json();
+  const content = stripCodeFence(data?.message?.content || '');
+
+  if (!content) {
+    throw new Error(`Risposta vuota da Ollama durante ${action} di ${slug}`);
+  }
+
+  return content.trim();
+}
+
 function buildBeautifyMessages({ body, contentType, slug }) {
   const system = [
     'You format editorial content into clean MDX.',
@@ -50,6 +105,30 @@ function buildBeautifyMessages({ body, contentType, slug }) {
   ];
 }
 
+function buildExcerptMessages({ body, contentType, slug }) {
+  const system = [
+    'You write short editorial excerpts.',
+    'Return only one plain-text excerpt line.',
+    'Maximum 15 words.',
+    'Do not use markdown, quotes, bullets, labels, or trailing explanations.',
+    'Preserve the original language and meaning.',
+    'Do not invent facts or claims not supported by the source.',
+  ].join(' ');
+
+  const user = [
+    `Write an excerpt for this ${contentType} MDX content with slug "${slug}".`,
+    'The excerpt must be a concise summary in maximum 15 words.',
+    'Return only the excerpt text.',
+    '',
+    body,
+  ].join('\n');
+
+  return [
+    { role: 'system', content: system },
+    { role: 'user', content: user },
+  ];
+}
+
 export async function beautifyMdxBody({ body, contentType, slug, baseUrl = process.env.OLLAMA_URL || DEFAULT_OLLAMA_URL }) {
   const trimmedBody = String(body || '').trim();
 
@@ -57,42 +136,52 @@ export async function beautifyMdxBody({ body, contentType, slug, baseUrl = proce
     return '';
   }
 
-  const response = await fetch(`${baseUrl.replace(/\/$/, '')}/api/chat`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: DEFAULT_OLLAMA_MODEL,
-      stream: false,
-      messages: buildBeautifyMessages({ body: trimmedBody, contentType, slug }),
-    }),
+  const beautified = await ollamaChat({
+    messages: buildBeautifyMessages({ body: trimmedBody, contentType, slug }),
+    slug,
+    action: 'il beautify',
+    baseUrl,
   });
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Ollama beautify ha risposto con ${response.status}: ${errorText}`);
-  }
-
-  const data = await response.json();
-  const beautified = stripCodeFence(data?.message?.content || '');
-
-  if (!beautified) {
-    throw new Error(`Risposta vuota da Ollama durante il beautify di ${slug}`);
-  }
-
-  return `${beautified.trim()}\n`;
+  return `${beautified}\n`;
 }
 
-export async function beautifyMdxDocument({ source, contentType, slug, baseUrl }) {
-  const { frontmatter, body } = splitFrontmatter(String(source || ''));
-  const beautifiedBody = await beautifyMdxBody({ body, contentType, slug, baseUrl });
+export async function beautifyMdxExcerpt({ body, contentType, slug, baseUrl = process.env.OLLAMA_URL || DEFAULT_OLLAMA_URL }) {
+  const trimmedBody = String(body || '').trim();
 
-  if (!frontmatter) {
-    return beautifiedBody;
+  if (!trimmedBody) {
+    return '';
   }
 
-  return `${frontmatter}${beautifiedBody}`;
+  const excerpt = await ollamaChat({
+    messages: buildExcerptMessages({ body: trimmedBody, contentType, slug }),
+    slug,
+    action: 'la sintesi excerpt',
+    baseUrl,
+  });
+
+  return excerpt
+    .replace(/\s+/g, ' ')
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 15)
+    .join(' ');
+}
+
+export async function beautifyMdxDocument({ source, contentType, slug, baseUrl, mode = 'full' }) {
+  const { frontmatter, body } = splitFrontmatter(String(source || ''));
+  const excerptSource = mode === 'excerpt-only' ? body : await beautifyMdxBody({ body, contentType, slug, baseUrl });
+  const excerpt = await beautifyMdxExcerpt({ body: excerptSource, contentType, slug, baseUrl });
+
+  if (mode === 'excerpt-only') {
+    return frontmatter ? `${upsertExcerpt(frontmatter, excerpt)}${body}` : body;
+  }
+
+  if (!frontmatter) {
+    return excerptSource;
+  }
+
+  return `${upsertExcerpt(frontmatter, excerpt)}${excerptSource}`;
 }
 
 export { DEFAULT_OLLAMA_MODEL, DEFAULT_OLLAMA_URL };
