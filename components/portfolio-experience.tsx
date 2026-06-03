@@ -30,7 +30,6 @@ async function getMdxContent(body: string) {
 }
 
 export default function PortfolioExperience({
-  lang,
   projects,
   openLabel,
   closeLabel,
@@ -42,14 +41,41 @@ export default function PortfolioExperience({
   closeLabel: string;
   detailsLabel: string;
 }) {
-  const [activeProjectSlug, setActiveProjectSlug] = useState<string | null>(null);
   const [activeContent, setActiveContent] = useState<MdxContentComponent | null>(null);
+  const [activeProjectSlug, setActiveProjectSlug] = useState<string | null>(null);
 
   const activeProject = useMemo(
     () => projects.find((project) => project.slug === activeProjectSlug) ?? null,
     [projects, activeProjectSlug]
   );
   const ActiveContent = activeContent;
+
+  const updateActiveProject = (slug: string | null) => {
+    setActiveProjectSlug(slug);
+  };
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const handleOpenPortfolio = (event: Event) => {
+      const slug = (event as CustomEvent<string | null>).detail;
+      if (typeof slug === "string" && slug) {
+        setActiveProjectSlug(slug);
+      }
+    };
+
+    const pendingSlug = window.sessionStorage.getItem("pending-portfolio-slug");
+    if (pendingSlug) {
+      window.sessionStorage.removeItem("pending-portfolio-slug");
+      setActiveProjectSlug(pendingSlug);
+    }
+
+    window.addEventListener("open-portfolio-modal", handleOpenPortfolio as EventListener);
+
+    return () => {
+      window.removeEventListener("open-portfolio-modal", handleOpenPortfolio as EventListener);
+    };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -76,13 +102,13 @@ export default function PortfolioExperience({
         <PortfolioSlider
           projects={projects}
           openLabel={openLabel}
-          onOpenProject={(slug) => setActiveProjectSlug(slug)}
+          onOpenProject={updateActiveProject}
           autoplay={!activeProjectSlug}
         />
       </GsapReveal>
 
       {activeProject ? (
-        <PortfolioModal closeLabel={closeLabel} detailsLabel={detailsLabel} onClose={() => setActiveProjectSlug(null)}>
+        <PortfolioModal closeLabel={closeLabel} detailsLabel={detailsLabel} onClose={() => updateActiveProject(null)}>
           <div className="portfolio-modal__panel">
             <div className={`portfolio-modal__hero portfolio-modal__hero--${activeProject.tone}`}>
               <div className="portfolio-modal__hero-copy">
@@ -103,7 +129,7 @@ export default function PortfolioExperience({
             </div>
 
             <div className="portfolio-modal__actions">
-              <button type="button" className="outline-btn" onClick={() => setActiveProjectSlug(null)}>
+              <button type="button" className="outline-btn" onClick={() => updateActiveProject(null)}>
                 {closeLabel}
               </button>
             </div>

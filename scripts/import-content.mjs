@@ -6,7 +6,7 @@ import path from 'node:path';
 import readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import { fileURLToPath } from 'node:url';
-import { beautifyMdxBody, DEFAULT_OLLAMA_MODEL } from './mdx-beautify.mjs';
+import { beautifyMdxBody, beautifyMdxExcerpt, DEFAULT_OLLAMA_MODEL } from './mdx-beautify.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -331,7 +331,14 @@ async function main() {
   const imagePublicPath = `${imageRoots[options.type]}/${imageFileName}`;
   const imageDiskPath = path.join(projectRoot, 'public', imagePublicPath.replace(/^?\//, ''));
 
-  const excerpt = options.excerpt || toExcerpt(formattedBody);
+  const excerpt = options.excerpt
+    || (options.dryRun || options.skipBeautify
+      ? toExcerpt(formattedBody)
+      : await beautifyMdxExcerpt({
+          body: formattedBody,
+          contentType: options.type,
+          slug,
+        }));
 
   let frontmatter = '';
 

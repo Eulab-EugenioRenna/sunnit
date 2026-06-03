@@ -8,9 +8,10 @@ interface SearchItem {
   title: string;
   subtitle: string;
   searchText: string;
-  category: "pagine" | "articoli";
+  category: "pagine" | "articoli" | "portfolio";
   href: string;
   icon: React.ReactNode;
+  portfolioSlug?: string;
 }
 
 type SpotlightArticle = {
@@ -22,7 +23,22 @@ type SpotlightArticle = {
   tags: string[];
 };
 
-export default function SpotlightSearch({ articles }: { articles: SpotlightArticle[] }) {
+type SpotlightPortfolioProject = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  tag: string;
+  href: string;
+};
+
+export default function SpotlightSearch({
+  articles,
+  portfolioProjects,
+}: {
+  articles: SpotlightArticle[];
+  portfolioProjects: SpotlightPortfolioProject[];
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
@@ -171,7 +187,17 @@ export default function SpotlightSearch({ articles }: { articles: SpotlightArtic
       icon: <FileText className="search-icon-svg" size={18} />
     }));
 
-    return [...pages, ...articleItems];
+    const portfolioItems: SearchItem[] = portfolioProjects.map((project) => ({
+      title: project.title,
+      subtitle: `${project.tag} - ${project.excerpt.substring(0, 60)}...`,
+      searchText: [project.title, project.excerpt, project.content, project.tag, project.slug].join(" ").toLowerCase(),
+      category: "portfolio",
+      href: project.href,
+      icon: <Briefcase className="search-icon-svg" size={18} />,
+      portfolioSlug: project.slug,
+    }));
+
+    return [...pages, ...portfolioItems, ...articleItems];
   };
 
   const allItems = getSearchItems();
@@ -240,6 +266,47 @@ export default function SpotlightSearch({ articles }: { articles: SpotlightArtic
   };
 
   const handleSelect = (item: SearchItem) => {
+    if (typeof window !== "undefined") {
+      const url = new URL(item.href, window.location.origin);
+      const targetPathname = url.pathname.replace(/\/$/, "") || "/";
+      const currentPathname = window.location.pathname.replace(/\/$/, "") || "/";
+
+      if (item.category === "portfolio" && item.portfolioSlug) {
+        setIsOpen(false);
+        const portfolioCasesHref = `${targetPathname}#cases`;
+
+        if (targetPathname === currentPathname) {
+          window.history.replaceState(null, "", portfolioCasesHref);
+          const casesSection = document.getElementById("cases");
+          if (casesSection) {
+            requestAnimationFrame(() => {
+              casesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+            });
+          }
+          window.dispatchEvent(new CustomEvent("open-portfolio-modal", { detail: item.portfolioSlug }));
+          return;
+        }
+
+        window.sessionStorage.setItem("pending-portfolio-slug", item.portfolioSlug);
+        router.push(portfolioCasesHref);
+        return;
+      }
+
+      if (targetPathname === currentPathname && url.hash) {
+        const targetId = decodeURIComponent(url.hash.slice(1));
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          setIsOpen(false);
+          window.history.replaceState(null, "", `${currentPathname}${url.hash}`);
+          requestAnimationFrame(() => {
+            targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+          return;
+        }
+      }
+    }
+
     router.push(item.href);
     setIsOpen(false);
   };

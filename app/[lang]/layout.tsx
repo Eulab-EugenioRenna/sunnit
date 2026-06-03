@@ -5,6 +5,7 @@ import Footer from "@/components/footer";
 import SpotlightSearch from "@/components/spotlight-search";
 import "../globals.css";
 import { getAllBlogPosts, type BlogLang } from "@/lib/blog";
+import { getAllPortfolioProjects, type PortfolioLang } from "@/lib/portfolio";
 import { getDictionary, getAvailableLocales } from "@/lib/dictionaries";
 import GsapProvider from "@/components/gsap-provider";
 import DebugDomErrors from "@/components/debug-dom-errors";
@@ -45,6 +46,14 @@ export default async function RootLayout({
     href: `/${lang}/blog/${post.slug}`,
     tags: post.tags,
   }));
+  const portfolioProjects = getAllPortfolioProjects(lang as PortfolioLang).map((project) => ({
+    slug: project.slug,
+    title: project.title,
+    excerpt: project.excerpt,
+    content: project.body,
+    tag: project.tag,
+    href: `/${lang}#cases`,
+  }));
 
   return (
     <html lang={lang} data-scroll-behavior="smooth">
@@ -73,7 +82,7 @@ eulabconsult@gmail.com
         <DebugDomErrors />
         <GsapProvider>
           <Header dict={dict} lang={lang} availableLocales={availableLocales} />
-          <SpotlightSearch articles={articles} />
+          <SpotlightSearch articles={articles} portfolioProjects={portfolioProjects} />
           <main>{children}</main>
           <Footer dict={dict} lang={lang} />
         </GsapProvider>
