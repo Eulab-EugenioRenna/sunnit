@@ -20,11 +20,17 @@ function describeNode(node: Node | null | undefined) {
   const tag = node.tagName.toLowerCase();
   const id = node.id ? `#${node.id}` : "";
   const className = typeof node.className === "string"
-    ? node.className.trim().split(/\s+/).filter(Boolean).slice(0, 4).map((name) => `.${name}`).join("")
+    ? node.className.trim().split(/\s+/).filter(Boolean).slice(0, 6).map((name) => `.${name}`).join("")
     : "";
-  const data = node.getAttribute("data-label") || node.getAttribute("aria-label") || node.getAttribute("role");
+  const attrs = ["data-label", "aria-label", "role", "data-nextjs-scroll-focus-boundary"]
+    .map((name) => {
+      const value = node.getAttribute(name);
+      return value === "" ? name : value ? `${name}=${value}` : null;
+    })
+    .filter(Boolean)
+    .join(" ");
 
-  return `${tag}${id}${className}${data ? ` [${data}]` : ""}`;
+  return `${tag}${id}${className}${attrs ? ` [${attrs}]` : ""}`;
 }
 
 function describeChain(node: Node | null | undefined) {

@@ -6,13 +6,14 @@ import SectionTitle from "@/components/section-title";
 import NewsSlider from "@/components/news-slider";
 import ServiceScrollPanels from "@/components/service-scroll-panels";
 import RotaryServices from "@/components/rotary-services";
+import TextLines from "@/components/text-lines";
 import { getAllBlogPosts, type BlogLang } from "@/lib/blog";
 import { getDictionary } from "@/lib/dictionaries";
 
 export default async function Home({
   params,
 }: {
-  params: Promise<{ lang: 'en' | 'it' }>;
+  params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
@@ -31,7 +32,7 @@ export default async function Home({
         <div className="hero-content">
           <HeroDynamicCopy dict={dict} />
           <div className="hero-actions">
-            <Link href={`/${lang}/services`} className="solid-btn">{dict.home.hero.ctaPrimary}</Link>
+            <Link href={`/${lang}/#services`} className="solid-btn">{dict.home.hero.ctaPrimary}</Link>
             <Link href={`/${lang}/contact`} className="outline-btn">{dict.home.hero.ctaSecondary}</Link>
           </div>
 
@@ -41,7 +42,7 @@ export default async function Home({
           <div className="hero-visual-main">
             <span className="arrow-floating">/</span>
             <strong>{dict.home.hero.visualMainTitle}</strong>
-            <p>{dict.home.hero.visualMainDesc}</p>
+            <TextLines text={dict.home.hero.visualMainDesc} />
           </div>
           <div className="hero-visual-card light"><strong>+150k</strong><span>{dict.home.hero.visualCard1}</span></div>
           <div className="hero-visual-card dark"><strong>AI</strong><span>{dict.home.hero.visualCard2}</span></div>
@@ -92,7 +93,7 @@ export default async function Home({
           <h2>{dict.home.howWeWork.titleStart} <span>{dict.home.howWeWork.titleHighlight}</span> {dict.home.howWeWork.titleEnd}</h2>
         </div>
         <div>
-          <p>{dict.home.howWeWork.desc}</p>
+          <TextLines text={dict.home.howWeWork.desc} />
           <ul className="check-list">
             <li>{dict.home.howWeWork.list1}</li>
             <li>{dict.home.howWeWork.list2}</li>
@@ -102,7 +103,7 @@ export default async function Home({
         </div>
       </GsapReveal>
 
-      <section className="service-scroll-stage">
+      <section id="services" className="home-anchor-section">
         <ServiceScrollPanels
           marquee="SOFTWARE CLOUD DATA AI DEVOPS"
           panels={[
@@ -134,7 +135,7 @@ export default async function Home({
         />
       </section>
 
-      <section className="container">
+      <section id="service-showcase" className="container home-anchor-section">
         <SectionTitle
           eyebrow={dict.home.serviceShowcase.eyebrow}
           title={dict.home.serviceShowcase.title}
@@ -143,14 +144,14 @@ export default async function Home({
         <RotaryServices cards={dict.home.serviceShowcase.cards} />
       </section>
 
-      <section className="container">
+      <section id="process" className="container home-anchor-section">
         <SectionTitle eyebrow={dict.home.process.eyebrow} title={dict.home.process.title} />
         <div className="process-grid">
           {dict.home.process.cards.map((card: any, index: number) => (
             <GsapReveal key={card.title} delay={index * 90}>
               <article className="process-card">
                 <h3>{card.title}</h3>
-                <p>{card.text}</p>
+                <TextLines text={card.text} />
               </article>
             </GsapReveal>
           ))}
@@ -170,7 +171,7 @@ export default async function Home({
         </GsapReveal>
       </section> */}
 
-      <section className="container">
+      <section id="cases" className="container home-anchor-section">
         <SectionTitle eyebrow={dict.home.cases.eyebrow} title={dict.home.cases.title} align="center" />
         <div className="filter-row">
           <button className="active">{dict.home.cases.filterAll}</button>
@@ -191,7 +192,7 @@ export default async function Home({
         </div>
       </section>
 
-      <section className="container blog-section">
+      <section id="blog" className="container blog-section home-anchor-section">
         <SectionTitle eyebrow={dict.home.blog.eyebrow} title={dict.home.blog.title} />
         <div style={{ marginTop: 18 }}>
           <NewsSlider posts={posts as any} lang={lang} />
@@ -200,7 +201,7 @@ export default async function Home({
 
 
 
-      <section className="container cta-band">
+      <section id="contact" className="container cta-band home-anchor-section">
         <div>
           <p className="card-eyebrow">{dict.home.cta.eyebrow}</p>
           <h2>{dict.home.cta.title}</h2>

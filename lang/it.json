@@ -1,12 +1,11 @@
 {
   "common": {
     "header": {
-      "homepage": "Homepage",
-      "services": "What We Do",
+      "services": "Cosa facciamo",
       "sunnitai": "SunnitAI",
-      "about": "About Us",
+      "about": "Chi siamo",
       "blog": "Blog",
-      "contact": "Contact",
+      "contact": "Contattaci",
       "cta": "Richiedi consulenza"
     },
     "footer": {
@@ -22,95 +21,6 @@
       "rights": "Tutti i diritti riservati"
     },
     "content": {
-      "heroSlides": [
-        {
-          "word": "Software",
-          "kicker": "Custom software / Web application",
-          "text": "Progettiamo piattaforme digitali su misura, portali e applicazioni enterprise pronte per crescere con processi, team e clienti."
-        },
-        {
-          "word": "Cloud",
-          "kicker": "Cloud consulting / Infrastructure",
-          "text": "Disegniamo architetture scalabili, migrazioni controllate, backup e continuita operativa con una delivery orientata ai costi."
-        },
-        {
-          "word": "AI",
-          "kicker": "SunnitAI / Document intelligence",
-          "text": "Trasformiamo documenti, policy e knowledge base in risposte operative, confronti intelligenti e insight accessibili in linguaggio naturale."
-        },
-        {
-          "word": "Data",
-          "kicker": "Database / Analytics / BI",
-          "text": "Costruiamo database, ETL, dashboard e sistemi di reporting per rendere il dato leggibile, affidabile e utile alle decisioni."
-        },
-        {
-          "word": "DevOps",
-          "kicker": "CI/CD / Automation / Monitoring",
-          "text": "Automatizziamo build, test, deploy e infrastruttura per rilasci piu rapidi, ambienti replicabili e controllo continuo."
-        }
-      ],
-      "serviceCards": [
-        {
-          "title": "Custom Software",
-          "eyebrow": "01",
-          "text": "Applicazioni su misura per digitalizzare processi, integrare sistemi e accelerare il business.",
-          "bullets": ["Web app", "API integration", "Workflow automation"]
-        },
-        {
-          "title": "Website Development",
-          "eyebrow": "02",
-          "text": "Siti, portali e piattaforme web performanti, accessibili e facili da evolvere.",
-          "bullets": ["Corporate site", "CMS", "Security audit"]
-        },
-        {
-          "title": "Database & Analytics",
-          "eyebrow": "03",
-          "text": "Database, data warehouse, ETL e dashboard per trasformare i dati in decisioni.",
-          "bullets": ["ETL", "BI reporting", "SQL optimization"]
-        },
-        {
-          "title": "Cloud Consulting",
-          "eyebrow": "04",
-          "text": "Assessment, migrazioni e architetture cloud scalabili, resilienti e ottimizzate.",
-          "bullets": ["Migration", "Backup", "Disaster recovery"]
-        },
-        {
-          "title": "DevOps Services",
-          "eyebrow": "05",
-          "text": "Pipeline, automazioni e ambienti replicabili per rilasci rapidi e controllati.",
-          "bullets": ["CI/CD", "IaC", "Monitoring"]
-        },
-        {
-          "title": "AI & Document Intelligence",
-          "eyebrow": "06",
-          "text": "Soluzioni AI per interrogare documenti, knowledge base e contenuti aziendali.",
-          "bullets": ["Document analysis", "Q&A", "Comparison"]
-        }
-      ],
-      "processCards": [
-        {
-          "title": "Estensione del tuo team",
-          "text": "Entriamo nei flussi del cliente con roadmap condivisa, sprint brevi e comunicazione chiara."
-        },
-        {
-          "title": "Competenze full-stack",
-          "text": "Frontend, backend, cloud, database, DevOps e AI in un unico percorso di delivery."
-        },
-        {
-          "title": "Approccio agile",
-          "text": "Prototipi, rilasci progressivi e miglioramento continuo per ridurre rischi e tempi."
-        },
-        {
-          "title": "Partnership durature",
-          "text": "Manutenzione, evoluzione e supporto per accompagnare il prodotto nel tempo."
-        }
-      ],
-      "cases": [
-        { "title": "Future Mobility", "tag": "AI robotics / Data", "tone": "blue" },
-        { "title": "Green AI Robots", "tag": "AI design / Robotics", "tone": "green" },
-        { "title": "Document Intelligence", "tag": "SunnitAI / Legal", "tone": "purple" },
-        { "title": "People Meet AI", "tag": "AI design / UX", "tone": "dark" }
-      ],
       "clients": [
         {
           "name": "Infocert",
@@ -162,26 +72,7 @@
           "url": "https://www.lottomatica.it/",
           "logo": "/images/clients/lottomatica.png"
         }
-      ],
-      "aiFaqItems": [
-        {
-          "title": "Intelligent Document Analysis",
-          "text": "Analizza contratti, report, manuali e policy estraendo contenuti rilevanti e relazioni."
-        },
-        {
-          "title": "Natural Language Querying",
-          "text": "Permette domande in linguaggio naturale sui documenti e sulle fonti informative interne."
-        },
-        {
-          "title": "Advanced Document Comparison",
-          "text": "Confronta versioni, capitolati e policy per evidenziare differenze e incongruenze."
-        },
-        {
-          "title": "Secure Access Control",
-          "text": "Rispetta permessi e ruoli per rendere la conoscenza accessibile solo a chi deve usarla."
-        }
-      ],
-      "team": ["Marco Landa", "Alessia Morrison", "Luca Rinaldi", "Angela Lago", "Sara Vale", "Marta Silvestri"]
+      ]
     }
   },
   "home": {
@@ -256,7 +147,7 @@
       "rail1": "Cloud",
       "rail2": "AI",
       "cloudTitle": "Architetture cloud progettate per scalare",
-      "cloudDesc": "Offriamo servizi di consulenza Azure, Google e AWS, tra cui migrazioni al cloud, disaster recovery, backup su cloud e Microsoft Virtual Desktop. A differenza della maggior parte delle società di consulenza Azure, Google e AWS, il nostro team va ben oltre la semplice migrazione, vantando esperienza nello sviluppo di applicazioni cloud-native e nella riprogettazione di software legacy per l'abilitazione al cloud. Ottimizziamo il vostro cloud Azure, Google e AWS per massimizzare l'efficienza dei costi, la sicurezza e l'adozione delle migliori pratiche.",
+      "cloudDesc": "Offriamo servizi di consulenza Azure, Google e AWS, tra cui migrazioni al cloud, disaster recovery, backup su cloud e Microsoft Virtual Desktop. Il nostro team va ben oltre la semplice migrazione, vantando esperienza nello sviluppo di applicazioni cloud-native e nella riprogettazione di software legacy per l'abilitazione al cloud. Ottimizziamo il vostro cloud Azure, Google e AWS per massimizzare l'efficienza dei costi, la sicurezza e l'adozione delle migliori pratiche.",
       "aiTitle": "Document intelligence e automazione guidata da AI.",
       "aiDesc": "SunnitAI è un'iniziativa innovativa di Sunnit, progettata per rivoluzionare la gestione della conoscenza aziendale. Questa soluzione basata sull'intelligenza artificiale si integra perfettamente con i sistemi di gestione della conoscenza esistenti (KMS e sistemi di gestione documentale) o ne installa uno completo qualora la vostra organizzazione non ne possieda ancora uno."
     },
@@ -348,8 +239,7 @@
     },
     "blog": {
       "eyebrow": "Recent News",
-      "title": "News e insight con card pulite.",
-      "readMore": "Read more"
+      "title": "News e insight con card pulite."
     },
     "cta": {
       "eyebrow": "Get in touch",
@@ -364,28 +254,28 @@
   },
   "about": {
     "hero": {
-      "title": "About Us",
+      "title": "Chi Siamo",
       "crumb": "About Us"
     },
     "intro": {
-      "eyebrow": "ABOUT US",
-      "title": "Migliora il traffico del tuo sito web e la tua offerta digitale.",
-      "desc": "SUNNIT è una software company italiana che supporta aziende e organizzazioni nella progettazione, sviluppo e gestione di soluzioni digitali personalizzate.",
-      "cta": "Scopri di più"
+      "eyebrow": "Software engineering, cloud e delivery internazionale",
+      "title": "Costruiamo piattaforme digitali solide, scalabili e pronte a crescere.",
+      "desc": "Sunnit Srl affianca aziende e organizzazioni nello sviluppo di soluzioni software personalizzate, siti web complessi, database performanti e infrastrutture cloud affidabili, con un approccio pragmatico orientato al risultato.",
+      "cta": "Parla con noi"
     },
-    "values": [
-      { "title": "Marketing", "text": "Creiamo sistemi digitali capaci di connettere brand e audience." },
-      { "title": "Design", "text": "Progettiamo interfacce accessibili, moderne e facili da evolvere." },
-      { "title": "Support", "text": "Affianchiamo il team cliente in manutenzione, crescita e rilascio." }
-    ],
+    "expertiseBand": {
+      "eyebrow": "Tecnologie presidiate",
+      "title": "Sunnit usa le migliori tecnologie",
+      "text": "Specializzata nelle tecnologie Microsoft, AWS e Google, con un team di talento composto da sviluppatori full-stack, amministratori di database SQL Server, designer UI/UX, architetti software, consulenti di ingegneria di rete e project manager.",
+      "logos": [
+        { "src": "/logos/microsoft.png", "alt": "Logo Microsoft", "label": "Microsoft" },
+        { "src": "/logos/aws.png", "alt": "Logo AWS", "label": "AWS" },
+        { "src": "/logos/google.png", "alt": "Logo Google", "label": "Google" }
+      ]
+    },
     "visualWide": {
-      "title": "Eccezionale Esperienza Digitale",
-      "desc": "Interfacce, piattaforme e automazioni per prodotti digitali migliori."
-    },
-    "stats": {
-      "stat1": "Aumento tasso conversione",
-      "stat2": "Utenti attivi mensili",
-      "stat3": "Follower attivi"
+      "title": "Esperienza tecnica ampia, esecuzione pulita",
+      "desc": "Dalla strategia applicativa alla delivery cloud, manteniamo una visione larga senza perdere controllo sui dettagli tecnici."
     },
     "story": {
       "eyebrow": "La nostra storia",
@@ -402,16 +292,22 @@
     "team": {
       "eyebrow": "Il nostro team",
       "title": "I Nostri Professionisti",
+      "story": {
+        "eyebrow": "Fondazione e crescita",
+        "title": "Una squadra di talento",
+        "desc": "Fondata da Dante Marotta come spin-off dell'azienda britannica Sunnit, da oltre 5 anni si occupa di sviluppo software personalizzato, creazione di siti web complessi, ottimizzazione di database SQL e migrazione dei clienti al cloud. La nostra vasta competenza tecnica e l'approccio snello alla gestione dei progetti ci rendono il partner ideale per il vostro prossimo progetto software. Assicuriamoci che tutto venga fatto bene fin da subito. Contattateci oggi stesso!",
+        "cta": "Contattateci oggi stesso"
+      },
       "members": ["Marco Landa", "Alessia Morrison", "Luca Rinaldi", "Angela Lago", "Sara Vale", "Marta Silvestri"]
     },
     "whyUs": {
       "eyebrow": "PERCHÉ SCEGLIERCI",
-      "title": "Risparmia tempo e risorse con l'approccio SUNNIT.",
-      "desc": "Un mix di competenze, governance e rapidità per passare dall'idea al rilascio."
+      "title": "Meno complessità, più controllo sul progetto.",
+      "desc": "Decisioni tecniche chiare, processi leggeri e responsabilità condivisa per arrivare in produzione senza sprechi."
     },
     "quote": {
-      "text": "L'innovazione AI sta trasformando le industrie, ridefinendo le interazioni con la tecnologia e aprendo nuove opportunità di business.",
-      "author": "Cosa dicono le persone"
+      "text": "Quando tecnologia, design e infrastruttura lavorano insieme, ogni progetto parte meglio e scala con meno attrito.",
+      "author": "Metodo SUNNIT"
     }
   },
   "contact": {
@@ -450,104 +346,166 @@
   },
   "services": {
     "hero": {
-      "title": "Services",
-      "crumb": "Services"
+      "title": "Cosa facciamo",
+      "crumb": "Servizi",
+      "text": "Costruiamo software, piattaforme e infrastrutture con un approccio tecnico, operativo e continuativo."
     },
-    "banner": {
-      "eyebrow": "COSA OFFRIAMO",
-      "title": "Aumenta le visite al sito e migliora i tuoi prodotti digitali.",
-      "desc": "Servizi basati su AI, SEO, sviluppo custom e automazioni per rendere la tua strategia più efficiente.",
-      "list": ["Servizi SEO", "Social Media Marketing", "Content Marketing", "UI/UX Design"],
-      "cta": "Scopri di più"
+    "intro": {
+      "eyebrow": "Categorie di intervento",
+      "title": "Tecnologia costruita attorno ai processi reali.",
+      "text": [
+        "Sunnit lavora su cinque aree: sviluppo software su misura, siti web, database e analisi, cloud consulting e DevOps.",
+        "Non proponiamo pacchetti rigidi: progettiamo stack, integrazioni e roadmap in funzione del contesto operativo, del team interno e degli obiettivi di business."
+      ],
+      "cta": "Parla con Sunnit"
     },
-    "marquee": "CASI RECENTI CASI RECENTI",
-    "faq": {
-      "eyebrow": "OFFERTA INNOVATIVA",
-      "titleStart": "Offriamo i più eccezionali ",
-      "titleHighlight": "servizi SEO",
-      "titleEnd": " disponibili.",
-      "desc": "SEO potenziata dall'AI e sviluppo custom per farti risparmiare tempo, migliorare il ranking e l'efficienza."
+    "lead": {
+      "title": "Un partner tecnico per sistemi che devono durare.",
+      "text": [
+        "Dallo sviluppo iniziale al supporto continuativo, lavoriamo su prodotti digitali, ambienti dati e infrastrutture.",
+        "Mettiamo attenzione su qualità del codice, manutenzione, sicurezza e scalabilità."
+      ],
+      "stats": [
+        { "value": "05", "label": "Aree principali di lavoro" },
+        { "value": "End-to-end", "label": "Dalla strategia al supporto operativo" },
+        { "value": "Cloud + software", "label": "Competenze integrate nello stesso team" }
+      ]
     },
-    "pricing": {
-      "title": "Scegli il piano più adatto a te",
-      "monthly": "Mensile",
-      "yearly": "Annuale",
-      "starterTitle": "STARTER",
-      "starterPrice": "9",
-      "starterPeriod": "/mese",
-      "starterDesc": "Per landing, contenuti e piccoli interventi UX.",
-      "starterList": ["3 Account Social Media", "Accesso gratuito piattaforma", "Supporto clienti 24/7"],
-      "starterCta": "Scopri di più",
-      "businessTitle": "BUSINESS",
-      "businessPrice": "29",
-      "businessPeriod": "/mese",
-      "businessDesc": "Per aziende che vogliono crescita, automazione e supporto.",
-      "businessList": ["3 Account Social Media", "Accesso gratuito piattaforma", "Supporto clienti 24/7"],
-      "businessCta": "Scopri di più"
-    },
-    "cards": [
+    "categories": [
       {
-        "title": "Custom Software",
-        "eyebrow": "01",
-        "text": "Applicazioni su misura per digitalizzare processi, integrare sistemi e accelerare il business.",
-        "bullets": ["Web app", "API integration", "Workflow automation"]
+        "number": "01",
+        "title": "Sviluppo di software personalizzato",
+        "summary": "Applicazioni, piattaforme e integrazioni costruite su processi e vincoli reali dell'azienda.",
+        "description": [
+          "I nostri servizi di sviluppo software personalizzato rispondono a un'esigenza fondamentale, offrendo una soluzione a una vasta gamma di problemi aziendali complessi.",
+          "Siamo un'azienda di sviluppo software personalizzato con sede a Roma, che pone l'accento sulla collaborazione con il cliente, sulla comunicazione e sulla passione per la creazione di applicazioni software personalizzate di alta qualità."
+        ],
+        "detail": [
+          "Grazie ai nostri team di ingegneri del software e di sviluppo continuo, avrete un partner affidabile per lo sviluppo software a lungo termine.",
+          "Scoprite i servizi di sviluppo software personalizzato che offriamo qui di seguito o approfondite il nostro approccio alla creazione di soluzioni software su misura."
+        ],
+        "bullets": [
+          "Applicazioni aziendali personalizzate",
+          "Supporto alla produzione e sviluppo continuo",
+          "API personalizzate e integrazioni di sistema",
+          "Sviluppo e abilitazione di software cloud-native",
+          "Sviluppo di app per dispositivi mobili",
+          "Automazione dei processi aziendali"
+        ],
+        "accent": "software"
       },
       {
-        "title": "Website Development",
-        "eyebrow": "02",
-        "text": "Siti, portali e piattaforme web performanti, accessibili e facili da evolvere.",
-        "bullets": ["Corporate site", "CMS", "Security audit"]
+        "number": "02",
+        "title": "Sviluppo di siti web",
+        "summary": "Esperienza web, contenuti e performance in un'unica piattaforma pensata per clienti e team interni.",
+        "description": [
+          "Sunnit e un'azienda leader nello sviluppo web che unisce la competenza nello sviluppo di siti web complessi a un design di qualita, ottimizzato per dispositivi mobili.",
+          "Realizziamo siti web eleganti e facili da usare per i tuoi clienti, capaci di supportare anche la tua attivita e la sua missione.",
+          "I nostri sviluppatori web vantano una vasta esperienza in tutti i servizi di progettazione e sviluppo web."
+        ],
+        "detail": [
+          "Affianchiamo brand, marketing e operation nella costruzione di siti che non siano solo belli da vedere.",
+          "Li progettiamo anche per essere chiari da gestire, sicuri e performanti nel tempo."
+        ],
+        "bullets": [
+          "Consulenza e sviluppo Sitecore",
+          "Sistemi di gestione dei contenuti web (CMS)",
+          "Hosting cloud e supporto alla produzione",
+          "Audit e risoluzione dei problemi di sicurezza del sito web",
+          "Servizi di accessibilita del sito web",
+          "Design web ottimizzato per dispositivi mobili"
+        ],
+        "accent": "web"
       },
       {
-        "title": "Database & Analytics",
-        "eyebrow": "03",
-        "text": "Database, data warehouse, ETL e dashboard per trasformare i dati in decisioni.",
-        "bullets": ["ETL", "BI reporting", "SQL optimization"]
+        "number": "03",
+        "title": "Database e analisi",
+        "summary": "Dati affidabili, architetture SQL solide e reporting operativo per decisioni piu veloci.",
+        "description": [
+          "Sunnit offre una gamma completa di servizi di consulenza SQL Server, tra cui sviluppo ETL, data warehousing, business intelligence e sviluppo di report.",
+          "Ci occupiamo anche di migrazione di database al cloud, valutazioni dell'ambiente SQL Server, controlli periodici di integrita, audit di sicurezza, backup e manutenzione del database."
+        ],
+        "detail": [
+          "Il nostro team di esperti SQL e disponibile su base progettuale.",
+          "Possiamo intervenire anche come DBA remoto reperibile con i nostri pacchetti di Servizi Gestiti SQL Server o Supporto SQL Server."
+        ],
+        "bullets": [
+          "Sviluppo di data warehousing e ETL",
+          "Servizi gestiti di SQL Server",
+          "Assistenza remota per amministratori di database e SQL Server",
+          "Business Intelligence e Reporting",
+          "Migrazione e consulenza per Azure SQL Cloud",
+          "Servizi di sviluppo di database"
+        ],
+        "accent": "data"
       },
       {
+        "number": "04",
         "title": "Cloud Consulting",
-        "eyebrow": "04",
-        "text": "Assessment, migrazioni e architetture cloud scalabili, resilienti e ottimizzate.",
-        "bullets": ["Migration", "Backup", "Disaster recovery"]
+        "summary": "Migrazione, modernizzazione e ottimizzazione operativa su Azure, Google Cloud e AWS.",
+        "description": [
+          "Offriamo servizi di consulenza Azure, Google e AWS, tra cui migrazioni al cloud, disaster recovery, backup su cloud e Microsoft Virtual Desktop.",
+          "A differenza della maggior parte delle societa di consulenza Azure, Google e AWS, il nostro team va ben oltre la semplice migrazione.",
+          "Vantiamo esperienza nello sviluppo di applicazioni cloud-native e nella riprogettazione di software legacy per l'abilitazione al cloud."
+        ],
+        "detail": [
+          "Ottimizziamo il vostro cloud Azure, Google e AWS per massimizzare l'efficienza dei costi.",
+          "Lavoriamo anche su sicurezza e adozione delle migliori pratiche."
+        ],
+        "bullets": [
+          "Migrazioni cloud",
+          "Soluzione VMware",
+          "Ripristino in caso di disastro",
+          "Backup su cloud",
+          "Desktop virtuale"
+        ],
+        "accent": "cloud"
       },
       {
-        "title": "DevOps Services",
-        "eyebrow": "05",
-        "text": "Pipeline, automazioni e ambienti replicabili per rilasci rapidi e controllati.",
-        "bullets": ["CI/CD", "IaC", "Monitoring"]
-      },
-      {
-        "title": "AI & Document Intelligence",
-        "eyebrow": "06",
-        "text": "Soluzioni AI per interrogare documenti, knowledge base e contenuti aziendali.",
-        "bullets": ["Document analysis", "Q&A", "Comparison"]
+        "number": "05",
+        "title": "Servizi DevOps",
+        "summary": "Pipeline, automazione e provisioning per rendere lo sviluppo ripetibile e sicuro.",
+        "description": [
+          "I nostri servizi DevOps colmano il divario tra due delle nostre maggiori competenze: lo sviluppo software e l'infrastruttura cloud.",
+          "Offriamo test e implementazione automatizzati di miglioramenti software personalizzati e provisioning dell'infrastruttura cloud tramite script."
+        ],
+        "detail": [
+          "Interveniamo sui flussi di rilascio e sugli ambienti per ridurre errori manuali.",
+          "Acceleriamo la delivery e manteniamo controllo sugli asset infrastrutturali."
+        ],
+        "bullets": [
+          "Integrazione continua e distribuzione continua (CI/CD)",
+          "Infrastruttura come codice (IaC)"
+        ],
+        "accent": "devops"
       }
     ],
-    "cases": [
-      { "title": "Future Mobility", "tag": "AI robotics / Data", "tone": "blue" },
-      { "title": "Green AI Robots", "tag": "AI design / Robotics", "tone": "green" },
-      { "title": "Document Intelligence", "tag": "SunnitAI / Legal", "tone": "purple" },
-      { "title": "People Meet AI", "tag": "AI design / UX", "tone": "dark" }
-    ],
-    "faqItems": [
-      { "title": "Lorem ad minim veniam exercitation ullamco?", "text": "Partiamo da discovery, priorita e roadmap. Ogni servizio puo essere attivato come progetto singolo o come percorso continuativo." },
-      { "title": "Our developers are committed to quality?", "text": "Usiamo revisioni, milestone, ambienti controllati e documentazione per garantire un delivery trasparente." },
-      { "title": "Excepteur sint occaecat cupidatat?", "text": "Sviluppiamo integrazioni API, automazioni, dashboard e sistemi custom in modo modulare." },
-      { "title": "Consectetur adipiscing incididunt?", "text": "Il team puo affiancare IT, operation, marketing, legal o direzione business." }
-    ]
-    },
+    "closing": {
+      "title": "Ogni categoria si traduce in delivery concreta.",
+      "text": [
+        "Possiamo intervenire su un singolo blocco tecnico.",
+        "Oppure guidare l'intera catena: prodotto, backend, dati, cloud e messa in produzione."
+      ],
+      "points": [
+        "Analisi iniziale dell'architettura esistente",
+        "Definizione di priorita, rischi e milestone",
+        "Sviluppo incrementale con supporto operativo continuo"
+      ],
+      "cta": "Richiedi una call"
+    }
+  },
   "sunnitai": {
     "hero": {
       "title": "SunnitAI",
       "crumb": "SunnitAI",
       "headline": "Trasforma documenti e conoscenza aziendale in risposte operative.",
       "desc": "Una soluzione AI per analizzare documenti, interrogare knowledge base, confrontare informazioni e supportare decisioni rapide.",
-      "cta1": "Richiedi una demo",
+      "cta1": "Scarica la presentazione di SunnitAI",
       "cta2": "Scopri i servizi"
     },
     "features": {
       "eyebrow": "Cosa fa",
-      "title": "Cosa fa SunnitAI",
+      "title": "SunnitAI",
       "items": [
         { "title": "Analizza documenti complessi", "text": "Estrae concetti, dati, relazioni e contenuti rilevanti." },
         { "title": "Interroga la conoscenza", "text": "Permette domande in linguaggio naturale sulle fonti aziendali." },
@@ -581,7 +539,7 @@
       "eyebrow": "DOWNLOAD RISORSE",
       "title": "Scarica brochure, one-pager e schede use case.",
       "desc": "Collega questo blocco al tuo CRM o al sistema di lead capture per misurare demo, download e richieste.",
-      "cta": "Richiedi una demo"
+      "cta": "Scarica la presentazione di SunnitAI"
     }
   },
   "blog": {
@@ -590,18 +548,7 @@
       "crumb": "Blog"
     },
     "list": {
-      "suffix": " Questa è una pratica assolutamente essenziale per qualsiasi progetto digitale che desideri un impatto misurabile.",
-      "readMore": "Leggi di più"
-    },
-    "sidebar": {
-      "authorQuote": "Sono stato fortunato perché non ho mai smesso di cercare. Ti stai arrendendo troppo presto?",
-      "searchPlaceholder": "Cerca...",
-      "recentPosts": "Post Recenti",
-      "categories": "Categorie",
-      "cat1": "Animazione",
-      "cat2": "Motion",
-      "cat3": "Web",
-      "tags": "Tag Popolari"
+      "suffix": " Questa è una pratica assolutamente essenziale per qualsiasi progetto digitale che desideri un impatto misurabile."
     }
   }
 }

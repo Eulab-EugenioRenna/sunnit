@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { gsap } from "gsap";
 import type { Dictionary } from "@/lib/dictionaries";
+import TextLines from "@/components/text-lines";
 
 export default function HeroDynamicCopy({ dict }: { dict: Dictionary }) {
   const [index, setIndex] = useState(0);
@@ -58,9 +59,10 @@ export default function HeroDynamicCopy({ dict }: { dict: Dictionary }) {
         {home.hero.titleEnd}
       </h1>
 
-      <p className="hero-subcopy" key={`copy-${slide.word}`}>
-        {slide.text || home.hero.subtitle}
-      </p>
+      <TextLines
+        text={slide.text || home.hero.subtitle}
+        className="hero-subcopy"
+      />
     </div>
   );
 }

@@ -4,18 +4,34 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
-import { Search } from "lucide-react";
+import { Search, ChevronDown } from "lucide-react";
 import type { Dictionary } from "@/lib/dictionaries";
+
+interface NavItem {
+  href: string;
+  label: string;
+  exact?: boolean;
+  hasDropdown?: boolean;
+  children?: { href: string; label: string; isExternal?: boolean }[];
+}
 
 export default function Header({ dict, lang, availableLocales }: { dict: Dictionary; lang: string; availableLocales: string[] }) {
   const pathname = usePathname();
   const router = useRouter();
   const [isLangOpen, setIsLangOpen] = useState(false);
+  const [isAiOpen, setIsAiOpen] = useState(false);
   const btnRef = useRef<HTMLButtonElement>(null);
+  const aiRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClick = () => setIsLangOpen(false);
-    const handleResize = () => setIsLangOpen(false);
+    const handleClick = () => {
+      setIsLangOpen(false);
+      setIsAiOpen(false);
+    };
+    const handleResize = () => {
+      setIsLangOpen(false);
+      setIsAiOpen(false);
+    };
 
     window.addEventListener("click", handleClick);
     window.addEventListener("resize", handleResize);
@@ -28,11 +44,19 @@ export default function Header({ dict, lang, availableLocales }: { dict: Diction
 
   useEffect(() => {
     setIsLangOpen(false);
+    setIsAiOpen(false);
   }, [pathname]);
 
-  const navItems = [
+  const navItems: NavItem[] = [
     { href: `/${lang}/services`, label: dict.common.header.services },
-    { href: `/${lang}/sunnitai`, label: dict.common.header.sunnitai },
+    { 
+      href: `/${lang}/sunnitai`, 
+      label: dict.common.header.sunnitai,
+      hasDropdown: true,
+      children: [
+        { href: "https://astrea.sunnit.ai/", label: "Astrea", isExternal: true }
+      ]
+    },
     { href: `/${lang}/about`, label: dict.common.header.about },
     { href: `/${lang}/blog`, label: dict.common.header.blog },
     { href: `/${lang}/contact`, label: dict.common.header.contact },
@@ -50,6 +74,8 @@ export default function Header({ dict, lang, availableLocales }: { dict: Diction
     setIsLangOpen(false);
   };
 
+
+
   return (
     <header className="site-header">
       <div className="nav-wrap">
@@ -59,6 +85,69 @@ export default function Header({ dict, lang, availableLocales }: { dict: Diction
 
         <nav className="nav-links" aria-label="Main navigation">
           {navItems.map((item) => {
+            if (item.hasDropdown) {
+              const active = pathname.startsWith(item.href);
+              return (
+                <div
+                  key={item.href}
+                  ref={aiRef}
+                  className="nav-item-dropdown-container"
+                  onMouseEnter={() => setIsAiOpen(true)}
+                  onMouseLeave={() => setIsAiOpen(false)}
+                >
+                  <div className="dropdown-trigger-wrapper">
+                    <Link
+                      href={item.href}
+                      className={`dropdown-trigger ${active ? "active" : ""}`}
+                    >
+                      {item.label}
+                    </Link>
+                    <button
+                      type="button"
+                      className="dropdown-caret-btn"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setIsAiOpen((open) => !open);
+                      }}
+                      aria-label="Toggle submenu"
+                    >
+                      <ChevronDown size={12} className={`dropdown-caret ${isAiOpen ? "open" : ""}`} />
+                    </button>
+                  </div>
+                  
+                  <div className={`nav-dropdown-menu ${isAiOpen ? "show" : ""}`}>
+                    {item.children?.map((child) => {
+                      if (child.isExternal) {
+                        return (
+                          <a
+                            key={child.href}
+                            href={child.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="dropdown-link"
+                          >
+                            {child.label}
+                          </a>
+                        );
+                      }
+                      const childActive = pathname === child.href;
+                      return (
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          className={`dropdown-link ${childActive ? "active" : ""}`}
+                          onClick={() => setIsAiOpen(false)}
+                        >
+                          {child.label}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            }
+
             const active = item.exact ? pathname === item.href : pathname.startsWith(item.href);
             return (
               <Link key={item.href} href={item.href} className={active ? "active" : ""}>

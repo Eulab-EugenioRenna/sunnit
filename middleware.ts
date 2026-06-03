@@ -2,11 +2,50 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { match } from '@formatjs/intl-localematcher';
 import Negotiator from 'negotiator';
+import { defaultLocale } from '@/lib/i18n';
 
-const locales = ['it', 'en'];
-const defaultLocale = 'it';
+let cachedLocales: string[] | null = null;
+let cachedLocalesAt = 0;
 
-function getLocale(request: NextRequest): string {
+async function getSupportedLocalesForMiddleware(request: NextRequest): Promise<string[]> {
+  const now = Date.now();
+
+  if (cachedLocales && now - cachedLocalesAt < 60_000) {
+    return cachedLocales;
+  }
+
+  try {
+    const response = await fetch(new URL('/api/locales', request.url), {
+      headers: {
+        cookie: request.headers.get('cookie') || '',
+      },
+      cache: 'no-store',
+    });
+
+    if (!response.ok) {
+      throw new Error(`Unable to fetch locales: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const locales = Array.isArray(data?.locales)
+      ? data.locales.filter((value: unknown): value is string => typeof value === 'string' && value.length > 0)
+      : [defaultLocale];
+
+    const normalizedLocales = locales.includes(defaultLocale) ? locales : [defaultLocale, ...locales];
+    cachedLocales = normalizedLocales;
+    cachedLocalesAt = now;
+    return normalizedLocales;
+  } catch {
+    return [defaultLocale];
+  }
+}
+
+function getPathLocale(pathname: string) {
+  const segment = pathname.split('/').filter(Boolean)[0];
+  return segment && /^[a-z]{2}$/i.test(segment) ? segment : null;
+}
+
+async function getLocale(request: NextRequest, supportedLocales: string[]): Promise<string> {
   const headers = new Headers(request.headers);
   const acceptLanguage = headers.get('accept-language');
 
@@ -21,13 +60,13 @@ function getLocale(request: NextRequest): string {
   const languages = new Negotiator({ headers: negotiatorHeaders }).languages();
 
   try {
-    return match(languages, locales, defaultLocale);
+    return match(languages, supportedLocales, defaultLocale);
   } catch (e) {
     return defaultLocale;
   }
 }
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   // Check if there is any supported locale in the pathname
   const { pathname } = request.nextUrl;
   
@@ -40,14 +79,23 @@ export function middleware(request: NextRequest) {
     return;
   }
 
-  const pathnameHasLocale = locales.some(
-    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
-  );
+  const supportedLocales = await getSupportedLocalesForMiddleware(request);
 
-  if (pathnameHasLocale) return;
+  const pathnameLocale = getPathLocale(pathname);
+
+  if (pathnameLocale) {
+    if (supportedLocales.includes(pathnameLocale)) {
+      return;
+    }
+
+    const segments = pathname.split('/').filter(Boolean);
+    segments[0] = defaultLocale;
+    request.nextUrl.pathname = `/${segments.join('/')}`;
+    return NextResponse.redirect(request.nextUrl);
+  }
 
   // Redirect if there is no locale
-  const locale = getLocale(request);
+  const locale = await getLocale(request, supportedLocales);
   request.nextUrl.pathname = `/${locale}${pathname}`;
   
   return NextResponse.redirect(request.nextUrl);

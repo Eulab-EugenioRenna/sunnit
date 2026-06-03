@@ -2,10 +2,11 @@ import "server-only";
 
 import fs from "fs";
 import path from "path";
+import { defaultLocale } from "./i18n";
 
 const BLOG_ROOT = path.join(process.cwd(), "content", "blog");
 
-export type BlogLang = "it" | "en";
+export type BlogLang = string;
 
 type FrontmatterValue = string | string[];
 
@@ -29,7 +30,7 @@ type RawFrontmatter = {
 };
 
 function isBlogLang(value: string): value is BlogLang {
-  return value === "it" || value === "en";
+  return fs.existsSync(path.join(BLOG_ROOT, value)) && fs.statSync(path.join(BLOG_ROOT, value)).isDirectory();
 }
 
 function stripQuotes(value: string) {
@@ -159,7 +160,8 @@ function getCreatedAt(stats: fs.Stats) {
 }
 
 function formatDate(date: Date, lang: BlogLang) {
-  return new Intl.DateTimeFormat(lang === "it" ? "it-IT" : "en-US", {
+  const locale = lang === "it" ? "it-IT" : lang === "en" ? "en-US" : `${lang}-${lang.toUpperCase()}`;
+  return new Intl.DateTimeFormat(locale, {
     day: "numeric",
     month: "long",
     year: "numeric",
@@ -170,10 +172,25 @@ function getBlogDir(lang: BlogLang) {
   return path.join(BLOG_ROOT, lang);
 }
 
+function resolveBlogSourceLang(lang: BlogLang) {
+  const requestedDir = getBlogDir(lang);
+
+  if (fs.existsSync(requestedDir)) {
+    return lang;
+  }
+
+  return defaultLocale;
+}
+
 function readPostFile(lang: BlogLang, slug: string) {
-  const filePath = path.join(getBlogDir(lang), `${slug}.mdx`);
+  const sourceLang = resolveBlogSourceLang(lang);
+  const filePath = path.join(getBlogDir(sourceLang), `${slug}.mdx`);
 
   if (!fs.existsSync(filePath)) {
+    if (sourceLang !== defaultLocale) {
+      return readPostFile(defaultLocale, slug);
+    }
+
     return null;
   }
 
@@ -196,7 +213,8 @@ function readPostFile(lang: BlogLang, slug: string) {
 }
 
 export function getAllBlogPosts(lang: BlogLang) {
-  const blogDir = getBlogDir(lang);
+  const sourceLang = resolveBlogSourceLang(lang);
+  const blogDir = getBlogDir(sourceLang);
 
   if (!fs.existsSync(blogDir)) {
     return [] as BlogPost[];

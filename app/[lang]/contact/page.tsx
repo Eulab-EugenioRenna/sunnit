@@ -4,6 +4,7 @@ import PageHero from "@/components/page-hero";
 import GsapReveal from "@/components/gsap-reveal";
 import { getDictionary } from "@/lib/dictionaries";
 import EuropeMap from "@/components/europe-map";
+import TextLines from "@/components/text-lines";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 export default async function ContactPage({
   params,
 }: {
-  params: Promise<{ lang: 'en' | 'it' }>;
+  params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
@@ -29,7 +30,7 @@ export default async function ContactPage({
       <section className="container contact-layout">
         <GsapReveal className="contact-card">
           <h2>{dict.contact.intro.title}</h2>
-          <p>{dict.contact.intro.desc}</p>
+          <TextLines text={dict.contact.intro.desc} />
           <div className="contact-form-wrap">
             <form className="form-grid">
               <input placeholder={dict.contact.form.name} />
@@ -58,7 +59,7 @@ export default async function ContactPage({
           </GsapReveal>
           <GsapReveal className="info-card" delay={260} direction="left">
             <h3>{dict.contact.info.office}</h3>
-            <p>{dict.contact.info.officeAddress}</p>
+            <TextLines text={dict.contact.info.officeAddress} />
             <Link href={`/${lang}/services`} className="outline-btn tiny">{dict.contact.info.cta}</Link>
           </GsapReveal>
           <EuropeMap lang={lang} />

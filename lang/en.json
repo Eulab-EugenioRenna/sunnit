@@ -1,0 +1,677 @@
+{
+  "common": {
+    "header": {
+      "services": "What we do",
+      "sunnitai": "SunnitAI",
+      "about": "About us",
+      "blog": "Blog",
+      "contact": "Contact us",
+      "cta": "Request a consultation"
+    },
+    "footer": {
+      "newsletterSub": "GET UPDATES",
+      "newsletterTitle": "Newsletter",
+      "newsletterDesc": "Receive insights, case studies and news directly in your inbox.",
+      "emailPlaceholder": "Your email",
+      "signUp": "SIGN UP",
+      "brandDesc": "Providing creative ideas for your business.",
+      "community": "Community",
+      "quickLinks": "Quick Links",
+      "contact": "Contact",
+      "rights": "All rights reserved"
+    },
+    "content": {
+      "clients": [
+        {
+          "name": "Infocert",
+          "url": "https://www.infocert.it/",
+          "logo": "/images/clients/infocert.png"
+        },
+        {
+          "name": "Generali",
+          "url": "https://www.generali.it/",
+          "logo": "/images/clients/generali.png"
+        },
+        {
+          "name": "Aruba.it",
+          "url": "https://www.aruba.it/",
+          "logo": "/images/clients/aruba.png"
+        },
+        {
+          "name": "Initweb",
+          "url": "https://www.initweb.it/",
+          "logo": "/images/clients/initweb.webp"
+        },
+        {
+          "name": "Exprivia",
+          "url": "https://www.exprivia.it/",
+          "logo": "/images/clients/exprivia.webp"
+        },
+        {
+          "name": "WeWorld",
+          "url": "https://www.weworld.it/",
+          "logo": "/images/clients/weworld.png"
+        },
+        {
+          "name": "ENI",
+          "url": "https://www.eni.com/",
+          "logo": "/images/clients/eni.png"
+        },
+        {
+          "name": "CDP",
+          "url": "https://www.cdp.it/",
+          "logo": "/images/clients/cdp.png"
+        },
+        {
+          "name": "S2E",
+          "url": "https://solutions2enterprises.com/",
+          "logo": "/images/clients/s2e.png"
+        },
+        {
+          "name": "Lottomatica",
+          "url": "https://www.lottomatica.it/",
+          "logo": "/images/clients/lottomatica.png"
+        }
+      ]
+    }
+  },
+  "home": {
+    "hero": {
+      "titleStart": "Solutions ",
+      "titleEnd": " for forward-thinking companies",
+      "subtitle": "SUNNIT designs and develops tailor-made digital solutions, integrating custom software, cloud, data and artificial intelligence.",
+      "slides": [
+        {
+          "word": "Software",
+          "kicker": "Custom software / Web application",
+          "text": "We design tailor-made digital platforms, portals and enterprise applications ready to grow with processes, teams and customers."
+        },
+        {
+          "word": "Cloud",
+          "kicker": "Cloud consulting / Infrastructure",
+          "text": "We design scalable architectures, controlled migrations, backup and business continuity with cost-oriented delivery."
+        },
+        {
+          "word": "AI",
+          "kicker": "SunnitAI / Document intelligence",
+          "text": "We turn documents, policies and knowledge bases into operational answers, intelligent comparisons and insights accessible in natural language."
+        },
+        {
+          "word": "Data",
+          "kicker": "Database / Analytics / BI",
+          "text": "We build databases, ETL, dashboards and reporting systems to make data readable, reliable and useful for decision-making."
+        },
+        {
+          "word": "DevOps",
+          "kicker": "CI/CD / Automation / Monitoring",
+          "text": "We automate builds, tests, deployments and infrastructure for faster releases, repeatable environments and continuous control."
+        }
+      ],
+      "ctaPrimary": "Explore services",
+      "ctaSecondary": "Contact us",
+      "visualMainTitle": "AI & CLOUD",
+      "visualMainDesc": "Discover how we can transform your company's technological potential.",
+      "visualCard1": "served processes",
+      "visualCard2": "document intelligence",
+      "visualCard3": "tailor-made stack"
+    },
+    "highlights": {
+      "eyebrow": "Digital products",
+      "title": "Next-gen solutions with creative and innovative ideas",
+      "desc": "Strategy, UX, code, cloud and automation in a scalable system.",
+      "cta": "Learn more",
+      "kpi1Text": "Users served by enterprise platforms and portals.",
+      "kpi1Number": "+70k",
+      "kpi2Text": "Supported digital automations and workflows.",
+      "kpi2Number": "1.3k",
+      "aiTitle": "SunnitAI, knowledge & innovation",
+      "aiDesc": "Documents, contracts, policies and knowledge bases searchable in natural language.",
+      "aiCta": "Explore AI"
+    },
+    "howWeWork": {
+      "eyebrow": "How we work",
+      "titleStart": "We deliver ",
+      "titleHighlight": "smart solutions",
+      "titleEnd": " tailored to your goals.",
+      "desc": "From discovery to release, we build clear, high-performance systems ready to evolve: from custom software to DevOps pipelines, from data to document intelligence.",
+      "list1": "Software development",
+      "list2": "Cloud consulting",
+      "list3": "Database & Analytics",
+      "list4": "AI Solutions"
+    },
+    "services": {
+      "eyebrow": "What we do",
+      "title": "Custom software development",
+      "desc": "Our custom software development services address a fundamental need, offering a solution to a wide range of complex business problems. We are a custom software development company based in Rome, with an emphasis on collaboration with the client, communication and a passion for creating high-quality custom software applications.",
+      "cta": "Discover more",
+      "rail1": "Cloud",
+      "rail2": "AI",
+      "cloudTitle": "Cloud architectures designed to scale",
+      "cloudDesc": "We offer Azure, Google and AWS consulting services, including cloud migrations, disaster recovery, cloud backup and Microsoft Virtual Desktop. Our team goes far beyond simple migration, boasting experience in developing cloud-native applications and redesigning legacy software for cloud enablement. We optimize your Azure, Google and AWS cloud to maximize cost efficiency, security and best-practice adoption.",
+      "aiTitle": "Document intelligence and AI-driven automation.",
+      "aiDesc": "SunnitAI is an innovative initiative by Sunnit, designed to revolutionize enterprise knowledge management. This artificial intelligence-based solution integrates seamlessly with existing knowledge management systems (KMS and document management systems) or installs a complete one if your organization does not yet have one."
+    },
+    "serviceShowcase": {
+      "eyebrow": "Our Services",
+      "title": "Core services ready as animated cards.",
+      "desc": "Each card has hover lift, soft shadow, reveal on scroll and a modular structure for SUNNIT content.",
+      "cards": [
+        {
+          "title": "Custom Software",
+          "eyebrow": "01",
+          "text": "Tailor-made applications to digitize processes, integrate systems and accelerate business.",
+          "bullets": [
+            "Web app",
+            "API integration",
+            "Workflow automation"
+          ]
+        },
+        {
+          "title": "Website Development",
+          "eyebrow": "02",
+          "text": "High-performance, accessible websites, portals and web platforms that are easy to evolve.",
+          "bullets": [
+            "Corporate site",
+            "CMS",
+            "Security audit"
+          ]
+        },
+        {
+          "title": "Database & Analytics",
+          "eyebrow": "03",
+          "text": "Databases, data warehouses, ETL and dashboards to turn data into decisions.",
+          "bullets": [
+            "ETL",
+            "BI reporting",
+            "SQL optimization"
+          ]
+        },
+        {
+          "title": "Cloud Consulting",
+          "eyebrow": "04",
+          "text": "Assessments, migrations and scalable, resilient and optimized cloud architectures.",
+          "bullets": [
+            "Migration",
+            "Backup",
+            "Disaster recovery"
+          ]
+        },
+        {
+          "title": "DevOps Services",
+          "eyebrow": "05",
+          "text": "Pipelines, automation and repeatable environments for fast and controlled releases.",
+          "bullets": [
+            "CI/CD",
+            "IaC",
+            "Monitoring"
+          ]
+        },
+        {
+          "title": "AI & Document Intelligence",
+          "eyebrow": "06",
+          "text": "AI solutions to query documents, knowledge bases and company content.",
+          "bullets": [
+            "Document analysis",
+            "Q&A",
+            "Comparison"
+          ]
+        }
+      ]
+    },
+    "process": {
+      "eyebrow": "How we do it",
+      "title": "Method, skills and partnerships.",
+      "cards": [
+        {
+          "title": "Extension of your team",
+          "text": "We enter the client's workflows with a shared roadmap, short sprints and clear communication."
+        },
+        {
+          "title": "Full-stack expertise",
+          "text": "Frontend, backend, cloud, database, DevOps and AI in a single delivery path."
+        },
+        {
+          "title": "Agile approach",
+          "text": "Prototypes, progressive releases and continuous improvement to reduce risks and timelines."
+        },
+        {
+          "title": "Long-term partnerships",
+          "text": "Maintenance, evolution and support to accompany the product over time."
+        }
+      ]
+    },
+    "stats": {
+      "quote": "Today's science is tomorrow's technology. ",
+      "author": "Edward Teller",
+      "growthLabel": "Average growth",
+      "growthDesc": "Since 2020, we have served companies and organizations with tailor-made digital solutions: software, cloud, data and AI."
+    },
+    "cases": {
+      "eyebrow": "Recent cases",
+      "title": "Recent cases in portfolio style.",
+      "filterAll": "All",
+      "filterAi": "AI Design",
+      "filterCloud": "Cloud",
+      "filterData": "Data",
+      "filterUx": "UX Technologies",
+      "items": [
+        {
+          "title": "Future Mobility",
+          "tag": "AI robotics / Data",
+          "tone": "blue"
+        },
+        {
+          "title": "Green AI Robots",
+          "tag": "AI design / Robotics",
+          "tone": "green"
+        },
+        {
+          "title": "Document Intelligence",
+          "tag": "SunnitAI / Legal",
+          "tone": "purple"
+        },
+        {
+          "title": "People Meet AI",
+          "tag": "AI design / UX",
+          "tone": "dark"
+        }
+      ]
+    },
+    "blog": {
+      "eyebrow": "Recent News",
+      "title": "News and insights with clean cards."
+    },
+    "cta": {
+      "eyebrow": "Get in touch",
+      "title": "We are here to help with your questions.",
+      "email": "Email: info@sunnit.it",
+      "phone": "Phone: +39 06 45251 300",
+      "placeholderName": "Name",
+      "placeholderEmail": "Email",
+      "placeholderMessage": "Message",
+      "send": "Send message"
+    }
+  },
+  "about": {
+    "hero": {
+      "title": "About Us",
+      "crumb": "About Us"
+    },
+    "intro": {
+      "eyebrow": "Software engineering, cloud and international delivery",
+      "title": "We build solid, scalable digital platforms ready to grow.",
+      "desc": "Sunnit Srl supports companies and organizations in developing custom software solutions, complex websites, high-performance databases and reliable cloud infrastructures, with a pragmatic, results-oriented approach.",
+      "cta": "Talk to us"
+    },
+    "expertiseBand": {
+      "eyebrow": "Technologies we cover",
+      "title": "Sunnit uses the best technologies",
+      "text": "Specialized in Microsoft, AWS and Google technologies, with a talented team made up of full-stack developers, SQL Server database administrators, UI/UX designers, software architects, network engineering consultants and project managers.",
+      "logos": [
+        {
+          "src": "/logos/microsoft.png",
+          "alt": "Microsoft logo",
+          "label": "Microsoft"
+        },
+        {
+          "src": "/logos/aws.png",
+          "alt": "AWS logo",
+          "label": "AWS"
+        },
+        {
+          "src": "/logos/google.png",
+          "alt": "Google logo",
+          "label": "Google"
+        }
+      ]
+    },
+    "visualWide": {
+      "title": "Broad technical experience, clean execution",
+      "desc": "From application strategy to cloud delivery, we maintain a broad vision without losing control over technical details."
+    },
+    "story": {
+      "eyebrow": "Our story",
+      "title": "The story of SUNNIT",
+      "events": [
+        {
+          "left": "Business ideation",
+          "year": "2019",
+          "right": "Project idea"
+        },
+        {
+          "left": "Infrastructure design",
+          "year": "2021",
+          "right": "Legal review"
+        },
+        {
+          "left": "Company founded",
+          "year": "2022",
+          "right": "Digital expansion"
+        },
+        {
+          "left": "Enterprise projects",
+          "year": "2024",
+          "right": "AI solutions"
+        }
+      ],
+      "descLeft": "A key moment in the growth journey.",
+      "descRight": "New skills, partnerships and services."
+    },
+    "team": {
+      "eyebrow": "Our team",
+      "title": "Our Professionals",
+      "story": {
+        "eyebrow": "Foundation and growth",
+        "title": "A talented team",
+        "desc": "Founded by Dante Marotta as a spin-off of the British company Sunnit, for over 5 years it has dealt with custom software development, creation of complex websites, SQL database optimization and customer migration to the cloud. Our broad technical expertise and lean approach to project management make us the ideal partner for your next software project. Let's make sure everything is done right from the start. Contact us today!",
+        "cta": "Contact us today"
+      },
+      "members": [
+        "Marco Landa",
+        "Alessia Morrison",
+        "Luca Rinaldi",
+        "Angela Lago",
+        "Sara Vale",
+        "Marta Silvestri"
+      ]
+    },
+    "whyUs": {
+      "eyebrow": "WHY CHOOSE US",
+      "title": "Less complexity, more control over the project.",
+      "desc": "Clear technical decisions, lightweight processes and shared responsibility to reach production without waste."
+    },
+    "quote": {
+      "text": "When technology, design and infrastructure work together, every project starts better and scales with less friction.",
+      "author": "SUNNIT Method"
+    }
+  },
+  "contact": {
+    "hero": {
+      "title": "Contact Us",
+      "crumb": "Contact",
+      "text": "Tell us about your project: together we will understand how to turn it into a scalable digital solution."
+    },
+    "intro": {
+      "title": "We are here to answer your questions.",
+      "desc": "We will reply within 1-2 business days with an initial assessment."
+    },
+    "form": {
+      "name": "Full name",
+      "email": "Business email",
+      "company": "Company",
+      "service": "Service of interest",
+      "services": [
+        "Custom Software",
+        "Website Development",
+        "Database & Analytics",
+        "Cloud Consulting",
+        "DevOps",
+        "SunnitAI"
+      ],
+      "message": "Message",
+      "submit": "Send message"
+    },
+    "info": {
+      "email": "Email",
+      "phone": "Phone",
+      "office": "Office",
+      "officeAddress": "Via Stamira 63, Rome, 00162",
+      "cta": "Explore services"
+    }
+  },
+  "services": {
+    "hero": {
+      "title": "What we do",
+      "crumb": "Services",
+      "text": "We build software, platforms and infrastructures with a technical, operational and continuous approach."
+    },
+    "intro": {
+      "eyebrow": "Areas of intervention",
+      "title": "Technology built around real processes.",
+      "text": [
+        "Sunnit works across five areas: custom software development, websites, database and analytics, cloud consulting and DevOps.",
+        "We do not offer rigid packages: we design stacks, integrations and roadmaps based on the operational context, internal team and business goals."
+      ],
+      "cta": "Talk to Sunnit"
+    },
+    "lead": {
+      "title": "A technical partner for systems that need to last.",
+      "text": [
+        "From initial development to ongoing support, we work on digital products, data environments and infrastructures.",
+        "We focus on code quality, maintenance, security and scalability."
+      ],
+      "stats": [
+        {
+          "value": "05",
+          "label": "Main areas of work"
+        },
+        {
+          "value": "End-to-end",
+          "label": "From strategy to operational support"
+        },
+        {
+          "value": "Cloud + software",
+          "label": "Integrated expertise in the same team"
+        }
+      ]
+    },
+    "categories": [
+      {
+        "number": "01",
+        "title": "Custom software development",
+        "summary": "Applications, platforms and integrations built around the company's real processes and constraints.",
+        "description": [
+          "Our custom software development services address a fundamental need, offering a solution to a wide range of complex business problems.",
+          "We are a custom software development company based in Rome, with an emphasis on collaboration with the client, communication and a passion for creating high-quality custom software applications."
+        ],
+        "detail": [
+          "Thanks to our software engineering and continuous development teams, you will have a reliable partner for long-term software development.",
+          "Discover the custom software development services we offer below or explore our approach to creating tailor-made software solutions."
+        ],
+        "bullets": [
+          "Custom business applications",
+          "Production support and continuous development",
+          "Custom APIs and system integrations",
+          "Cloud-native software development and enablement",
+          "Mobile app development",
+          "Business process automation"
+        ],
+        "accent": "software"
+      },
+      {
+        "number": "02",
+        "title": "Website development",
+        "summary": "Web experience, content and performance in a single platform designed for customers and internal teams.",
+        "description": [
+          "Sunnit is a leading web development company that combines expertise in complex website development with quality design optimized for mobile devices.",
+          "We build elegant, easy-to-use websites for your customers, able to support your business and its mission as well.",
+          "Our web developers have extensive experience across all web design and development services."
+        ],
+        "detail": [
+          "We support brands, marketing and operations in building sites that are not just beautiful to look at.",
+          "We also design them to be easy to manage, secure and performant over time."
+        ],
+        "bullets": [
+          "Sitecore consulting and development",
+          "Web content management systems (CMS)",
+          "Cloud hosting and production support",
+          "Website security audit and troubleshooting",
+          "Website accessibility services",
+          "Mobile-optimized web design"
+        ],
+        "accent": "web"
+      },
+      {
+        "number": "03",
+        "title": "Database and analytics",
+        "summary": "Reliable data, solid SQL architectures and operational reporting for faster decisions.",
+        "description": [
+          "Sunnit offers a complete range of SQL Server consulting services, including ETL development, data warehousing, business intelligence and report development.",
+          "We also handle cloud database migration, SQL Server environment assessments, periodic health checks, security audits, database backup and maintenance."
+        ],
+        "detail": [
+          "Our team of SQL experts is available on a project basis.",
+          "We can also step in as remote DBAs available through our Managed SQL Server Services or SQL Server Support packages."
+        ],
+        "bullets": [
+          "Data warehousing and ETL development",
+          "Managed SQL Server services",
+          "Remote support for database administrators and SQL Server",
+          "Business Intelligence and Reporting",
+          "Migration and consulting for Azure SQL Cloud",
+          "Database development services"
+        ],
+        "accent": "data"
+      },
+      {
+        "number": "04",
+        "title": "Cloud Consulting",
+        "summary": "Migration, modernization and operational optimization on Azure, Google Cloud and AWS.",
+        "description": [
+          "We offer Azure, Google and AWS consulting services, including cloud migrations, disaster recovery, cloud backup and Microsoft Virtual Desktop.",
+          "Unlike most Azure, Google and AWS consulting firms, our team goes far beyond simple migration.",
+          "We boast experience in developing cloud-native applications and redesigning legacy software for cloud enablement."
+        ],
+        "detail": [
+          "We optimize your Azure, Google and AWS cloud to maximize cost efficiency.",
+          "We also work on security and best-practice adoption."
+        ],
+        "bullets": [
+          "Cloud migrations",
+          "VMware solution",
+          "Disaster recovery",
+          "Cloud backup",
+          "Virtual desktop"
+        ],
+        "accent": "cloud"
+      },
+      {
+        "number": "05",
+        "title": "DevOps Services",
+        "summary": "Pipelines, automation and provisioning to make development repeatable and secure.",
+        "description": [
+          "Our DevOps services bridge the gap between two of our biggest areas of expertise: software development and cloud infrastructure.",
+          "We offer automated testing and deployment of custom software improvements and cloud infrastructure provisioning through scripts."
+        ],
+        "detail": [
+          "We work on release flows and environments to reduce manual errors.",
+          "We accelerate delivery and maintain control over infrastructure assets."
+        ],
+        "bullets": [
+          "Continuous integration and continuous delivery (CI/CD)",
+          "Infrastructure as code (IaC)"
+        ],
+        "accent": "devops"
+      }
+    ],
+    "closing": {
+      "title": "Every category translates into concrete delivery.",
+      "text": [
+        "We can work on a single technical block.",
+        "Or guide the entire chain: product, backend, data, cloud and production release."
+      ],
+      "points": [
+        "Initial analysis of the existing architecture",
+        "Definition of priorities, risks and milestones",
+        "Incremental development with ongoing operational support"
+      ],
+      "cta": "Request a call"
+    }
+  },
+  "sunnitai": {
+    "hero": {
+      "title": "SunnitAI",
+      "crumb": "SunnitAI",
+      "headline": "Turn documents and company knowledge into operational answers.",
+      "desc": "An AI solution to analyze documents, query knowledge bases, compare information and support fast decisions.",
+      "cta1": "Download the SunnitAI presentation",
+      "cta2": "Explore services"
+    },
+    "features": {
+      "eyebrow": "What it does",
+      "title": "SunnitAI",
+      "items": [
+        {
+          "title": "Analyzes complex documents",
+          "text": "Extracts relevant concepts, data, relationships and content."
+        },
+        {
+          "title": "Queries knowledge",
+          "text": "Enables natural-language questions on company sources."
+        },
+        {
+          "title": "Compares information",
+          "text": "Highlights differences, similarities and inconsistencies between documents."
+        }
+      ]
+    },
+    "faq": {
+      "eyebrow": "FEATURE LIST",
+      "title": "Document intelligence with an interactive accordion.",
+      "desc": "Each feature can include a description, practical example and business benefit.",
+      "items": [
+        {
+          "title": "Intelligent Document Analysis",
+          "text": "Analyzes contracts, reports, manuals and policies, extracting relevant content and relationships."
+        },
+        {
+          "title": "Natural Language Querying",
+          "text": "Allows natural-language questions on documents and internal information sources."
+        },
+        {
+          "title": "Advanced Document Comparison",
+          "text": "Compares versions, specifications and policies to highlight differences and inconsistencies."
+        },
+        {
+          "title": "Secure Access Control",
+          "text": "Respects permissions and roles to make knowledge accessible only to those who need to use it."
+        }
+      ]
+    },
+    "useCases": {
+      "eyebrow": "Use cases",
+      "title": "The opportunities",
+      "items": [
+        {
+          "title": "Legal",
+          "text": "Contract analysis, version comparison and regulatory search."
+        },
+        {
+          "title": "Operations",
+          "text": "Internal knowledge base and support for complex processes."
+        },
+        {
+          "title": "HR",
+          "text": "Policies, manuals and company documents that can be queried."
+        },
+        {
+          "title": "Procurement",
+          "text": "Specifications, tenders, offers and document due diligence."
+        },
+        {
+          "title": "IT",
+          "text": "Technical documentation, runbooks and assisted troubleshooting."
+        },
+        {
+          "title": "Customer care",
+          "text": "Consistent answers based on validated and updated sources."
+        }
+      ]
+    },
+    "download": {
+      "eyebrow": "RESOURCE DOWNLOADS",
+      "title": "Download brochures, one-pagers and use-case sheets.",
+      "desc": "Connect this block to your CRM or lead capture system to measure demos, downloads and requests.",
+      "cta": "Download the SunnitAI presentation"
+    }
+  },
+  "blog": {
+    "hero": {
+      "title": "Blog",
+      "crumb": "Blog"
+    },
+    "list": {
+      "suffix": " This is an absolutely essential practice for any digital project that wants measurable impact."
+    }
+  }
+}

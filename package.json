@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "translate:blog": "node scripts/translate-missing-blog-posts.mjs"
   },
   "dependencies": {
     "@amcharts/amcharts5": "^5.17.2",

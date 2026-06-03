@@ -1,3 +1,5 @@
+import TextLines from "@/components/text-lines";
+
 type PageHeroProps = {
   title: string;
   crumb?: string;
@@ -9,7 +11,7 @@ export default function PageHero({ title, crumb, text }: PageHeroProps) {
     <section className="page-hero container">
       <p>{crumb ? `Home - ${crumb}` : "Home"}</p>
       <h1>{title}</h1>
-      {text ? <span>{text}</span> : null}
+      <TextLines text={text} as="span" />
     </section>
   );
 }

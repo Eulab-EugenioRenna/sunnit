@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import TextLines from "@/components/text-lines";
 
 type FaqItem = {
   title: string;
@@ -19,7 +20,7 @@ export default function FAQ({ items }: { items: FaqItem[] }) {
             <i>{open === index ? "-" : "+"}</i>
           </button>
           <div className="faq-content">
-            <p>{item.text}</p>
+            <TextLines text={item.text} />
           </div>
         </div>
       ))}

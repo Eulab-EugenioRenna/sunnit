@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import TextLines from "@/components/text-lines";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -25,13 +26,15 @@ export default function ServiceScrollPanels({
   marquee?: string;
   panels: ServicePanel[];
 }) {
-  const sectionRef = useRef<HTMLElement | null>(null);
+  const stageRef = useRef<HTMLElement | null>(null);
+  const sectionRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const stage = stageRef.current;
     const section = sectionRef.current;
     const track = trackRef.current;
-    if (!section || !track || panels.length < 3) return;
+    if (!stage || !section || !track || panels.length < 3) return;
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion || window.innerWidth < 1024) return;
 
@@ -40,6 +43,8 @@ export default function ServiceScrollPanels({
       const contentNodes = gsap.utils.toArray<HTMLElement>(".service-scroll-panel__content");
       const collapsedWidth = "15%";
       const expandedWidth = "70%";
+      const navWrap = document.querySelector<HTMLElement>(".site-header .nav-wrap");
+      const pinOffset = (navWrap?.offsetHeight ?? 72) + 60;
 
       gsap.set(panelNodes[0], { width: expandedWidth, zIndex: 3 });
       gsap.set(panelNodes[1], { width: collapsedWidth, zIndex: 2 });
@@ -50,12 +55,13 @@ export default function ServiceScrollPanels({
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          start: "top top",
+          start: () => `top top+=${pinOffset}`,
           end: "+=185%",
           scrub: 0.8,
           pin: section,
           pinSpacing: true,
           anticipatePin: 1,
+          invalidateOnRefresh: true,
         },
       });
 
@@ -68,31 +74,33 @@ export default function ServiceScrollPanels({
         .to(panelNodes[2], { width: expandedWidth, duration: 1, zIndex: 4 }, 1)
         .to(contentNodes[1], { autoAlpha: 0, y: -18, duration: 0.4 }, 1.32)
         .to(contentNodes[2], { autoAlpha: 1, y: 0, duration: 0.5 }, 1.62);
-    }, section);
+    }, stage);
 
     return () => ctx.revert();
   }, [panels]);
 
   return (
-    <section className="container service-scroll-showcase" ref={sectionRef}>
-      {marquee ? <div className="ghost-marquee service-scroll-marquee">{marquee}</div> : null}
-      <div className="service-scroll-track" ref={trackRef}>
-        {panels.map((panel) => (
-          <article
-            key={panel.label}
-            className={`service-scroll-panel service-scroll-panel--${panel.tone}`}
-            data-label={panel.label}
-          >
-            <div className="service-scroll-panel__content">
-              <p className="card-eyebrow">{panel.label}</p>
-              <h3>{panel.title}</h3>
-              <p>{panel.desc}</p>
-              <Link href={panel.href} className="outline-btn">
-                {panel.cta}
-              </Link>
-            </div>
-          </article>
-        ))}
+    <section className="service-scroll-stage" ref={stageRef}>
+      <div className="container service-scroll-showcase" ref={sectionRef}>
+        {marquee ? <div className="ghost-marquee service-scroll-marquee">{marquee}</div> : null}
+        <div className="service-scroll-track" ref={trackRef}>
+          {panels.map((panel) => (
+            <article
+              key={panel.label}
+              className={`service-scroll-panel service-scroll-panel--${panel.tone}`}
+              data-label={panel.label}
+            >
+              <div className="service-scroll-panel__content">
+                <p className="card-eyebrow">{panel.label}</p>
+                <h3>{panel.title}</h3>
+                <TextLines text={panel.desc} />
+                <Link href={panel.href} className="outline-btn">
+                  {panel.cta}
+                </Link>
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );

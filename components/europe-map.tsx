@@ -14,15 +14,32 @@ interface Office {
   longitude: number;
 }
 
-export default function EuropeMap({ lang }: { lang: "en" | "it" }) {
+export default function EuropeMap({ lang }: { lang: string }) {
   const [activeOffice, setActiveOffice] = useState<Office | null>(null);
   const [loading, setLoading] = useState(true);
   const chartRef = useRef<HTMLDivElement>(null);
+  const copy = lang === "en"
+    ? {
+        rome: "Rome (HQ)",
+        offices: "SUNNIT European Offices",
+        loading: "Loading interactive network...",
+      }
+    : lang === "es"
+      ? {
+          rome: "Roma (HQ)",
+          offices: "Oficinas europeas de SUNNIT",
+          loading: "Cargando red interactiva...",
+        }
+      : {
+          rome: "Roma (HQ)",
+          offices: "Sedi Europee SUNNIT",
+          loading: "Caricamento rete interattiva...",
+        };
 
   const offices: Office[] = [
     {
       id: "roma",
-      name: lang === "en" ? "Rome (HQ)" : "Roma (HQ)",
+      name: copy.rome,
       city: "Roma",
       address: "Via Stamira 63, 00162 Roma",
       phone: "+39 06 45251 300",
@@ -64,6 +81,7 @@ export default function EuropeMap({ lang }: { lang: "en" | "it" }) {
 
   useEffect(() => {
     let root: any;
+    let isDestroyed = false;
 
     async function initChart() {
       try {
@@ -84,7 +102,7 @@ export default function EuropeMap({ lang }: { lang: "en" | "it" }) {
           import("@amcharts/amcharts5/themes/Animated")
         ]);
 
-        if (!chartRef.current) return;
+        if (isDestroyed || !chartRef.current) return;
 
         // Initialize Root element
         root = am5.Root.new(chartRef.current);
@@ -343,6 +361,7 @@ export default function EuropeMap({ lang }: { lang: "en" | "it" }) {
     initChart();
 
     return () => {
+      isDestroyed = true;
       // Clean up chart root instance to prevent memory leaks in React dev mode
       if (root) {
         root.dispose();
@@ -355,7 +374,7 @@ export default function EuropeMap({ lang }: { lang: "en" | "it" }) {
       {/* Interactive Map Label */}
       <div className="map-label">
         <Landmark size={14} />
-        <span>{lang === "en" ? "SUNNIT European Offices" : "Sedi Europee SUNNIT"}</span>
+        <span>{copy.offices}</span>
       </div>
 
       <div className="europe-map-container">
@@ -365,7 +384,7 @@ export default function EuropeMap({ lang }: { lang: "en" | "it" }) {
             <div className="skeleton-glow"></div>
             <div className="skeleton-grid"></div>
             <div className="skeleton-text">
-              {lang === "en" ? "Loading interactive network..." : "Caricamento rete interattiva..."}
+              {copy.loading}
             </div>
           </div>
         )}

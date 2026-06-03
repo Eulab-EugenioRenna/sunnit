@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Dictionary } from "@/lib/dictionaries";
+import TextLines from "@/components/text-lines";
 
 export default function Footer({ dict, lang }: { dict: Dictionary; lang: string }) {
   return (
@@ -8,7 +9,7 @@ export default function Footer({ dict, lang }: { dict: Dictionary; lang: string 
       <div className="newsletter">
         <p>{dict.common.footer.newsletterSub}</p>
         <h2>{dict.common.footer.newsletterTitle}</h2>
-        <span>{dict.common.footer.newsletterDesc}</span>
+        <TextLines text={dict.common.footer.newsletterDesc} as="span" />
         <form className="newsletter-form">
           <input type="email" placeholder={dict.common.footer.emailPlaceholder} aria-label={dict.common.footer.emailPlaceholder} />
           <button type="button">{dict.common.footer.signUp}</button>
@@ -20,7 +21,7 @@ export default function Footer({ dict, lang }: { dict: Dictionary; lang: string 
           <Link href={`/${lang}`} className="brand light" aria-label="SUNNIT home">
             <Image src="/logo.png" alt="SUNNIT" width={152} height={44} className="brand-logo brand-logo--footer" />
           </Link>
-          <p>{dict.common.footer.brandDesc}</p>
+          <TextLines text={dict.common.footer.brandDesc} />
         </div>
 
         <div>

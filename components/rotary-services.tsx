@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import TextLines from "@/components/text-lines";
 
 export default function RotaryServices({ cards }: { cards: any[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -47,7 +48,7 @@ export default function RotaryServices({ cards }: { cards: any[] }) {
             className={`rotary-card${i === activeIndex ? " rotary-card--active" : ""}`}
           >
             <h3>{card.title}</h3>
-            <p>{card.text}</p>
+            <TextLines text={card.text} />
             <ul>
               {card.bullets?.map((b: string) => <li key={b}>{b}</li>)}
             </ul>

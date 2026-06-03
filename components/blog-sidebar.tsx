@@ -3,7 +3,7 @@ import { Facebook, Linkedin, Mail, MessageCircle, Send, Twitter } from "lucide-r
 import type { BlogPost } from "@/lib/blog";
 
 type BlogSidebarProps = {
-  lang: "it" | "en";
+  lang: string;
   posts: BlogPost[];
   allTags: string[];
   activeTag?: string;
@@ -12,7 +12,7 @@ type BlogSidebarProps = {
   currentShareUrl?: string;
 };
 
-function getShareItems(lang: "it" | "en", title: string, url: string) {
+function getShareItems(lang: string, title: string, url: string) {
   const text = encodeURIComponent(title);
   const encodedUrl = encodeURIComponent(url);
 
@@ -59,6 +59,36 @@ export default function BlogSidebar({
   currentPost,
   currentShareUrl,
 }: BlogSidebarProps) {
+  const copy = lang === "en"
+    ? {
+        author: "Practical articles on software delivery, cloud architecture, AI, and product quality.",
+        searchPlaceholder: "Search articles",
+        share: "Share article",
+        recent: "Recent posts",
+        browse: "Browse by tag",
+        allTags: "All Tags",
+        popular: "Popular tags",
+      }
+    : lang === "es"
+      ? {
+          author: "Articulos practicos sobre entrega de software, arquitectura cloud, IA y calidad de producto.",
+          searchPlaceholder: "Buscar articulos",
+          share: "Compartir articulo",
+          recent: "Articulos recientes",
+          browse: "Explorar por tag",
+          allTags: "Todos los tags",
+          popular: "Tags populares",
+        }
+      : {
+          author: "Articoli pratici su delivery software, architetture cloud, AI e qualita di prodotto.",
+          searchPlaceholder: "Cerca articoli",
+          share: "Condividi articolo",
+          recent: "Articoli recenti",
+          browse: "Esplora per tag",
+          allTags: "Tutti i tag",
+          popular: "Tag popolari",
+        };
+
   const getFilterUrl = (newTag?: string, newSearch?: string) => {
     const params = new URLSearchParams();
 
@@ -86,9 +116,7 @@ export default function BlogSidebar({
       <div className="author-card">
         <div className="author-avatar" />
         <p>
-          {lang === "en"
-            ? "Practical articles on software delivery, cloud architecture, AI, and product quality."
-            : "Articoli pratici su delivery software, architetture cloud, AI e qualita di prodotto."}
+          {copy.author}
         </p>
         <div className="blog-mini-meta">
           <span>{posts.length} posts</span>
@@ -102,13 +130,13 @@ export default function BlogSidebar({
           name="search"
           defaultValue={search}
           className="search-input"
-          placeholder={lang === "en" ? "Search articles" : "Cerca articoli"}
+          placeholder={copy.searchPlaceholder}
         />
       </form>
 
       {currentPost && shareItems.length ? (
         <div className="sidebar-card">
-          <h3>{lang === "en" ? "Share article" : "Condividi articolo"}</h3>
+          <h3>{copy.share}</h3>
           <div className="share-grid">
             {shareItems.map((item) => (
               <a
@@ -127,7 +155,7 @@ export default function BlogSidebar({
       ) : null}
 
       <div className="sidebar-card">
-        <h3>{lang === "en" ? "Recent posts" : "Articoli recenti"}</h3>
+        <h3>{copy.recent}</h3>
         <div className="sidebar-post-list">
           {recentPosts.map((post) => (
             <Link key={post.slug} href={`/${lang}/blog/${post.slug}`} className="sidebar-post-link">
@@ -146,10 +174,10 @@ export default function BlogSidebar({
       </div>
 
       <div className="sidebar-card">
-        <h3>{lang === "en" ? "Browse by tag" : "Esplora per tag"}</h3>
+        <h3>{copy.browse}</h3>
         <div className="category-list">
           <Link href={getFilterUrl("")} className={`category-item ${activeTag === "" ? "active" : ""}`}>
-            {lang === "en" ? "All Tags" : "Tutti i tag"}
+            {copy.allTags}
           </Link>
           {allTags.map((item) => (
             <Link
@@ -164,7 +192,7 @@ export default function BlogSidebar({
       </div>
 
       <div className="sidebar-card">
-        <h3>{lang === "en" ? "Popular tags" : "Tag popolari"}</h3>
+        <h3>{copy.popular}</h3>
         <div className="tag-cloud">
           {allTags.map((item) => (
             <Link key={item} href={getFilterUrl(item)}>

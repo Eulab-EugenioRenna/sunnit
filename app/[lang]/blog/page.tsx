@@ -5,6 +5,7 @@ import PageHero from "@/components/page-hero";
 import GsapReveal from "@/components/gsap-reveal";
 import { getAllBlogPosts, type BlogLang } from "@/lib/blog";
 import { getDictionary } from "@/lib/dictionaries";
+import TextLines from "@/components/text-lines";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -15,7 +16,7 @@ export default async function BlogPage({
   params,
   searchParams,
 }: {
-  params: Promise<{ lang: 'en' | 'it' }>;
+  params: Promise<{ lang: string }>;
   searchParams: Promise<{ search?: string; page?: string; tag?: string }>;
 }) {
   const { lang } = await params;
@@ -64,6 +65,32 @@ export default async function BlogPage({
   const allTags = Array.from(new Set(posts.flatMap((post) => post.tags))).sort((left, right) =>
     left.localeCompare(right)
   );
+  const copy = lang === "en"
+    ? {
+        open: "Open article",
+        emptyTitle: "No posts found",
+        emptyText: "Try adjusting your search query or filters.",
+        reset: "Reset all filters",
+        prev: "Prev",
+        next: "Next",
+      }
+    : lang === "es"
+      ? {
+          open: "Abrir articulo",
+          emptyTitle: "No se encontraron articulos",
+          emptyText: "Prueba a modificar la busqueda o los filtros.",
+          reset: "Restablecer filtros",
+          prev: "Ant",
+          next: "Sig",
+        }
+      : {
+          open: "Apri articolo",
+          emptyTitle: "Nessun articolo trovato",
+          emptyText: "Prova a modificare i filtri di ricerca.",
+          reset: "Azzera tutti i filtri",
+          prev: "Prec",
+          next: "Succ",
+        };
 
   return (
     <>
@@ -87,19 +114,19 @@ export default async function BlogPage({
                     {post.tags[0] ? ` / ${post.tags[0]}` : ""}
                   </small>
                   <h2>{post.title}</h2>
-                  <p>{post.excerpt} {dict.blog.list.suffix}</p>
+                  <TextLines text={`${post.excerpt} ${dict.blog.list.suffix}`} />
                   <span className="article-preview-action">
-                    {lang === "en" ? "Open article" : "Apri articolo"}
+                    {copy.open}
                   </span>
                 </Link>
               </GsapReveal>
             ))
           ) : (
             <div className="blog-empty-state">
-              <h3>{lang === "en" ? "No posts found" : "Nessun articolo trovato"}</h3>
-              <p>{lang === "en" ? "Try adjusting your search query or filters." : "Prova a modificare i filtri di ricerca."}</p>
+              <h3>{copy.emptyTitle}</h3>
+              <TextLines text={copy.emptyText} />
               <Link href={`/${lang}/blog`} className="outline-btn tiny" style={{ marginTop: "18px" }}>
-                {lang === "en" ? "Reset all filters" : "Azzera tutti i filtri"}
+                {copy.reset}
               </Link>
             </div>
           )}
@@ -109,10 +136,10 @@ export default async function BlogPage({
             <div className="pagination">
               {currentPage > 1 ? (
                 <Link href={getFilterUrl(undefined, currentPage - 1)} className="pagination-btn">
-                  &larr; {lang === "en" ? "Prev" : "Prec"}
+                  &larr; {copy.prev}
                 </Link>
               ) : (
-                <span className="pagination-btn disabled">&larr; {lang === "en" ? "Prev" : "Prec"}</span>
+                <span className="pagination-btn disabled">&larr; {copy.prev}</span>
               )}
 
               <div className="pagination-pages">
@@ -133,10 +160,10 @@ export default async function BlogPage({
 
               {currentPage < totalPages ? (
                 <Link href={getFilterUrl(undefined, currentPage + 1)} className="pagination-btn">
-                  {lang === "en" ? "Next" : "Succ"} &rarr;
+                  {copy.next} &rarr;
                 </Link>
               ) : (
-                <span className="pagination-btn disabled">{lang === "en" ? "Next" : "Succ"} &rarr;</span>
+                <span className="pagination-btn disabled">{copy.next} &rarr;</span>
               )}
             </div>
           )}

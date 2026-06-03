@@ -5,11 +5,12 @@ import { evaluate } from "@mdx-js/mdx";
 import * as runtime from "react/jsx-runtime";
 import BlogSidebar from "@/components/blog-sidebar";
 import PageHero from "@/components/page-hero";
+import TextLines from "@/components/text-lines";
 import { getAllBlogPosts, getAllBlogSlugs, getBlogPost, type BlogLang } from "@/lib/blog";
 import { useMDXComponents } from "@/mdx-components";
 
 type BlogPostPageProps = {
-  params: Promise<{ lang: "it" | "en"; slug: string }>;
+  params: Promise<{ lang: string; slug: string }>;
 };
 
 export function generateStaticParams() {
@@ -83,7 +84,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 {post.tags.length ? ` / ${post.tags.join(" / ")}` : ""}
               </small>
               <h1>{post.title}</h1>
-              <p>{post.excerpt}</p>
+              <TextLines text={post.excerpt} />
             </header>
 
             {post.image ? (

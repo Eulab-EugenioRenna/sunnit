@@ -3,6 +3,8 @@ import Link from "next/link";
 import PageHero from "@/components/page-hero";
 import GsapReveal from "@/components/gsap-reveal";
 import SectionTitle from "@/components/section-title";
+import AboutExpertiseBand from "@/components/about-expertise-band";
+import TextLines from "@/components/text-lines";
 import { getDictionary } from "@/lib/dictionaries";
 
 export const metadata: Metadata = {
@@ -13,7 +15,7 @@ export const metadata: Metadata = {
 export default async function AboutPage({
   params,
 }: {
-  params: Promise<{ lang: 'en' | 'it' }>;
+  params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
@@ -26,43 +28,34 @@ export default async function AboutPage({
         <GsapReveal className="intro-copy">
           <p>{dict.about.intro.eyebrow}</p>
           <h2>{dict.about.intro.title}</h2>
-          <p>{dict.about.intro.desc}</p>
+          <TextLines text={dict.about.intro.desc} />
           <Link href={`/${lang}/contact`} className="outline-btn">{dict.about.intro.cta}</Link>
         </GsapReveal>
         <GsapReveal className="visual-card" delay={120} direction="left" scrub={true} />
       </section>
 
-      <section className="container value-cards">
-        {dict.about.values.map((item: any, index: number) => (
-          <GsapReveal className="value-card" key={item.title} delay={index * 100}>
-            <div className="icon-star"><span /></div>
-            <h3>{item.title}</h3>
-            <p>{item.text}</p>
-          </GsapReveal>
-        ))}
-      </section>
+      <AboutExpertiseBand
+        eyebrow={dict.about.expertiseBand.eyebrow}
+        title={dict.about.expertiseBand.title}
+        description={dict.about.expertiseBand.text}
+        logos={dict.about.expertiseBand.logos}
+      />
 
       <GsapReveal className="container visual-wide" scrub={true} distance={20}>
         <div>
           <h2>{dict.about.visualWide.title}</h2>
-          <p>{dict.about.visualWide.desc}</p>
+          <TextLines text={dict.about.visualWide.desc} />
         </div>
       </GsapReveal>
-
-      <section className="container stats-strip">
-        <div><strong>+15%</strong><span>{dict.about.stats.stat1}</span></div>
-        <div><strong>+16K</strong><span>{dict.about.stats.stat2}</span></div>
-        <div><strong>+10K</strong><span>{dict.about.stats.stat3}</span></div>
-      </section>
 
       <section className="container">
         <SectionTitle eyebrow={dict.about.story.eyebrow} title={dict.about.story.title} align="center" />
         <div className="timeline-card">
           {dict.about.story.events.map((event: any) => (
             <div className="timeline-row" key={event.year}>
-              <div className="timeline-box"><strong>{event.left}</strong><p>{dict.about.story.descLeft}</p></div>
+              <div className="timeline-box"><strong>{event.left}</strong><TextLines text={dict.about.story.descLeft} /></div>
               <b>{event.year}</b>
-              <div className="timeline-box"><strong>{event.right}</strong><p>{dict.about.story.descRight}</p></div>
+              <div className="timeline-box"><strong>{event.right}</strong><TextLines text={dict.about.story.descRight} /></div>
             </div>
           ))}
         </div>
@@ -70,12 +63,20 @@ export default async function AboutPage({
 
       <section className="container">
         <SectionTitle eyebrow={dict.about.team.eyebrow} title={dict.about.team.title} />
-        <div className="team-grid">
-          {dict.about.team.members.map((person: string, index: number) => (
-            <GsapReveal className="team-card" key={person} delay={index * 70}>
-              <span>{person}</span>
-            </GsapReveal>
-          ))}
+        <div className="split-panel team-story-panel">
+          <GsapReveal className="intro-copy" distance={24}>
+            <p>{dict.about.team.story.eyebrow}</p>
+            <h2>{dict.about.team.story.title}</h2>
+            <TextLines text={dict.about.team.story.desc} />
+            <Link href={`/${lang}/contact`} className="outline-btn">{dict.about.team.story.cta}</Link>
+          </GsapReveal>
+          <div className="team-grid team-grid--compact">
+            {dict.about.team.members.map((person: string, index: number) => (
+              <GsapReveal className="team-card" key={person} delay={index * 70} direction="left">
+                <span>{person}</span>
+              </GsapReveal>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -84,12 +85,12 @@ export default async function AboutPage({
         <div className="intro-copy">
           <p>{dict.about.whyUs.eyebrow}</p>
           <h2>{dict.about.whyUs.title}</h2>
-          <p>{dict.about.whyUs.desc}</p>
+          <TextLines text={dict.about.whyUs.desc} />
         </div>
       </section>
 
       <GsapReveal className="container quote-card" distance={40}>
-        <p>{dict.about.quote.text}</p>
+        <TextLines text={dict.about.quote.text} />
         <strong>{dict.about.quote.author}</strong>
       </GsapReveal>
     </>
