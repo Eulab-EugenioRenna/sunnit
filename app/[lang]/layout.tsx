@@ -7,13 +7,21 @@ import { getAllBlogPosts, type BlogLang } from "@/lib/blog";
 import { getDictionary, getAvailableLocales } from "@/lib/dictionaries";
 import GsapProvider from "@/components/gsap-provider";
 import DebugDomErrors from "@/components/debug-dom-errors";
+
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://sunnit.it"),
   title: {
     default: "SUNNIT",
     template: "%s | SUNNIT"
   },
-  description: "Template Next.js per sito SUNNIT con animazioni, card e hero dinamica."
+  description: "Sito Web di Sunnit SRL, specialista in soluzioni informatiche, cybersecurity e trasformazione digitale.",
+  authors: [
+    {
+      name: "Sunnit SRL",
+      url: "https://sunnit.it"
+    }
+  ],
+  keywords: ["SUNNIT", "Sunnit SRL", "Sunnit", " Cybersecurity", "Soluzioni Informatiche", "Trasformazione Digitale", "Consulenza", "AI", "Intelligenza Artificiale", "Cloud", "Data Analytics"]
 };
 
 export default async function RootLayout({

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
-import { Search, ChevronDown } from "lucide-react";
+import { Search, ChevronDown, Menu, X } from "lucide-react";
 import type { Dictionary } from "@/lib/dictionaries";
 
 interface NavItem {
@@ -20,6 +20,7 @@ export default function Header({ dict, lang, availableLocales }: { dict: Diction
   const router = useRouter();
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isAiOpen, setIsAiOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const btnRef = useRef<HTMLButtonElement>(null);
   const aiRef = useRef<HTMLDivElement>(null);
 
@@ -31,6 +32,7 @@ export default function Header({ dict, lang, availableLocales }: { dict: Diction
     const handleResize = () => {
       setIsLangOpen(false);
       setIsAiOpen(false);
+      setIsMenuOpen(false);
     };
 
     window.addEventListener("click", handleClick);
@@ -45,6 +47,7 @@ export default function Header({ dict, lang, availableLocales }: { dict: Diction
   useEffect(() => {
     setIsLangOpen(false);
     setIsAiOpen(false);
+    setIsMenuOpen(false);
   }, [pathname]);
 
   const navItems: NavItem[] = [
@@ -75,16 +78,39 @@ export default function Header({ dict, lang, availableLocales }: { dict: Diction
     setIsLangOpen(false);
   };
 
+  const openSpotlight = () => {
+    window.dispatchEvent(new Event("open-spotlight"));
+    setIsMenuOpen(false);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMenuOpen(false);
+    setIsAiOpen(false);
+  };
+
 
 
   return (
     <header className="site-header">
-      <div className="nav-wrap">
+      <div className={`nav-wrap ${isMenuOpen ? "is-mobile-open" : ""}`}>
         <Link href={`/${lang}`} className="brand" aria-label="SUNNIT home">
           <Image src="/logo.png" alt="SUNNIT" width={152} height={44} priority className="brand-logo" />
         </Link>
 
-        <nav className="nav-links" aria-label="Main navigation">
+        <button
+          type="button"
+          className="nav-toggle"
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isMenuOpen}
+          onClick={(event) => {
+            event.stopPropagation();
+            setIsMenuOpen((open) => !open);
+          }}
+        >
+          {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+
+        <nav className={`nav-links ${isMenuOpen ? "is-open" : ""}`} aria-label="Main navigation">
           {navItems.map((item) => {
             if (item.hasDropdown) {
               const active = pathname.startsWith(item.href);
@@ -100,6 +126,7 @@ export default function Header({ dict, lang, availableLocales }: { dict: Diction
                     <Link
                       href={item.href}
                       className={`dropdown-trigger ${active ? "active" : ""}`}
+                      onClick={closeMobileMenu}
                     >
                       {item.label}
                     </Link>
@@ -138,7 +165,7 @@ export default function Header({ dict, lang, availableLocales }: { dict: Diction
                           key={child.href}
                           href={child.href}
                           className={`dropdown-link ${childActive ? "active" : ""}`}
-                          onClick={() => setIsAiOpen(false)}
+                          onClick={closeMobileMenu}
                         >
                           {child.label}
                         </Link>
@@ -151,11 +178,38 @@ export default function Header({ dict, lang, availableLocales }: { dict: Diction
 
             const active = item.exact ? pathname === item.href : pathname.startsWith(item.href);
             return (
-              <Link key={item.href} href={item.href} className={active ? "active" : ""}>
+              <Link key={item.href} href={item.href} className={active ? "active" : ""} onClick={closeMobileMenu}>
                 {item.label}
               </Link>
             );
           })}
+
+          <div className="nav-mobile-actions">
+            <button className="search-trigger nav-mobile-search" type="button" aria-label="Open search" onClick={openSpotlight}>
+              <Search size={18} />
+              <span>Search</span>
+            </button>
+
+            <div className="nav-mobile-languages" aria-label="Available languages">
+              {availableLocales.map((locale) => (
+                <button
+                  key={locale}
+                  type="button"
+                  className={`nav-mobile-lang ${locale === lang ? "active" : ""}`}
+                  onClick={() => {
+                    handleLanguageChange(locale);
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  {locale.toUpperCase()}
+                </button>
+              ))}
+            </div>
+
+            <Link className="outline-btn tiny nav-mobile-cta" href={`/${lang}/contact`} onClick={closeMobileMenu}>
+              {dict.common.header.cta}
+            </Link>
+          </div>
         </nav>
 
         <div className="nav-actions">
@@ -163,7 +217,7 @@ export default function Header({ dict, lang, availableLocales }: { dict: Diction
             className="search-trigger" 
             type="button" 
             aria-label="Open search"
-            onClick={() => window.dispatchEvent(new Event("open-spotlight"))}
+            onClick={openSpotlight}
             style={{
               background: "transparent",
               border: "none",

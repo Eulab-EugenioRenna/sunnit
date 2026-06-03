@@ -827,6 +827,73 @@ main {
   background: linear-gradient(180deg, #f6fbff, #e2e9ef);
 }
 
+.service-mobile-shell {
+  display: none;
+}
+
+.service-mobile-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.service-mobile-tab {
+  min-height: 38px;
+  padding: 0 16px;
+  border: 1px solid rgba(8, 47, 63, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+}
+
+.service-mobile-tab.is-active {
+  background: var(--dark);
+  border-color: var(--dark);
+  color: var(--white);
+}
+
+.service-mobile-card {
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  animation: serviceMobileCardIn 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.service-mobile-card__inner {
+  padding: 26px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.service-mobile-card__inner h3 {
+  margin: 0;
+  font-size: clamp(2rem, 8vw, 2.75rem);
+  line-height: 0.96;
+  letter-spacing: -0.06em;
+}
+
+.service-mobile-card__inner p:not(.card-eyebrow) {
+  margin: 0;
+  min-height: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.75;
+  font-weight: 600;
+}
+
+.service-mobile-card__inner .outline-btn {
+  width: 100%;
+  margin-top: 6px;
+}
+
 @media (max-width: 1023px) {
   .service-scroll-showcase {
     min-height: auto;
@@ -4557,6 +4624,283 @@ body {
 .rotary-card--active p,
 .rotary-card--active li { color: rgba(255,255,255,0.7); }
 .rotary-card--active li::before { background: rgba(255,255,255,0.6); }
+
+img,
+video,
+svg {
+  max-width: 100%;
+}
+
+.nav-toggle,
+.nav-mobile-actions {
+  display: none;
+}
+
+.service-scroll-stage,
+.service-scroll-showcase,
+.service-scroll-track,
+.service-scroll-panel,
+.service-scroll-panel__content,
+.rotary-section,
+.rotary-track,
+.rotary-card,
+.split-panel,
+.section-title,
+.cta-band,
+.cta-form,
+.contact-layout,
+.contact-card,
+.contact-form-wrap,
+.form-grid,
+.form-grid > *,
+.newsletter-form,
+.newsletter-form > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.service-scroll-marquee,
+.ghost-marquee {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+@media (max-width: 1024px) {
+  .nav-wrap {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 14px;
+    padding: 14px 16px;
+    overflow: hidden;
+  }
+
+  .brand {
+    min-width: 0;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(8, 47, 63, 0.1);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .nav-links {
+    grid-column: 1 / -1;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+    padding-top: 8px;
+  }
+
+  .nav-links.is-open,
+  .nav-wrap.is-mobile-open .nav-links {
+    display: flex;
+  }
+
+  .nav-links > a,
+  .nav-item-dropdown-container,
+  .dropdown-trigger-wrapper,
+  .dropdown-trigger,
+  .nav-dropdown-menu,
+  .nav-mobile-actions,
+  .nav-mobile-cta {
+    width: 100%;
+  }
+
+  .nav-links > a,
+  .dropdown-trigger {
+    justify-content: space-between;
+    padding: 10px 2px;
+  }
+
+  .nav-item-dropdown-container {
+    align-items: stretch;
+  }
+
+  .dropdown-trigger-wrapper {
+    justify-content: space-between;
+  }
+
+  .nav-dropdown-menu {
+    max-width: none;
+    margin-top: 4px;
+  }
+
+  .nav-mobile-actions {
+    display: grid;
+    gap: 10px;
+    padding-top: 6px;
+  }
+
+  .nav-mobile-search {
+    width: 100%;
+    min-height: 46px;
+    border: 1px solid rgba(8, 47, 63, 0.1);
+    border-radius: 999px;
+    background: rgba(8, 47, 63, 0.04);
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+
+  .nav-mobile-languages {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .nav-mobile-lang {
+    min-height: 38px;
+    padding: 0 14px;
+    border: 1px solid rgba(8, 47, 63, 0.1);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--ink);
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  .nav-mobile-lang.active {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .hero-actions,
+  .section-title,
+  .section-title.center {
+    text-align: left;
+  }
+
+  .section-title {
+    margin: 56px 0 22px;
+  }
+
+  .service-scroll-panel {
+    min-height: 0;
+  }
+
+  .service-scroll-panel__content .outline-btn,
+  .cta-form .dark-btn,
+  .contact-form-wrap .dark-btn {
+    width: 100%;
+  }
+
+  .cta-band,
+  .contact-layout,
+  .split-panel {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 720px) {
+  .service-scroll-track {
+    display: none;
+  }
+
+  .service-mobile-shell {
+    display: block;
+  }
+
+  .nav-wrap {
+    padding: 12px 14px;
+  }
+
+  .brand {
+    justify-content: flex-start;
+  }
+
+  .split-panel,
+  .cta-band,
+  .contact-layout,
+  .contact-card,
+  .contact-form-wrap,
+  .cta-form {
+    grid-template-columns: 1fr;
+  }
+
+  .split-panel {
+    min-height: 0;
+  }
+
+  .check-list {
+    columns: 1;
+  }
+
+  .service-showcase,
+  .process-grid,
+  .contact-layout,
+  .cta-band {
+    grid-template-columns: 1fr;
+  }
+
+  .ghost-marquee {
+    margin: 0 0 10px;
+    font-size: clamp(42px, 14vw, 84px);
+    line-height: 0.9;
+    white-space: normal;
+    animation: none;
+  }
+
+  .rotary-track {
+    display: grid;
+    grid-template-columns: 1fr;
+    transform: none !important;
+    gap: 14px;
+    padding: 12px 0 0;
+  }
+
+  .rotary-card {
+    flex: auto;
+    width: 100%;
+    transform: none;
+  }
+
+  .rotary-card--active {
+    transform: none;
+  }
+
+  .contact-form-wrap,
+  .cta-form {
+    padding: 22px;
+    clip-path: none;
+  }
+
+  .form-grid {
+    gap: 14px;
+  }
+
+  .form-grid input,
+  .form-grid textarea,
+  .form-grid select,
+  .newsletter-form input,
+  .newsletter-form button {
+    min-height: 48px;
+  }
+}
+
+@keyframes serviceMobileCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
 
 .services-lead {
   display: grid;

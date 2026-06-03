@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -29,6 +29,18 @@ export default function ServiceScrollPanels({
   const stageRef = useRef<HTMLElement | null>(null);
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [activeMobilePanel, setActiveMobilePanel] = useState(0);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 720px)");
+    const syncViewport = () => setIsMobile(mediaQuery.matches);
+
+    syncViewport();
+    mediaQuery.addEventListener("change", syncViewport);
+
+    return () => mediaQuery.removeEventListener("change", syncViewport);
+  }, []);
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -36,7 +48,7 @@ export default function ServiceScrollPanels({
     const track = trackRef.current;
     if (!stage || !section || !track || panels.length < 3) return;
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion || window.innerWidth < 1024) return;
+    if (prefersReducedMotion || isMobile || window.innerWidth < 1024) return;
 
     const ctx = gsap.context(() => {
       const panelNodes = gsap.utils.toArray<HTMLElement>(".service-scroll-panel");
@@ -77,30 +89,72 @@ export default function ServiceScrollPanels({
     }, stage);
 
     return () => ctx.revert();
-  }, [panels]);
+  }, [isMobile, panels]);
+
+  useEffect(() => {
+    if (activeMobilePanel > panels.length - 1) {
+      setActiveMobilePanel(0);
+    }
+  }, [activeMobilePanel, panels.length]);
+
+  const mobilePanel = panels[activeMobilePanel] || panels[0];
 
   return (
     <section className="service-scroll-stage" ref={stageRef}>
       <div className="container service-scroll-showcase" ref={sectionRef}>
         {marquee ? <div className="ghost-marquee service-scroll-marquee">{marquee}</div> : null}
-        <div className="service-scroll-track" ref={trackRef}>
-          {panels.map((panel) => (
-            <article
-              key={panel.label}
-              className={`service-scroll-panel service-scroll-panel--${panel.tone}`}
-              data-label={panel.label}
-            >
-              <div className="service-scroll-panel__content">
-                <p className="card-eyebrow">{panel.label}</p>
-                <h3>{panel.title}</h3>
-                <TextLines text={panel.desc} />
-                <Link href={panel.href} className="outline-btn">
-                  {panel.cta}
-                </Link>
-              </div>
-            </article>
-          ))}
-        </div>
+
+        {isMobile ? (
+          <div className="service-mobile-shell">
+            <div className="service-mobile-tabs" aria-label="Service categories">
+              {panels.map((panel, index) => (
+                <button
+                  key={panel.label}
+                  type="button"
+                  className={`service-mobile-tab ${index === activeMobilePanel ? "is-active" : ""}`}
+                  onClick={() => setActiveMobilePanel(index)}
+                >
+                  {panel.label}
+                </button>
+              ))}
+            </div>
+
+            {mobilePanel ? (
+              <article
+                key={mobilePanel.label}
+                className={`service-mobile-card service-scroll-panel--${mobilePanel.tone}`}
+              >
+                <div className="service-mobile-card__inner">
+                  <p className="card-eyebrow">{mobilePanel.label}</p>
+                  <h3>{mobilePanel.title}</h3>
+                  <TextLines text={mobilePanel.desc} />
+                  <Link href={mobilePanel.href} className="outline-btn">
+                    {mobilePanel.cta}
+                  </Link>
+                </div>
+              </article>
+            ) : null}
+          </div>
+        ) : (
+          <div className="service-scroll-track" ref={trackRef}>
+            {panels.map((panel) => (
+              <article
+                key={panel.label}
+                className={`service-scroll-panel service-scroll-panel--${panel.tone}`}
+                data-label={panel.label}
+              >
+                <div className="service-scroll-panel__content">
+                  <p className="card-eyebrow">{panel.label}</p>
+                  <h3>{panel.title}</h3>
+                  <TextLines text={panel.desc} />
+                  <Link href={panel.href} className="outline-btn">
+                    {panel.cta}
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

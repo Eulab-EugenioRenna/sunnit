@@ -13,6 +13,12 @@ export default function RotaryServices({ cards }: { cards: any[] }) {
     const section = sectionRef.current;
     if (!track || !section || cards.length === 0) return;
 
+    if (window.innerWidth <= 720) {
+      track.style.transform = "";
+      setActiveIndex(0);
+      return;
+    }
+
     const first = track.querySelector<HTMLElement>(".rotary-card");
     if (!first) return;
     const cardW = first.offsetWidth + 20;

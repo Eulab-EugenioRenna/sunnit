@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { match } from '@formatjs/intl-localematcher';
 import Negotiator from 'negotiator';
-import { defaultLocale } from '@/lib/i18n';
+import { defaultLocale, getLocaleFromHostname } from '@/lib/i18n';
 
 let cachedLocales: string[] | null = null;
 let cachedLocalesAt = 0;
@@ -66,6 +66,10 @@ async function getLocale(request: NextRequest, supportedLocales: string[]): Prom
   }
 }
 
+function getRequestHostname(request: NextRequest): string {
+  return request.headers.get('x-forwarded-host') || request.headers.get('host') || '';
+}
+
 export async function middleware(request: NextRequest) {
   // Check if there is any supported locale in the pathname
   const { pathname } = request.nextUrl;
@@ -80,6 +84,7 @@ export async function middleware(request: NextRequest) {
   }
 
   const supportedLocales = await getSupportedLocalesForMiddleware(request);
+  const domainLocale = getLocaleFromHostname(getRequestHostname(request), supportedLocales);
 
   const pathnameLocale = getPathLocale(pathname);
 
@@ -89,13 +94,13 @@ export async function middleware(request: NextRequest) {
     }
 
     const segments = pathname.split('/').filter(Boolean);
-    segments[0] = defaultLocale;
+    segments[0] = domainLocale || defaultLocale;
     request.nextUrl.pathname = `/${segments.join('/')}`;
     return NextResponse.redirect(request.nextUrl);
   }
 
   // Redirect if there is no locale
-  const locale = await getLocale(request, supportedLocales);
+  const locale = domainLocale || await getLocale(request, supportedLocales);
   request.nextUrl.pathname = `/${locale}${pathname}`;
   
   return NextResponse.redirect(request.nextUrl);
