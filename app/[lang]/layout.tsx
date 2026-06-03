@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import SpotlightSearch from "@/components/spotlight-search";
@@ -46,6 +47,10 @@ export default async function RootLayout({
   return (
     <html lang={lang} data-scroll-behavior="smooth">
       <body>
+        <Script
+          src="https://embeds.iubenda.com/widgets/7ff98209-e356-4b43-a690-f7a9d626611f.js"
+          strategy="afterInteractive"
+        />
         <DebugDomErrors />
         <GsapProvider>
           <Header dict={dict} lang={lang} availableLocales={availableLocales} />

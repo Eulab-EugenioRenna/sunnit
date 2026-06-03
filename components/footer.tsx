@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 import NewsletterSignupForm from "@/components/newsletter-signup-form";
 import type { Dictionary } from "@/lib/dictionaries";
 import TextLines from "@/components/text-lines";
@@ -7,6 +8,8 @@ import TextLines from "@/components/text-lines";
 export default function Footer({ dict, lang }: { dict: Dictionary; lang: string }) {
   return (
     <footer className="footer-shell">
+      <Script src="https://cdn.iubenda.com/iubenda.js" strategy="lazyOnload" />
+
       <div className="newsletter">
         <p>{dict.common.footer.newsletterSub}</p>
         <h2>{dict.common.footer.newsletterTitle}</h2>
@@ -50,7 +53,24 @@ export default function Footer({ dict, lang }: { dict: Dictionary; lang: string 
         </div>
       </div>
 
-      <div className="copyright">© 2026 - SUNNIT. {dict.common.footer.rights}.</div>
+      <div className="copyright">
+        © 2026 - SUNNIT. {dict.common.footer.rights}. {" "}
+        <a
+          href="https://www.iubenda.com/privacy-policy/92438526"
+          className="iubenda-white iubenda-noiframe iubenda-embed"
+          title="Privacy Policy"
+        >
+          Privacy Policy
+        </a>
+        {" "}|{" "}
+        <a
+          href="https://www.iubenda.com/privacy-policy/92438526/cookie-policy"
+          className="iubenda-white iubenda-noiframe iubenda-embed"
+          title="Cookie Policy"
+        >
+          Cookie Policy
+        </a>
+      </div>
     </footer>
   );
 }
