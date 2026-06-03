@@ -60,7 +60,7 @@
         {
           "name": "S2E",
           "url": "https://solutions2enterprises.com/",
-          "logo": "/images/clients/s2e.png"
+          "logo": "/images/clients/sduee.png"
         },
         {
           "name": "Lottomatica",
@@ -148,7 +148,7 @@
     },
     "serviceShowcase": {
       "eyebrow": "Our Services",
-      "title": "Serizi Sunnit",
+      "title": "Servizi Sunnit",
       "desc": "Il team di Sunnit ha maturato una significativa esperienza in svariati settori tecnologici, costruendo soluzioni che generano valore tangibile per le organizzazioni.",
       "cards": [
         {
