@@ -2,13 +2,19 @@
 
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import readline from 'node:readline/promises';
+import { stdin as input, stdout as output } from 'node:process';
 import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, '..');
 const langDir = path.join(projectRoot, 'lang');
-const blogDir = path.join(projectRoot, 'content', 'blog');
+
+const contentRoots = {
+  blog: path.join(projectRoot, 'content', 'blog'),
+  portfolio: path.join(projectRoot, 'content', 'portfolio'),
+};
 
 const localeLabels = {
   en: 'English',
@@ -25,6 +31,7 @@ function parseArgs(argv) {
     baseUrl: process.env.OLLAMA_URL || 'http://127.0.0.1:11434',
     preferredSource: process.env.BLOG_TRANSLATION_SOURCE || 'it',
     dryRun: false,
+    contentTypes: [],
   };
 
   for (let index = 0; index < argv.length; index += 1) {
@@ -58,6 +65,33 @@ function parseArgs(argv) {
       continue;
     }
 
+    if (arg === '--type') {
+      const value = argv[index + 1];
+      index += 1;
+
+      if (!value) {
+        throw new Error('--type richiede un valore');
+      }
+
+      const resolved = value
+        .split(',')
+        .map((item) => item.trim())
+        .filter(Boolean);
+
+      if (resolved.length === 0) {
+        throw new Error('--type deve contenere almeno un valore');
+      }
+
+      for (const item of resolved) {
+        if (!(item in contentRoots) && item !== 'all') {
+          throw new Error(`Tipo contenuto non supportato: ${item}`);
+        }
+      }
+
+      options.contentTypes = resolved.includes('all') ? Object.keys(contentRoots) : resolved;
+      continue;
+    }
+
     throw new Error(`Argomento non supportato: ${arg}`);
   }
 
@@ -65,16 +99,55 @@ function parseArgs(argv) {
 }
 
 function printHelp() {
-  console.log(`Uso:
-  npm run translate:blog -- [--dry-run] [--model <nome>] [--base-url <url>] [--source <locale>]
+console.log(`Uso:
+  npm run translate
+  npm run translate:blog -- [--dry-run] [--model <nome>] [--base-url <url>] [--source <locale>] [--type <blog|portfolio|all>]
 
 Opzioni:
   --dry-run         Mostra i file mancanti senza tradurli
-  --model           Modello Ollama da usare (default: env OLLAMA_MODEL o llama3.1:8b)
+  --model           Modello Ollama da usare (default: env OLLAMA_MODEL o gemma4:31b-cloud)
   --base-url        URL API Ollama (default: env OLLAMA_URL o http://127.0.0.1:11434)
-  --source          Lingua sorgente preferita se disponibile (default: env BLOG_TRANSLATION_SOURCE o en)
+  --source          Lingua sorgente preferita se disponibile (default: env BLOG_TRANSLATION_SOURCE o it)
+  --type            Contenuto da tradurre: blog, portfolio o all
   --help, -h        Mostra questo messaggio
 `);
+}
+
+async function promptMissingOptions(options) {
+  if (options.help || options.contentTypes.length > 0) {
+    return options;
+  }
+
+  const rl = readline.createInterface({ input, output });
+
+  try {
+    const selectedType = (await rl.question('Cosa vuoi tradurre? (blog|portfolio|all): ')).trim().toLowerCase();
+
+    if (!selectedType) {
+      throw new Error('Tipo contenuto obbligatorio');
+    }
+
+    const resolved = selectedType
+      .split(',')
+      .map((item) => item.trim())
+      .filter(Boolean);
+
+    if (resolved.length === 0) {
+      throw new Error('Tipo contenuto obbligatorio');
+    }
+
+    for (const item of resolved) {
+      if (!(item in contentRoots) && item !== 'all') {
+        throw new Error(`Tipo contenuto non supportato: ${item}`);
+      }
+    }
+
+    options.contentTypes = resolved.includes('all') ? Object.keys(contentRoots) : resolved;
+  } finally {
+    rl.close();
+  }
+
+  return options;
 }
 
 async function getLocales() {
@@ -86,11 +159,11 @@ async function getLocales() {
     .sort();
 }
 
-async function getBlogInventory(locales) {
+async function getContentInventory(locales, contentDir) {
   const inventory = new Map();
 
   for (const locale of locales) {
-    const localeDir = path.join(blogDir, locale);
+    const localeDir = path.join(contentDir, locale);
     let entries = [];
 
     try {
@@ -167,9 +240,9 @@ function stripCodeFence(value) {
   return fenced ? fenced[1].trim() : trimmed;
 }
 
-async function translateWithOllama({ baseUrl, model, sourceLocale, targetLocale, content, slug }) {
+async function translateWithOllama({ baseUrl, model, sourceLocale, targetLocale, content, slug, contentType }) {
   const system = [
-    'You translate MDX blog posts while preserving structure.',
+    `You translate MDX ${contentType} content while preserving structure.`,
     'Return only the translated MDX document.',
     'Do not add explanations, notes, or code fences.',
     'Keep YAML frontmatter keys unchanged.',
@@ -181,7 +254,7 @@ async function translateWithOllama({ baseUrl, model, sourceLocale, targetLocale,
   ].join(' ');
 
   const user = [
-    `Translate this blog post from ${getLocaleLabel(sourceLocale)} to ${getLocaleLabel(targetLocale)}.`,
+    `Translate this ${contentType} entry from ${getLocaleLabel(sourceLocale)} to ${getLocaleLabel(targetLocale)}.`,
     `Slug: ${slug}.`,
     'Return only the final MDX content.',
     '',
@@ -219,7 +292,7 @@ async function translateWithOllama({ baseUrl, model, sourceLocale, targetLocale,
 }
 
 async function main() {
-  const options = parseArgs(process.argv.slice(2));
+  const options = await promptMissingOptions(parseArgs(process.argv.slice(2)));
 
   if (options.help) {
     printHelp();
@@ -232,43 +305,47 @@ async function main() {
     throw new Error('Nessuna lingua trovata in lang/*.json');
   }
 
-  const inventory = await getBlogInventory(locales);
-  const tasks = buildMissingTranslations(locales, inventory, options.preferredSource);
-
   console.log(`Lingue rilevate: ${locales.join(', ')}`);
 
-  if (tasks.length === 0) {
-    console.log('Nessun articolo mancante da tradurre.');
-    return;
-  }
+  for (const contentType of options.contentTypes) {
+    const contentDir = contentRoots[contentType];
+    const inventory = await getContentInventory(locales, contentDir);
+    const tasks = buildMissingTranslations(locales, inventory, options.preferredSource);
 
-  console.log(`Articoli mancanti trovati: ${tasks.length}`);
-
-  for (const task of tasks) {
-    const sourcePath = path.join(blogDir, task.sourceLocale, `${task.slug}.mdx`);
-    const targetPath = path.join(blogDir, task.targetLocale, `${task.slug}.mdx`);
-    const printableTargetPath = path.relative(projectRoot, targetPath);
-
-    console.log(`- ${task.slug}: ${task.sourceLocale} -> ${task.targetLocale}`);
-
-    if (options.dryRun) {
+    if (tasks.length === 0) {
+      console.log(`[${contentType}] Nessun contenuto mancante da tradurre.`);
       continue;
     }
 
-    const sourceContent = await readFile(sourcePath, 'utf8');
-    const translatedContent = await translateWithOllama({
-      baseUrl: options.baseUrl,
-      model: options.model,
-      sourceLocale: task.sourceLocale,
-      targetLocale: task.targetLocale,
-      content: sourceContent,
-      slug: task.slug,
-    });
+    console.log(`[${contentType}] Contenuti mancanti trovati: ${tasks.length}`);
 
-    await mkdir(path.dirname(targetPath), { recursive: true });
-    await writeFile(targetPath, translatedContent, 'utf8');
+    for (const task of tasks) {
+      const sourcePath = path.join(contentDir, task.sourceLocale, `${task.slug}.mdx`);
+      const targetPath = path.join(contentDir, task.targetLocale, `${task.slug}.mdx`);
+      const printableTargetPath = path.relative(projectRoot, targetPath);
 
-    console.log(`  creato ${printableTargetPath}`);
+      console.log(`- [${contentType}] ${task.slug}: ${task.sourceLocale} -> ${task.targetLocale}`);
+
+      if (options.dryRun) {
+        continue;
+      }
+
+      const sourceContent = await readFile(sourcePath, 'utf8');
+      const translatedContent = await translateWithOllama({
+        baseUrl: options.baseUrl,
+        model: options.model,
+        sourceLocale: task.sourceLocale,
+        targetLocale: task.targetLocale,
+        content: sourceContent,
+        slug: task.slug,
+        contentType,
+      });
+
+      await mkdir(path.dirname(targetPath), { recursive: true });
+      await writeFile(targetPath, translatedContent, 'utf8');
+
+      console.log(`  creato ${printableTargetPath}`);
+    }
   }
 }
 

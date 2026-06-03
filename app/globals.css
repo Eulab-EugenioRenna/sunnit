@@ -17,6 +17,39 @@
   --max: 1180px;
 }
 
+/* Ensure logo-row behaves as a responsive flex container across breakpoints */
+@media (max-width: 1024px) {
+  .logo-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    gap: 18px;
+  }
+  .logo-pill {
+    max-width: 140px;
+  }
+  .logo-pill img {
+    max-width: 120px;
+    max-height: 56px;
+  }
+}
+
+@media (max-width: 720px) {
+  .logo-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+  }
+  .logo-pill {
+    max-width: 120px;
+  }
+  .logo-pill img {
+    max-width: 100px;
+    max-height: 48px;
+  }
+}
+
 * {
   box-sizing: border-box;
 }
@@ -1182,9 +1215,24 @@ main {
   padding: 0.375rem;
 }
 
+.news-item.blog-card {
+  min-height: auto;
+  padding: 1rem;
+  justify-content: flex-start;
+  gap: 0.875rem;
+}
+
+.news-image-shell {
+  padding: 0.625rem;
+  border-radius: 1rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(245, 240, 235, 0.92));
+  border: 1px solid rgba(8, 47, 63, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
 .news-image {
   width: 100%;
-  height: 8.75rem; /* ~140px */
+  height: clamp(11.5rem, 18vw, 15rem);
   border-radius: 0.75rem; /* 12px */
   overflow: hidden;
   background: linear-gradient(135deg, #e9eefc, #fcefe8);
@@ -1198,7 +1246,7 @@ main {
 }
 
 .news-title {
-  margin: 0.625rem 0 0; /* 10px */
+  margin: 0;
   font-size: 1rem; /* 16px */
   font-weight: 900;
   /* fixed title area: 2 lines max with ellipsis */
@@ -1236,7 +1284,13 @@ main {
 
 @media (max-width: 720px) {
   .news-item { width: 100%; }
-  .news-image { height: 11.25rem; /* ~180px */ }
+  .news-item.blog-card {
+    padding: 0.875rem;
+  }
+  .news-image-shell {
+    padding: 0.5rem;
+  }
+  .news-image { height: 12.5rem; }
   .news-title { height: 3rem; }
 }
 
@@ -1275,19 +1329,34 @@ main {
 }
 
 .logo-row {
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly; /* evenly spaced logos */
+  gap: 28px;
+  width: 100vw; /* full screen width */
   margin: 42px 0 56px;
+  padding: 0 16px; /* small horizontal padding to avoid edge cropping */
 }
 
 .logo-pill {
   min-height: 58px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  font-weight: 950;
-  letter-spacing: -0.04em;
-  color: rgba(8, 47, 63, 0.36);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto; /* don't stretch */
+  max-width: 160px; /* constrain logo width */
+  padding: 8px 12px;
+  border-radius: 12px;
   background: transparent;
+}
+
+.logo-pill img {
+  display: block;
+  max-width: 140px; /* prevent very wide, small logos from stretching the row */
+  max-height: 58px; /* respect the existing pill height */
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
 .cta-band {
@@ -1812,7 +1881,8 @@ main {
 }
 
 .blog-post-content {
-  max-width: 760px;
+  width: 100%;
+  max-width: none;
 }
 
 .blog-post-content > :first-child {
@@ -1842,6 +1912,215 @@ main {
 .blog-post-content a {
   color: var(--primary);
   text-decoration: underline;
+}
+
+.form-feedback {
+  margin: 6px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.form-feedback-success {
+  color: #1f7a45;
+}
+
+.form-feedback-error {
+  color: #b42318;
+}
+
+.portfolio-grid {
+  margin-top: 28px;
+}
+
+.portfolio-slider .news-item {
+  width: auto;
+}
+
+.portfolio-slider .portfolio-card {
+  height: 100%;
+}
+
+.portfolio-card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.portfolio-card {
+  min-height: clamp(340px, 30vw, 460px);
+  justify-content: space-between;
+  gap: 22px;
+}
+
+.portfolio-card__media {
+  position: relative;
+  z-index: 1;
+  border-radius: 22px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.portfolio-card__image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+.portfolio-card__body {
+  position: relative;
+  z-index: 1;
+}
+
+.portfolio-card__body p {
+  margin: 12px 0 0;
+  max-width: 28ch;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.portfolio-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.portfolio-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 20, 30, 0.58);
+  backdrop-filter: blur(14px);
+  border: 0;
+  padding: 0;
+}
+
+.portfolio-modal__panel {
+  position: relative;
+  z-index: 1;
+  width: min(1100px, 100%);
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  border-radius: 32px;
+  background: linear-gradient(180deg, #ffffff, #f4f7fa);
+  box-shadow: 0 40px 120px rgba(6, 45, 60, 0.28);
+}
+
+.portfolio-modal__hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(280px, 1.1fr);
+  gap: 24px;
+  padding: 28px;
+  color: var(--white);
+}
+
+.portfolio-modal__hero--blue {
+  background: linear-gradient(135deg, #1f4958, #052333);
+}
+
+.portfolio-modal__hero--green {
+  background: linear-gradient(135deg, #5f765f, #d7ecd5);
+  color: var(--ink);
+}
+
+.portfolio-modal__hero--purple {
+  background: linear-gradient(135deg, #88caff, #f5e8ff);
+  color: var(--ink);
+}
+
+.portfolio-modal__hero--dark {
+  background: linear-gradient(135deg, #18173f, #5b355b);
+}
+
+.portfolio-modal__hero-copy {
+  display: grid;
+  align-content: end;
+}
+
+.portfolio-modal__hero-copy small {
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+}
+
+.portfolio-modal__hero-copy h3 {
+  margin: 10px 0 12px;
+  font-size: clamp(34px, 4vw, 58px);
+  line-height: 0.96;
+  letter-spacing: -0.06em;
+}
+
+.portfolio-modal__hero-copy p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.7;
+  opacity: 0.88;
+}
+
+.portfolio-modal__hero-media {
+  border-radius: 24px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.14);
+  min-height: 280px;
+}
+
+.portfolio-modal__hero-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  object-fit: cover;
+}
+
+.portfolio-modal__content {
+  padding: 34px 34px 12px;
+}
+
+.portfolio-modal__content > :first-child {
+  margin-top: 0;
+}
+
+.portfolio-modal__content h1,
+.portfolio-modal__content h2,
+.portfolio-modal__content h3 {
+  margin: 1.5em 0 0.6em;
+  color: var(--ink);
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+.portfolio-modal__content p,
+.portfolio-modal__content li {
+  color: var(--ink-2);
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.portfolio-modal__content ul,
+.portfolio-modal__content ol {
+  padding-left: 1.25rem;
+}
+
+.portfolio-modal__content img {
+  display: block;
+  width: 100%;
+  margin: 26px 0;
+  border-radius: 24px;
+  background: #eef3f8;
+}
+
+.portfolio-modal__actions {
+  padding: 0 34px 34px;
 }
 
 .post-switch-grid {
@@ -3105,10 +3384,11 @@ body {
 .logo-pill {
   min-height: 76px;
   font-size: clamp(16px, 1.2vw, 22px);
-  img{
-    height: 50px;
-    width: auto;
-  }
+}
+
+.logo-pill img {
+  height: 50px;
+  width: auto;
 }
 
 .cta-band {
@@ -4605,6 +4885,10 @@ body {
     grid-template-columns: 1fr;
   }
 
+  .portfolio-modal__hero {
+    grid-template-columns: 1fr;
+  }
+
   .services-story__preview {
     position: relative;
     top: 0;
@@ -4620,6 +4904,35 @@ body {
   .services-closing {
     border-radius: 24px;
     padding: 22px;
+  }
+
+  .portfolio-modal {
+    padding: 12px;
+  }
+
+  .portfolio-modal__panel {
+    max-height: calc(100vh - 24px);
+    border-radius: 24px;
+  }
+
+  .portfolio-modal__hero,
+  .portfolio-modal__content,
+  .portfolio-modal__actions {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .portfolio-modal__hero {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .portfolio-modal__content {
+    padding-top: 24px;
+  }
+
+  .portfolio-modal__actions {
+    padding-bottom: 20px;
   }
 
   .services-story-card__meta {

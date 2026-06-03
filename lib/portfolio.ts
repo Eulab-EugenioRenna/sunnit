@@ -4,21 +4,22 @@ import fs from "fs";
 import path from "path";
 import { defaultLocale } from "./i18n";
 
-const BLOG_ROOT = path.join(process.cwd(), "content", "blog");
+const PORTFOLIO_ROOT = path.join(process.cwd(), "content", "portfolio");
 
-export type BlogLang = string;
+export type PortfolioLang = string;
 
 type FrontmatterValue = string | string[];
 
-export type BlogPost = {
+export type PortfolioProject = {
   title: string;
   excerpt: string;
-  tags: string[];
   image: string;
-  lang: BlogLang;
-  slug: string;
+  tag: string;
+  tone: "blue" | "green" | "purple" | "dark";
+  order: number;
   createdAt: string;
-  createdAtLabel: string;
+  lang: PortfolioLang;
+  slug: string;
   body: string;
 };
 
@@ -26,11 +27,14 @@ type RawFrontmatter = {
   title?: string;
   excerpt?: string;
   image?: string;
-  tags?: string[];
+  tag?: string;
+  tone?: string;
+  order?: string;
 };
 
-function isBlogLang(value: string): value is BlogLang {
-  return fs.existsSync(path.join(BLOG_ROOT, value)) && fs.statSync(path.join(BLOG_ROOT, value)).isDirectory();
+function isPortfolioLang(value: string): value is PortfolioLang {
+  const target = path.join(PORTFOLIO_ROOT, value);
+  return fs.existsSync(target) && fs.statSync(target).isDirectory();
 }
 
 function stripQuotes(value: string) {
@@ -122,18 +126,12 @@ function parseFrontmatter(source: string) {
       title: typeof data.title === "string" ? data.title : undefined,
       excerpt: typeof data.excerpt === "string" ? data.excerpt : undefined,
       image: typeof data.image === "string" ? data.image : undefined,
-      tags: Array.isArray(data.tags) ? data.tags : [],
+      tag: typeof data.tag === "string" ? data.tag : undefined,
+      tone: typeof data.tone === "string" ? data.tone : undefined,
+      order: typeof data.order === "string" ? data.order : undefined,
     },
     body,
   };
-}
-
-function slugToTitle(slug: string) {
-  return slug
-    .split("-")
-    .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
 }
 
 function stripMdx(source: string) {
@@ -159,31 +157,12 @@ function getCreatedAt(stats: fs.Stats) {
   return created;
 }
 
-function resolveDateLocale(lang: BlogLang) {
-  const normalized = String(lang || "").trim().toLowerCase();
-
-  if (normalized === "it") return "it-IT";
-  if (normalized === "en") return "en-US";
-  if (normalized === "es") return "es-ES";
-
-  return "en-US";
+function getPortfolioDir(lang: PortfolioLang) {
+  return path.join(PORTFOLIO_ROOT, lang);
 }
 
-function formatDate(date: Date, lang: BlogLang) {
-  const locale = resolveDateLocale(lang);
-  return new Intl.DateTimeFormat(locale, {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(date);
-}
-
-function getBlogDir(lang: BlogLang) {
-  return path.join(BLOG_ROOT, lang);
-}
-
-function resolveBlogSourceLang(lang: BlogLang) {
-  const requestedDir = getBlogDir(lang);
+function resolvePortfolioSourceLang(lang: PortfolioLang) {
+  const requestedDir = getPortfolioDir(lang);
 
   if (fs.existsSync(requestedDir)) {
     return lang;
@@ -192,13 +171,13 @@ function resolveBlogSourceLang(lang: BlogLang) {
   return defaultLocale;
 }
 
-function readPostFile(lang: BlogLang, slug: string) {
-  const sourceLang = resolveBlogSourceLang(lang);
-  const filePath = path.join(getBlogDir(sourceLang), `${slug}.mdx`);
+function readProjectFile(lang: PortfolioLang, slug: string) {
+  const sourceLang = resolvePortfolioSourceLang(lang);
+  const filePath = path.join(getPortfolioDir(sourceLang), `${slug}.mdx`);
 
   if (!fs.existsSync(filePath)) {
     if (sourceLang !== defaultLocale) {
-      return readPostFile(defaultLocale, slug);
+      return readProjectFile(defaultLocale, slug);
     }
 
     return null;
@@ -210,50 +189,51 @@ function readPostFile(lang: BlogLang, slug: string) {
   const createdAtDate = getCreatedAt(stats);
 
   return {
-    title: data.title || slugToTitle(slug),
+    title: data.title || slug,
     excerpt: data.excerpt || toExcerpt(body),
-    tags: data.tags || [],
     image: data.image || "",
+    tag: data.tag || "Project",
+    tone: data.tone === "green" || data.tone === "purple" || data.tone === "dark" ? data.tone : "blue",
+    order: data.order ? Number(data.order) || 999 : 999,
+    createdAt: createdAtDate.toISOString(),
     lang,
     slug,
-    createdAt: createdAtDate.toISOString(),
-    createdAtLabel: formatDate(createdAtDate, lang),
     body,
-  } satisfies BlogPost;
+  } satisfies PortfolioProject;
 }
 
-export function getAllBlogPosts(lang: BlogLang) {
-  const sourceLang = resolveBlogSourceLang(lang);
-  const blogDir = getBlogDir(sourceLang);
+export function getAllPortfolioProjects(lang: PortfolioLang) {
+  const sourceLang = resolvePortfolioSourceLang(lang);
+  const portfolioDir = getPortfolioDir(sourceLang);
 
-  if (!fs.existsSync(blogDir)) {
-    return [] as BlogPost[];
+  if (!fs.existsSync(portfolioDir)) {
+    return [] as PortfolioProject[];
   }
 
   return fs
-    .readdirSync(blogDir, { withFileTypes: true })
+    .readdirSync(portfolioDir, { withFileTypes: true })
     .filter((entry) => entry.isFile() && entry.name.endsWith(".mdx"))
     .map((entry) => entry.name.replace(/\.mdx$/, ""))
-    .map((slug) => readPostFile(lang, slug))
-    .filter((post): post is BlogPost => Boolean(post))
+    .map((slug) => readProjectFile(lang, slug))
+    .filter((project): project is PortfolioProject => Boolean(project))
     .sort((left, right) => new Date(right.createdAt).getTime() - new Date(left.createdAt).getTime());
 }
 
-export function getBlogPost(lang: BlogLang, slug: string) {
-  return readPostFile(lang, slug);
+export function getPortfolioProject(lang: PortfolioLang, slug: string) {
+  return readProjectFile(lang, slug);
 }
 
-export function getAllBlogSlugs() {
-  if (!fs.existsSync(BLOG_ROOT)) {
-    return [] as Array<{ lang: BlogLang; slug: string }>;
+export function getAllPortfolioSlugs() {
+  if (!fs.existsSync(PORTFOLIO_ROOT)) {
+    return [] as Array<{ lang: PortfolioLang; slug: string }>;
   }
 
   return fs
-    .readdirSync(BLOG_ROOT, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory() && isBlogLang(entry.name))
+    .readdirSync(PORTFOLIO_ROOT, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && isPortfolioLang(entry.name))
     .flatMap((entry) =>
       fs
-        .readdirSync(path.join(BLOG_ROOT, entry.name), { withFileTypes: true })
+        .readdirSync(path.join(PORTFOLIO_ROOT, entry.name), { withFileTypes: true })
         .filter((file) => file.isFile() && file.name.endsWith(".mdx"))
         .map((file) => ({
           lang: entry.name,

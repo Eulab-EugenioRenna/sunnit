@@ -1,0 +1,15 @@
+[
+  {
+    "email": "eugeniorenna92@gmail.com",
+    "createdAt": "2026-06-03T14:47:43.598Z",
+    "date": "2026-06-03",
+    "time": "16:47:43",
+    "ip": "::1",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+    "referer": "http://localhost:3000/it/contact",
+    "lang": "it",
+    "source": "footer-newsletter",
+    "host": "localhost:3000",
+    "forwardedFor": "::1"
+  }
+]

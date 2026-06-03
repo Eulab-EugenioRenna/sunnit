@@ -43,11 +43,6 @@
           "logo": "/images/clients/initweb.webp"
         },
         {
-          "name": "Exprivia",
-          "url": "https://www.exprivia.it/" ,
-          "logo": "/images/clients/exprivia.webp"
-        },
-        {
           "name": "WeWorld",
           "url": "https://www.weworld.it/",
           "logo": "/images/clients/weworld.png"
@@ -224,8 +219,8 @@
     },
     "cases": {
       "eyebrow": "Recent cases",
-      "title": "Recent cases in stile portfolio.",
-      "filterAll": "All",
+      "title": "Ultimi progetti",
+      "filterAll": "Tutti",
       "filterAi": "AI Design",
       "filterCloud": "Cloud",
       "filterData": "Data",
@@ -239,7 +234,7 @@
     },
     "blog": {
       "eyebrow": "Recent News",
-      "title": "News e insight con card pulite."
+      "title": "News e insight"
     },
     "cta": {
       "eyebrow": "Get in touch",
@@ -537,7 +532,7 @@
     },
     "download": {
       "eyebrow": "DOWNLOAD RISORSE",
-      "title": "Scarica brochure, one-pager e schede use case.",
+      "title": "Scarica brochure SunnitAI",
       "desc": "Collega questo blocco al tuo CRM o al sistema di lead capture per misurare demo, download e richieste.",
       "cta": "Scarica la presentazione di SunnitAI"
     }

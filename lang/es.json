@@ -43,11 +43,6 @@
           "logo": "/images/clients/initweb.webp"
         },
         {
-          "name": "Exprivia",
-          "url": "https://www.exprivia.it/",
-          "logo": "/images/clients/exprivia.webp"
-        },
-        {
           "name": "WeWorld",
           "url": "https://www.weworld.it/",
           "logo": "/images/clients/weworld.png"
@@ -248,7 +243,7 @@
     },
     "cases": {
       "eyebrow": "Casos recientes",
-      "title": "Casos recientes en estilo portfolio.",
+      "title": "Últimos proyectos",
       "filterAll": "Todos",
       "filterAi": "Diseño IA",
       "filterCloud": "Cloud",
@@ -279,7 +274,7 @@
     },
     "blog": {
       "eyebrow": "Noticias recientes",
-      "title": "Noticias e insights con cards limpias."
+      "title": "Noticias e insights"
     },
     "cta": {
       "eyebrow": "Ponte en contacto",

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ContactMailtoForm from "@/components/contact-mailto-form";
 import PageHero from "@/components/page-hero";
 import GsapReveal from "@/components/gsap-reveal";
 import { getDictionary } from "@/lib/dictionaries";
@@ -32,19 +33,20 @@ export default async function ContactPage({
           <h2>{dict.contact.intro.title}</h2>
           <TextLines text={dict.contact.intro.desc} />
           <div className="contact-form-wrap">
-            <form className="form-grid">
-              <input placeholder={dict.contact.form.name} />
-              <input placeholder={dict.contact.form.email} />
-              <input placeholder={dict.contact.form.company} />
-              <select defaultValue="">
-                <option value="" disabled>{dict.contact.form.service}</option>
-                {dict.contact.form.services.map((svc: string) => (
-                  <option key={svc} value={svc}>{svc}</option>
-                ))}
-              </select>
-              <textarea placeholder={dict.contact.form.message} />
-              <button type="button" className="dark-btn">{dict.contact.form.submit}</button>
-            </form>
+            <ContactMailtoForm
+              lang={lang}
+              context="contact"
+              className="form-grid"
+              labels={{
+                name: dict.contact.form.name,
+                email: dict.contact.form.email,
+                company: dict.contact.form.company,
+                service: dict.contact.form.service,
+                services: dict.contact.form.services,
+                message: dict.contact.form.message,
+                submit: dict.contact.form.submit,
+              }}
+            />
           </div>
         </GsapReveal>
 

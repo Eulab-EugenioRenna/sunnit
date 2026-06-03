@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "translate:blog": "node scripts/translate-missing-blog-posts.mjs"
+    "translate": "node scripts/translate-missing-blog-posts.mjs",
+    "import": "node scripts/import-content.mjs",
+    "beautify": "node scripts/beautify-content.mjs"
   },
   "dependencies": {
     "@amcharts/amcharts5": "^5.17.2",

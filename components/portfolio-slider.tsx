@@ -1,23 +1,32 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
-import type { BlogPost } from "@/lib/blog";
 
-export default function NewsSlider({
-  posts,
-  lang,
+type PortfolioSliderProject = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  image: string;
+  tag: string;
+  tone: "blue" | "green" | "purple" | "dark";
+};
+
+export default function PortfolioSlider({
+  projects,
+  openLabel,
+  onOpenProject,
   autoplay = true,
-  autoplayInterval = 4000,
+  autoplayInterval = 4200,
   scrollDuration = 900,
 }: {
-  posts: BlogPost[];
-  lang: string;
+  projects: PortfolioSliderProject[];
+  openLabel: string;
+  onOpenProject: (slug: string) => void;
   autoplay?: boolean;
   autoplayInterval?: number;
   scrollDuration?: number;
 }) {
-  const len = posts.length;
+  const len = projects.length;
   const [visible, setVisible] = useState(3);
   const [paused, setPaused] = useState(false);
   const [itemWidth, setItemWidth] = useState(0);
@@ -45,16 +54,16 @@ export default function NewsSlider({
   const effectiveVisible = Math.max(1, Math.min(visible, len || 1));
   const loopStartIndex = len;
 
-  const orderedPosts = useMemo(() => {
-    if (len === 0) return [] as BlogPost[];
+  const orderedProjects = useMemo(() => {
+    if (len === 0) return [] as PortfolioSliderProject[];
 
-    return Array.from({ length: len }, (_, index) => posts[(anchorIndex + index) % len]);
-  }, [posts, len, anchorIndex]);
+    return Array.from({ length: len }, (_, index) => projects[(anchorIndex + index) % len]);
+  }, [projects, len, anchorIndex]);
 
-  const trackPosts = useMemo(() => {
-    if (len === 0) return [] as BlogPost[];
-    return [...orderedPosts, ...orderedPosts, ...orderedPosts];
-  }, [orderedPosts, len]);
+  const trackProjects = useMemo(() => {
+    if (len === 0) return [] as PortfolioSliderProject[];
+    return [...orderedProjects, ...orderedProjects, ...orderedProjects];
+  }, [orderedProjects, len]);
 
   useEffect(() => {
     setAnchorIndex(0);
@@ -139,7 +148,7 @@ export default function NewsSlider({
 
   return (
     <div
-      className="news-slider"
+      className="news-slider portfolio-slider"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
@@ -156,30 +165,35 @@ export default function NewsSlider({
           role="list"
           onTransitionEnd={handleTransitionEnd}
           style={{
-            width: itemWidth ? `${trackPosts.length * itemWidth + Math.max(trackPosts.length - 1, 0) * 16}px` : undefined,
+            width: itemWidth ? `${trackProjects.length * itemWidth + Math.max(trackProjects.length - 1, 0) * 16}px` : undefined,
             transform: `translate3d(-${currentIndex * (itemWidth + 16)}px, 0, 0)`,
             transition: transitionEnabled ? `transform ${scrollDuration}ms cubic-bezier(0.22, 1, 0.36, 1)` : "none",
           }}
         >
-          {trackPosts.map((post, index) => (
-            <Link
-              key={`${post.slug}-${index}`}
-              href={`/${lang}/blog/${post.slug}`}
-              className="news-item blog-card"
+          {trackProjects.map((project, index) => (
+            <button
+              type="button"
+              key={`${project.slug}-${index}`}
+              className="news-item portfolio-card-link"
               role="listitem"
+              aria-label={`${openLabel}: ${project.title}`}
               style={{ width: itemWidth ? `${itemWidth}px` : `${100 / effectiveVisible}%` }}
+              onClick={() => onOpenProject(project.slug)}
             >
-              <div className="news-image-shell">
-                {post.image ? (
-                  <div className="news-image">
-                    <img src={post.image} alt={post.title} loading="lazy" />
+              <article className={`case-card portfolio-card ${project.tone}`}>
+                {project.image ? (
+                  <div className="portfolio-card__media">
+                    <img src={project.image} alt={project.title} className="portfolio-card__image" loading="lazy" />
                   </div>
-                ) : (
-                  <div className="news-image" aria-hidden="true" />
-                )}
-              </div>
-              <h3 className="news-title">{post.title}</h3>
-            </Link>
+                ) : null}
+
+                <div className="portfolio-card__body">
+                  <small>{project.tag}</small>
+                  <h3>{project.title}</h3>
+                  <p>{project.excerpt}</p>
+                </div>
+              </article>
+            </button>
           ))}
         </div>
       </div>

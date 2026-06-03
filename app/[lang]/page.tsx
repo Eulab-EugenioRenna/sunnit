@@ -1,9 +1,11 @@
 import Link from "next/link";
 import HeroDynamicCopy from "@/components/hero-dynamic-copy";
+import ContactMailtoForm from "@/components/contact-mailto-form";
 import GsapReveal from "@/components/gsap-reveal";
 import ScrollVideo from "@/components/scroll-video";
 import SectionTitle from "@/components/section-title";
 import NewsSlider from "@/components/news-slider";
+import PortfolioSection from "@/components/portfolio-section";
 import ServiceScrollPanels from "@/components/service-scroll-panels";
 import RotaryServices from "@/components/rotary-services";
 import TextLines from "@/components/text-lines";
@@ -171,26 +173,11 @@ export default async function Home({
         </GsapReveal>
       </section> */}
 
-      <section id="cases" className="container home-anchor-section">
-        <SectionTitle eyebrow={dict.home.cases.eyebrow} title={dict.home.cases.title} align="center" />
-        <div className="filter-row">
-          <button className="active">{dict.home.cases.filterAll}</button>
-          <button>{dict.home.cases.filterAi}</button>
-          <button>{dict.home.cases.filterCloud}</button>
-          <button>{dict.home.cases.filterData}</button>
-          <button>{dict.home.cases.filterUx}</button>
-        </div>
-        <div className="case-grid case-grid-full">
-          {dict.home.cases.items.map((item: any, index: number) => (
-            <GsapReveal key={item.title} delay={index * 90}>
-              <article className={`case-card ${item.tone}`}>
-                <small>{item.tag}</small>
-                <h3>{item.title}</h3>
-              </article>
-            </GsapReveal>
-          ))}
-        </div>
-      </section>
+      <PortfolioSection
+        lang={lang}
+        eyebrow={dict.home.cases.eyebrow}
+        title={dict.home.cases.title}
+      />
 
       <section id="blog" className="container blog-section home-anchor-section">
         <SectionTitle eyebrow={dict.home.blog.eyebrow} title={dict.home.blog.title} />
@@ -208,12 +195,17 @@ export default async function Home({
           <p>{dict.home.cta.email}</p>
           <p>{dict.home.cta.phone}</p>
         </div>
-        <form className="cta-form form-grid">
-          <input placeholder={dict.home.cta.placeholderName} />
-          <input placeholder={dict.home.cta.placeholderEmail} />
-          <textarea placeholder={dict.home.cta.placeholderMessage} />
-          <button type="button" className="dark-btn">{dict.home.cta.send}</button>
-        </form>
+        <ContactMailtoForm
+          lang={lang}
+          context="home"
+          className="cta-form form-grid"
+          labels={{
+            name: dict.home.cta.placeholderName,
+            email: dict.home.cta.placeholderEmail,
+            message: dict.home.cta.placeholderMessage,
+            submit: dict.home.cta.send,
+          }}
+        />
       </section>
     </>
   );

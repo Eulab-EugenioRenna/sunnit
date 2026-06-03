@@ -48,6 +48,8 @@ export default function Header({ dict, lang, availableLocales }: { dict: Diction
   }, [pathname]);
 
   const navItems: NavItem[] = [
+        { href: `/${lang}/about`, label: dict.common.header.about },
+
     { href: `/${lang}/services`, label: dict.common.header.services },
     { 
       href: `/${lang}/sunnitai`, 
@@ -57,7 +59,6 @@ export default function Header({ dict, lang, availableLocales }: { dict: Diction
         { href: "https://astrea.sunnit.ai/", label: "Astrea", isExternal: true }
       ]
     },
-    { href: `/${lang}/about`, label: dict.common.header.about },
     { href: `/${lang}/blog`, label: dict.common.header.blog },
     { href: `/${lang}/contact`, label: dict.common.header.contact },
   ];

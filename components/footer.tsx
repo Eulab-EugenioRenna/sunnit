@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import NewsletterSignupForm from "@/components/newsletter-signup-form";
 import type { Dictionary } from "@/lib/dictionaries";
 import TextLines from "@/components/text-lines";
 
@@ -10,10 +11,11 @@ export default function Footer({ dict, lang }: { dict: Dictionary; lang: string 
         <p>{dict.common.footer.newsletterSub}</p>
         <h2>{dict.common.footer.newsletterTitle}</h2>
         <TextLines text={dict.common.footer.newsletterDesc} as="span" />
-        <form className="newsletter-form">
-          <input type="email" placeholder={dict.common.footer.emailPlaceholder} aria-label={dict.common.footer.emailPlaceholder} />
-          <button type="button">{dict.common.footer.signUp}</button>
-        </form>
+        <NewsletterSignupForm
+          lang={lang}
+          placeholder={dict.common.footer.emailPlaceholder}
+          buttonLabel={dict.common.footer.signUp}
+        />
       </div>
 
       <div className="footer-card">
