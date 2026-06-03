@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { Search, FileText, CornerDownLeft, Laptop, Info, Mail, Award, Cpu, BookOpen } from "lucide-react";
+import { Search, FileText, CornerDownLeft, Laptop, Info, Mail, Award, Cpu, BookOpen, Briefcase } from "lucide-react";
 
 interface SearchItem {
   title: string;
@@ -37,6 +37,8 @@ export default function SpotlightSearch({ articles }: { articles: SpotlightArtic
         homeSubtitle: "Back to home page",
         servicesTitle: "Services & Expertise",
         servicesSubtitle: "What we do: Software, cloud, DevOps, AI",
+        portfolioTitle: "Portfolio",
+        portfolioSubtitle: "Selected projects, case studies, and results",
         aiSubtitle: "Document intelligence & generative AI solutions",
         aboutTitle: "About Us",
         aboutSubtitle: "Our history, team, and digital philosophy",
@@ -58,6 +60,8 @@ export default function SpotlightSearch({ articles }: { articles: SpotlightArtic
           homeSubtitle: "Volver a la pagina principal",
           servicesTitle: "Servicios y Competencias",
           servicesSubtitle: "Lo que hacemos: Software, cloud, DevOps, IA",
+          portfolioTitle: "Portfolio",
+          portfolioSubtitle: "Proyectos seleccionados, casos de uso y resultados",
           aiSubtitle: "Soluciones de inteligencia documental e IA generativa",
           aboutTitle: "Quienes somos",
           aboutSubtitle: "Nuestra historia, el equipo y la filosofia digital",
@@ -78,6 +82,8 @@ export default function SpotlightSearch({ articles }: { articles: SpotlightArtic
           homeSubtitle: "Torna alla pagina principale",
           servicesTitle: "Servizi & Competenze",
           servicesSubtitle: "Cosa facciamo: Software, cloud, DevOps, AI",
+          portfolioTitle: "Portfolio",
+          portfolioSubtitle: "Progetti selezionati, casi studio e risultati",
           aiSubtitle: "Soluzioni AI e document intelligence avanzata",
           aboutTitle: "Chi Siamo",
           aboutSubtitle: "La nostra storia, il team e la filosofia digitale",
@@ -113,6 +119,14 @@ export default function SpotlightSearch({ articles }: { articles: SpotlightArtic
         category: "pagine",
         href: `/${lang}/services`,
         icon: <Award className="search-icon-svg" size={18} />
+      },
+      {
+        title: copy.portfolioTitle,
+        subtitle: copy.portfolioSubtitle,
+        searchText: `${copy.portfolioTitle} ${copy.portfolioSubtitle}`.toLowerCase(),
+        category: "pagine",
+        href: `/${lang}/#cases`,
+        icon: <Briefcase className="search-icon-svg" size={18} />
       },
       {
         title: "SunnitAI",

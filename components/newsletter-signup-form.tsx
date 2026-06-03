@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function getNewsletterCopy(lang: string) {
   if (lang === "it") {
@@ -43,6 +43,19 @@ export default function NewsletterSignupForm({
   const [message, setMessage] = useState("");
 
   const copy = getNewsletterCopy(lang);
+
+  // Reset status and feedback message after a short timeout so the UI returns
+  // to the idle state (e.g. "Iscrizione salvata" -> hide after 3s).
+  useEffect(() => {
+    if (status === "success" || status === "error") {
+      const t = setTimeout(() => {
+        setStatus("idle");
+        setMessage("");
+      }, 3000);
+      return () => clearTimeout(t);
+    }
+    return;
+  }, [status]);
 
   return (
     <form
