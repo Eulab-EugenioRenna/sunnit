@@ -18,6 +18,14 @@ type ServiceStoryItem = {
   accent: "software" | "web" | "data" | "cloud" | "devops";
 };
 
+const sectionIdByAccent: Record<ServiceStoryItem["accent"], string> = {
+  software: "software",
+  web: "web",
+  data: "data",
+  cloud: "cloud",
+  devops: "devops",
+};
+
 export default function ServicesScrollStory({
   eyebrow,
   title,
@@ -100,6 +108,7 @@ export default function ServicesScrollStory({
           {items.map((item, index) => (
             <article
               key={item.number}
+              id={sectionIdByAccent[item.accent]}
               ref={(node) => {
                 articleRefs.current[index] = node;
               }}

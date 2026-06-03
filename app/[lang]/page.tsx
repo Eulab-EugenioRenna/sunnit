@@ -112,7 +112,7 @@ export default async function Home({
               title: dict.home.services.title,
               desc: dict.home.services.desc,
               cta: dict.home.services.cta,
-              href: `/${lang}/services`,
+              href: `/${lang}/services#software`,
               tone: "development",
             },
             {
@@ -120,7 +120,7 @@ export default async function Home({
               title: (dict.home.services as any).cloudTitle,
               desc: (dict.home.services as any).cloudDesc,
               cta: dict.home.services.cta,
-              href: `/${lang}/services`,
+              href: `/${lang}/services#cloud`,
               tone: "cloud",
             },
             {
