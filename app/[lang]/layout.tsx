@@ -18,10 +18,12 @@ export const metadata: Metadata = {
   description: "Sito Web di Sunnit SRL, specialista in soluzioni informatiche, cybersecurity e trasformazione digitale.",
   authors: [
     {
-      name: "Sunnit SRL",
-      url: "https://sunnit.it"
+      name: "EULAB - RENNA EUGENIO",
+      url: "https://eulab.cloud"
     }
   ],
+  creator: "EULAB - RENNA EUGENIO",
+  publisher: "EULAB - RENNA EUGENIO",
   keywords: ["SUNNIT", "Sunnit SRL", "Sunnit", " Cybersecurity", "Soluzioni Informatiche", "Trasformazione Digitale", "Consulenza", "AI", "Intelligenza Artificiale", "Cloud", "Data Analytics"]
 };
 
@@ -47,6 +49,23 @@ export default async function RootLayout({
   return (
     <html lang={lang} data-scroll-behavior="smooth">
       <body>
+        <Script id="author-console-banner" strategy="afterInteractive">
+          {`console.log(String.raw\`
+
+  ______ _    _ _               ____  
+ │  ____│ │  │ │ │        ╱╲   │  _ ╲ 
+ │ │__  │ │  │ │ │       ╱  ╲  │ │_) │
+ │  __│ │ │  │ │ │      ╱ ╱╲ ╲ │  _ < 
+ │ │____│ │__│ │ │____ ╱ ____ ╲│ │_) │
+ │______│╲____╱│______╱_╱    ╲_╲____╱ 
+                                      
+                                      
+Sito Web Realizzato da: 
+EULAB - RENNA EUGENIO
+https://eulab.cloud
+eulabconsult@gmail.com
+\`);`}
+        </Script>
         <Script
           src="https://embeds.iubenda.com/widgets/7ff98209-e356-4b43-a690-f7a9d626611f.js"
           strategy="afterInteractive"
