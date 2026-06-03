@@ -148,8 +148,8 @@
     },
     "serviceShowcase": {
       "eyebrow": "Nuestros servicios",
-      "title": "Servicios principales ya preparados como cards animadas.",
-      "desc": "Cada card tiene hover lift, sombra suave, reveal on scroll y una estructura modular para los contenidos SUNNIT.",
+      "title": "Servicios Sunnit",
+      "desc": "El equipo de Sunnit cuenta con una sólida experiencia en diversos sectores tecnológicos, desarrollando soluciones que aportan un valor tangible a las organizaciones.",
       "cards": [
         {
           "title": "Software personalizado",
