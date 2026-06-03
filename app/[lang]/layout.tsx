@@ -10,7 +10,7 @@ import DebugDomErrors from "@/components/debug-dom-errors";
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://sunnit.it"),
   title: {
-    default: "SUNNIT Template",
+    default: "SUNNIT",
     template: "%s | SUNNIT"
   },
   description: "Template Next.js per sito SUNNIT con animazioni, card e hero dinamica."
