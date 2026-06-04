@@ -700,12 +700,15 @@ main {
 }
 
 .ghost-marquee {
+  display: inline-block;
+  width: max-content;
+  max-width: none;
+  overflow: visible;
   font-weight: 950;
   letter-spacing: -0.08em;
   white-space: nowrap;
   line-height: 0.8;
   animation: driftWords 28s linear infinite;
-  margin: clamp(50px, 8vw, 90px) 0 -12px;
   font-size: clamp(72px, 13vw, 230px);
   color: rgba(8, 47, 63, 0.038);
 }
@@ -721,8 +724,16 @@ main {
   padding-top: 0.75rem;
 }
 
+.service-scroll-marquee-wrap {
+  overflow-x: hidden;
+  overflow-y: visible;
+  margin: clamp(50px, 8vw, 90px) 0 -12px;
+  padding: 0.12em 0;
+}
+
 .service-scroll-marquee {
   margin: 0 0 1rem;
+  padding-right: 0.16em;
 }
 
 .home-anchor-section {
@@ -4682,8 +4693,7 @@ svg {
   max-width: 100%;
 }
 
-.service-scroll-marquee,
-.ghost-marquee {
+.service-scroll-marquee-wrap {
   width: 100%;
   max-width: 100%;
   overflow: hidden;
@@ -4885,11 +4895,21 @@ svg {
   }
 
   .ghost-marquee {
-    margin: 0 0 10px;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
     font-size: clamp(42px, 14vw, 84px);
-    line-height: 0.9;
+    line-height: 1.04;
     white-space: normal;
+    word-break: normal;
+    overflow-wrap: anywhere;
     animation: none;
+  }
+
+  .service-scroll-marquee-wrap {
+    margin: 0 0 10px;
+    padding: 0.18em 0;
   }
 
   .rotary-track {

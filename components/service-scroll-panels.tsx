@@ -139,7 +139,11 @@ export default function ServiceScrollPanels({
   return (
     <section className="service-scroll-stage" ref={stageRef}>
       <div className="container service-scroll-showcase" ref={sectionRef}>
-        {marquee ? <div className="ghost-marquee service-scroll-marquee">{marquee}</div> : null}
+        {marquee ? (
+          <div className="service-scroll-marquee-wrap">
+            <div className="ghost-marquee service-scroll-marquee">{marquee}</div>
+          </div>
+        ) : null}
 
         {isMobile ? (
           <div className="service-mobile-shell">
