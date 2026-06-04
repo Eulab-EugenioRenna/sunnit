@@ -3135,7 +3135,7 @@ body {
 
 .hero-visual-main strong {
   max-width: 420px;
-  font-size: clamp(36px, 5vw, 76px);
+  font-size: clamp(36px, 4vw, 76px);
   line-height: 0.92;
   letter-spacing: -0.08em;
 }
