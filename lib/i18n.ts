@@ -5,6 +5,10 @@ const domainLocaleMap: Record<string, string> = {
   'www.sunnit.it': 'it',
   'sunnitspain.es': 'es',
   'www.sunnitspain.es': 'es',
+  'sunnit.co.uk': 'en',
+  'www.sunnit.co.uk': 'en',
+  'sunnit.eu': 'en',
+  'www.sunnit.eu': 'en',
 };
 
 function normalizeHostname(hostname: string): string {
