@@ -20,6 +20,19 @@
       "contact": "Contatti",
       "rights": "Tutti i diritti riservati"
     },
+    "company": {
+      "email": "info@sunnit.it",
+      "phonePrimaryDisplay": "+39 06 45251 300",
+      "phonePrimaryHref": "+390645251300",
+      "phoneSecondaryDisplay": "",
+      "phoneSecondaryHref": "",
+      "website": "https://sunnit.it/",
+      "addressLine": "Via Stamira 63, Roma",
+      "fullAddress": "Via Stamira 63, Roma, 00162",
+      "taxId": "",
+      "presentationPdf": "/sunnitai.pdf",
+      "showcaseVideo": "/sunnit.mp4"
+    },
     "content": {
       "clients": [
         {
@@ -241,6 +254,7 @@
       "title": "Siamo qui per aiutarti con le tue domande.",
       "email": "Email: info@sunnit.it",
       "phone": "Phone: +39 06 45251 300",
+      "website": "Web: https://sunnit.it/",
       "placeholderName": "Nome",
       "placeholderEmail": "E-mail",
       "placeholderMessage": "Messaggio",

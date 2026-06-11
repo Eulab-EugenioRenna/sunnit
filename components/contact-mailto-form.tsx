@@ -36,11 +36,13 @@ function getMailtoCopy(lang: string, context: "home" | "contact") {
 export default function ContactMailtoForm({
   lang,
   context,
+  recipientEmail,
   labels,
   className,
 }: {
   lang: string;
   context: "home" | "contact";
+  recipientEmail: string;
   labels: FieldLabels;
   className: string;
 }) {
@@ -79,7 +81,7 @@ export default function ContactMailtoForm({
           .filter(Boolean)
           .join("\n");
 
-        window.location.href = `mailto:info@sunnit.it?subject=${encodeURIComponent(copy.subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = `mailto:${recipientEmail}?subject=${encodeURIComponent(copy.subject)}&body=${encodeURIComponent(body)}`;
       }}
     >
       <input name="name" placeholder={labels.name} aria-label={labels.name} required />

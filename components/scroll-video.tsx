@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-export default function ScrollVideo() {
+export default function ScrollVideo({ src }: { src: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -90,7 +90,7 @@ export default function ScrollVideo() {
         controlsList="nodownload noplaybackrate"
         onContextMenu={(e) => e.preventDefault()}
       >
-        <source src="/sunnit.mp4" type="video/mp4" />
+        <source src={src} type="video/mp4" />
         Il tuo browser non supporta il tag video.
       </video>
       <div className="scroll-video-overlay" />

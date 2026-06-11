@@ -20,6 +20,19 @@
       "contact": "Contactos",
       "rights": "Todos los derechos reservados"
     },
+    "company": {
+      "email": "administracion@sunnitspain.es",
+      "phonePrimaryDisplay": "+34 687 093 488",
+      "phonePrimaryHref": "+34687093488",
+      "phoneSecondaryDisplay": "+34 687 093 541",
+      "phoneSecondaryHref": "+34687093541",
+      "website": "sunnitspain.es",
+      "addressLine": "Calle Colón 10 - 8, Valencia 46004",
+      "fullAddress": "Calle Colón 10 - 8, Valencia 46004 - NIF: B23933435",
+      "taxId": "NIF: B23933435",
+      "presentationPdf": "/Presentación IT SunnitAI.pdf",
+      "showcaseVideo": "/sunnit-es.mp4"
+    },
     "content": {
       "clients": [
         {
@@ -279,8 +292,9 @@
     "cta": {
       "eyebrow": "Ponte en contacto",
       "title": "Estamos aquí para ayudarte con tus preguntas.",
-      "email": "Email: info@sunnit.it",
-      "phone": "Teléfono: +39 06 45251 300",
+      "email": "Email: administracion@sunnitspain.es",
+      "phone": "Teléfono: +34 687 093 488 / +34 687 093 541",
+      "website": "Web: sunnitspain.es",
       "placeholderName": "Nombre",
       "placeholderEmail": "E-mail",
       "placeholderMessage": "Mensaje",
@@ -410,7 +424,7 @@
       "email": "Email",
       "phone": "Teléfono",
       "office": "Sede",
-      "officeAddress": "Via Stamira 63, Roma, 00162",
+      "officeAddress": "Calle Colón 10 - 8, Valencia 46004 - NIF: B23933435",
       "cta": "Descubre los servicios"
     }
   },

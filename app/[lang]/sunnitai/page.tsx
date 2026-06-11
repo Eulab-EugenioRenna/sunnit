@@ -18,6 +18,7 @@ export default async function SunnitAIPage({
 }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
+  const company = dict.common.company;
 
   return (
     <>
@@ -27,7 +28,7 @@ export default async function SunnitAIPage({
         <h2>{dict.sunnitai.hero.headline}</h2>
         <TextLines text={dict.sunnitai.hero.desc} />
         <div className="hero-actions">
-          <a href="/sunnitai.pdf" className="solid-btn" download>{dict.sunnitai.hero.cta1}</a>
+          <a href={company.presentationPdf} className="solid-btn" download>{dict.sunnitai.hero.cta1}</a>
           <a href={`/${lang}/services`} className="outline-btn">{dict.sunnitai.hero.cta2}</a>
         </div>
       </section>
@@ -77,7 +78,7 @@ export default async function SunnitAIPage({
         </div>
         <div>
           <TextLines text={dict.sunnitai.download.desc} />
-          <a href="/sunnitai.pdf" className="solid-btn" download>{dict.sunnitai.download.cta}</a>
+          <a href={company.presentationPdf} className="solid-btn" download>{dict.sunnitai.download.cta}</a>
         </div>
       </GsapReveal>
     </>

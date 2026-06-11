@@ -71,9 +71,9 @@ export default function EuropeMap({ lang }: { lang: string }) {
       id: "valencia",
       name: "Valencia",
       city: "Valencia",
-      address: "Carrer de Colón 8, 46004 Valencia",
-      phone: "+34 963 51 01 00",
-      email: "valencia@sunnit.es",
+      address: "Calle Colón 10 - 8, Valencia 46004 - NIF: B23933435",
+      phone: "+34 687 093 488 / +34 687 093 541",
+      email: "administracion@sunnitspain.es",
       latitude: 39.4699,
       longitude: -0.3763
     }
@@ -416,9 +416,11 @@ export default function EuropeMap({ lang }: { lang: string }) {
             </>
           ) : (
             <div className="tooltip-placeholder">
-              {lang === "en" 
-                ? "Hover over a city pin to view office details." 
-                : "Passa col mouse sui pin delle città per i dettagli delle sedi."}
+              {lang === "en"
+                ? "Hover over a city pin to view office details."
+                : lang === "es"
+                  ? "Pasa el cursor sobre los puntos para ver los detalles de las sedes."
+                  : "Passa col mouse sui pin delle città per i dettagli delle sedi."}
             </div>
           )}
         </div>

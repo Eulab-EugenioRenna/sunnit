@@ -8,6 +8,7 @@ import NewsSlider from "@/components/news-slider";
 import PortfolioSection from "@/components/portfolio-section";
 import ServiceScrollPanels from "@/components/service-scroll-panels";
 import RotaryServices from "@/components/rotary-services";
+import LogoMarquee from "@/components/logo-marquee";
 import TextLines from "@/components/text-lines";
 import { getAllBlogPosts, type BlogLang } from "@/lib/blog";
 import { getDictionary } from "@/lib/dictionaries";
@@ -20,6 +21,7 @@ export default async function Home({
   const { lang } = await params;
   const dict = await getDictionary(lang);
   const content = (dict as any).common.content;
+  const company = dict.common.company;
   const posts = getAllBlogPosts(lang as BlogLang).slice(0, 3);
 
   type client = {
@@ -53,12 +55,10 @@ export default async function Home({
         <div className="hero-orbit" aria-hidden="true" />
       </section>
 
-      <ScrollVideo />
+      <ScrollVideo src={company.showcaseVideo} />
 
       <section className="container">
-        <div className="logo-row">
-          {content.clients.map((client: client) => <div className="logo-pill" key={client.name}><img src={client.logo} alt={client.name} /></div>)}
-        </div>
+        <LogoMarquee clients={content.clients} />
       </section>
 
       {/* <section className="container bento-grid" aria-label="Highlights">
@@ -194,10 +194,12 @@ export default async function Home({
           <h2>{dict.home.cta.title}</h2>
           <p>{dict.home.cta.email}</p>
           <p>{dict.home.cta.phone}</p>
+          <p>{dict.home.cta.website}</p>
         </div>
         <ContactMailtoForm
           lang={lang}
           context="home"
+          recipientEmail={company.email}
           className="cta-form form-grid"
           labels={{
             name: dict.home.cta.placeholderName,

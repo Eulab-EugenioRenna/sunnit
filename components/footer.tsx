@@ -6,6 +6,8 @@ import type { Dictionary } from "@/lib/dictionaries";
 import TextLines from "@/components/text-lines";
 
 export default function Footer({ dict, lang }: { dict: Dictionary; lang: string }) {
+  const company = dict.common.company;
+
   return (
     <footer className="footer-shell">
       <Script src="https://cdn.iubenda.com/iubenda.js" strategy="lazyOnload" />
@@ -47,9 +49,13 @@ export default function Footer({ dict, lang }: { dict: Dictionary; lang: string 
 
         <div>
           <h3>{dict.common.footer.contact}</h3>
-          <a href="mailto:info@sunnit.it">info@sunnit.it</a>
-          <a href="tel:+390645251300">+39 06 45251 300</a>
-          <span>Via Stamira 63, Roma</span>
+          <a href={`mailto:${company.email}`}>{company.email}</a>
+          <a href={`tel:${company.phonePrimaryHref}`}>{company.phonePrimaryDisplay}</a>
+          {company.phoneSecondaryDisplay ? (
+            <a href={`tel:${company.phoneSecondaryHref}`}>{company.phoneSecondaryDisplay}</a>
+          ) : null}
+          <a href={company.website} target="_blank" rel="noreferrer">{company.website}</a>
+          <span>{company.fullAddress}</span>
         </div>
       </div>
 

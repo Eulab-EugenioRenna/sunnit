@@ -19,6 +19,7 @@ export default async function ContactPage({
 }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
+  const company = dict.common.company;
 
   return (
     <>
@@ -36,6 +37,7 @@ export default async function ContactPage({
             <ContactMailtoForm
               lang={lang}
               context="contact"
+              recipientEmail={company.email}
               className="form-grid"
               labels={{
                 name: dict.contact.form.name,
@@ -53,15 +55,19 @@ export default async function ContactPage({
         <div className="contact-info-grid">
           <GsapReveal className="info-card" delay={100} direction="left">
             <h3>{dict.contact.info.email}</h3>
-            <a href="mailto:info@sunnit.it">info@sunnit.it</a>
+            <a href={`mailto:${company.email}`}>{company.email}</a>
           </GsapReveal>
           <GsapReveal className="info-card" delay={180} direction="left">
             <h3>{dict.contact.info.phone}</h3>
-            <a href="tel:+390645251300">+39 06 45251 300</a>
+            <a href={`tel:${company.phonePrimaryHref}`}>{company.phonePrimaryDisplay}</a>
+            {company.phoneSecondaryDisplay ? (
+              <a href={`tel:${company.phoneSecondaryHref}`}>{company.phoneSecondaryDisplay}</a>
+            ) : null}
           </GsapReveal>
           <GsapReveal className="info-card" delay={260} direction="left">
             <h3>{dict.contact.info.office}</h3>
             <TextLines text={dict.contact.info.officeAddress} />
+            <a href={company.website} target="_blank" rel="noreferrer">{company.website}</a>
             <Link href={`/${lang}/services`} className="outline-btn tiny">{dict.contact.info.cta}</Link>
           </GsapReveal>
           <EuropeMap lang={lang} />

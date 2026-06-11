@@ -20,6 +20,19 @@
       "contact": "Contact",
       "rights": "All rights reserved"
     },
+    "company": {
+      "email": "info@sunnit.it",
+      "phonePrimaryDisplay": "+39 06 45251 300",
+      "phonePrimaryHref": "+390645251300",
+      "phoneSecondaryDisplay": "",
+      "phoneSecondaryHref": "",
+      "website": "https://sunnit.it/",
+      "addressLine": "Via Stamira 63, Rome",
+      "fullAddress": "Via Stamira 63, Rome, 00162",
+      "taxId": "",
+      "presentationPdf": "/sunnitai.pdf",
+      "showcaseVideo": "/sunnit.mp4"
+    },
     "content": {
       "clients": [
         {
@@ -281,6 +294,7 @@
       "title": "We are here to help with your questions.",
       "email": "Email: info@sunnit.it",
       "phone": "Phone: +39 06 45251 300",
+      "website": "Web: https://sunnit.it/",
       "placeholderName": "Name",
       "placeholderEmail": "Email",
       "placeholderMessage": "Message",
