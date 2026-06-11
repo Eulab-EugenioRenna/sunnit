@@ -30,6 +30,7 @@ type RawFrontmatter = {
   tag?: string;
   tone?: string;
   order?: string;
+  date?: string;
 };
 
 function isPortfolioLang(value: string): value is PortfolioLang {
@@ -129,6 +130,7 @@ function parseFrontmatter(source: string) {
       tag: typeof data.tag === "string" ? data.tag : undefined,
       tone: typeof data.tone === "string" ? data.tone : undefined,
       order: typeof data.order === "string" ? data.order : undefined,
+      date: typeof data.date === "string" ? data.date : undefined,
     },
     body,
   };
@@ -155,6 +157,17 @@ function toExcerpt(body: string) {
 function getCreatedAt(stats: fs.Stats) {
   const created = Number.isNaN(stats.birthtime.getTime()) ? stats.mtime : stats.birthtime;
   return created;
+}
+
+function resolveCreatedAt(rawDate: string | undefined, stats: fs.Stats) {
+  if (rawDate) {
+    const parsed = new Date(rawDate);
+    if (!Number.isNaN(parsed.getTime())) {
+      return parsed;
+    }
+  }
+
+  return getCreatedAt(stats);
 }
 
 function getPortfolioDir(lang: PortfolioLang) {
@@ -186,7 +199,7 @@ function readProjectFile(lang: PortfolioLang, slug: string) {
   const source = fs.readFileSync(filePath, "utf8");
   const stats = fs.statSync(filePath);
   const { data, body } = parseFrontmatter(source);
-  const createdAtDate = getCreatedAt(stats);
+  const createdAtDate = resolveCreatedAt(data.date, stats);
 
   return {
     title: data.title || slug,

@@ -27,6 +27,7 @@ type RawFrontmatter = {
   excerpt?: string;
   image?: string;
   tags?: string[];
+  date?: string;
 };
 
 function isBlogLang(value: string): value is BlogLang {
@@ -123,6 +124,7 @@ function parseFrontmatter(source: string) {
       excerpt: typeof data.excerpt === "string" ? data.excerpt : undefined,
       image: typeof data.image === "string" ? data.image : undefined,
       tags: Array.isArray(data.tags) ? data.tags : [],
+      date: typeof data.date === "string" ? data.date : undefined,
     },
     body,
   };
@@ -157,6 +159,17 @@ function toExcerpt(body: string) {
 function getCreatedAt(stats: fs.Stats) {
   const created = Number.isNaN(stats.birthtime.getTime()) ? stats.mtime : stats.birthtime;
   return created;
+}
+
+function resolveCreatedAt(rawDate: string | undefined, stats: fs.Stats) {
+  if (rawDate) {
+    const parsed = new Date(rawDate);
+    if (!Number.isNaN(parsed.getTime())) {
+      return parsed;
+    }
+  }
+
+  return getCreatedAt(stats);
 }
 
 function resolveDateLocale(lang: BlogLang) {
@@ -207,7 +220,7 @@ function readPostFile(lang: BlogLang, slug: string) {
   const source = fs.readFileSync(filePath, "utf8");
   const stats = fs.statSync(filePath);
   const { data, body } = parseFrontmatter(source);
-  const createdAtDate = getCreatedAt(stats);
+  const createdAtDate = resolveCreatedAt(data.date, stats);
 
   return {
     title: data.title || slugToTitle(slug),

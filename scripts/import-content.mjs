@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
-import { createWriteStream } from 'node:fs';
-import { mkdir, readFile, stat, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
@@ -32,6 +31,7 @@ function parseArgs(argv) {
     textFile: '',
     body: '',
     excerpt: '',
+    date: '',
     tags: '',
     tag: '',
     tone: 'blue',
@@ -107,6 +107,12 @@ function parseArgs(argv) {
       continue;
     }
 
+    if (arg === '--date') {
+      options.date = next || '';
+      index += 1;
+      continue;
+    }
+
     if (arg === '--tags') {
       options.tags = next || '';
       index += 1;
@@ -139,7 +145,7 @@ function parseArgs(argv) {
 
 function printHelp() {
   console.log(`Uso:
-  npm run import:content -- --type <blog|portfolio> --lang <it|en|es> --title "Titolo" --image-url <url>
+  npm run import -- --type <blog|portfolio> --lang <it|en|es> --title "Titolo" --image-url <url>
 
 Modalita:
   1. Interattiva: lancia solo il comando e incolla il testo quando richiesto
@@ -154,6 +160,7 @@ Opzioni principali:
   --image-url     URL dell'immagine da scaricare
   --text-file     file locale con il corpo MD/MDX
   --body          corpo MD/MDX inline
+  --date          data editoriale in formato YYYY-MM-DD (default: oggi)
   --dry-run       non scrive file, mostra solo cosa farebbe
   --skip-beautify salta la rifinitura MDX con Ollama
 
@@ -198,6 +205,10 @@ function toExcerpt(body) {
 
 function escapeYaml(value) {
   return String(value || '').replace(/"/g, '\\"');
+}
+
+function getDefaultDate() {
+  return new Date().toISOString().slice(0, 10);
 }
 
 function inferExtension(contentType, url, contentTypeHeader) {
@@ -307,6 +318,8 @@ async function main() {
     throw new Error('URL immagine obbligatorio');
   }
 
+  const editorialDate = options.date || getDefaultDate();
+
   const body = await getBodyContent(options);
 
   if (!body) {
@@ -352,6 +365,7 @@ async function main() {
       `title: "${escapeYaml(options.title)}"`,
       `excerpt: "${escapeYaml(excerpt)}"`,
       `image: "${imagePublicPath}"`,
+      `date: "${escapeYaml(editorialDate)}"`,
       `tags: [${tags.map((tag) => `"${escapeYaml(tag)}"`).join(', ')}]`,
       '---',
       '',
@@ -362,6 +376,7 @@ async function main() {
       `title: "${escapeYaml(options.title)}"`,
       `excerpt: "${escapeYaml(excerpt)}"`,
       `image: "${imagePublicPath}"`,
+      `date: "${escapeYaml(editorialDate)}"`,
       `tag: "${escapeYaml(options.tag || 'Project')}"`,
       `tone: "${escapeYaml(options.tone || 'blue')}"`,
       ...(options.order ? [`order: "${escapeYaml(options.order)}"`] : []),
@@ -375,6 +390,7 @@ async function main() {
   console.log(`Tipo: ${options.type}`);
   console.log(`Lingua: ${options.lang}`);
   console.log(`Slug: ${slug}`);
+  console.log(`Data: ${editorialDate}`);
   console.log(`MDX: ${path.relative(projectRoot, mdxPath)}`);
   console.log(`Immagine: ${path.relative(projectRoot, imageDiskPath)}`);
   console.log(`Beautify MDX: ${options.skipBeautify ? 'saltato' : `Ollama ${DEFAULT_OLLAMA_MODEL}`}`);
