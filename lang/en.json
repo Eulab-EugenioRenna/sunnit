@@ -5,6 +5,7 @@
       "sunnitai": "SunnitAI",
       "about": "About us",
       "blog": "Blog",
+      "jobs": "Jobs",
       "contact": "Contact us",
       "cta": "Request a consultation"
     },
@@ -681,6 +682,49 @@
     },
     "list": {
       "suffix": " This is an absolutely essential practice for any digital project that wants measurable impact."
+    }
+  },
+  "jobs": {
+    "hero": {
+      "title": "Jobs",
+      "crumb": "Jobs",
+      "text": "Open SUNNIT roles for technical teams, AI, cloud and multi-country projects."
+    },
+    "intro": {
+      "eyebrow": "Work with us",
+      "title": "Open roles filterable by skill area, country and work mode.",
+      "text": "Each application is sent directly to the SUNNIT team with CV and essential information."
+    },
+    "filters": {
+      "search": "Search role, skill or location",
+      "all": "All",
+      "department": "Area",
+      "country": "Country",
+      "workMode": "Mode",
+      "contract": "Contract",
+      "seniority": "Seniority",
+      "reset": "Reset filters",
+      "results": "roles",
+      "empty": "No roles match the selected filters."
+    },
+    "card": {
+      "apply": "Apply",
+      "statusOpen": "Open"
+    },
+    "application": {
+      "title": "Send application",
+      "subtitle": "The CV and form information are sent to the SUNNIT team.",
+      "name": "Full name",
+      "email": "Email",
+      "phone": "Phone",
+      "cv": "Drop CV here or select PDF, DOC, DOCX",
+      "message": "Message",
+      "submit": "Send application",
+      "sending": "Sending",
+      "success": "Application completed.",
+      "missing": "Fill in name, email and attach your CV.",
+      "error": "Delivery failed. Try again later.",
+      "close": "Close"
     }
   }
 }

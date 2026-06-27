@@ -14,6 +14,7 @@ const projectRoot = path.resolve(__dirname, '..');
 const contentRoots = {
   blog: path.join(projectRoot, 'content', 'blog'),
   portfolio: path.join(projectRoot, 'content', 'portfolio'),
+  job: path.join(projectRoot, 'content', 'jobs'),
 };
 
 const imageRoots = {
@@ -36,6 +37,13 @@ function parseArgs(argv) {
     tag: '',
     tone: 'blue',
     order: '',
+    department: '',
+    country: '',
+    location: '',
+    workMode: '',
+    contract: '',
+    seniority: '',
+    status: 'open',
     dryRun: false,
     skipBeautify: false,
   };
@@ -137,6 +145,48 @@ function parseArgs(argv) {
       continue;
     }
 
+    if (arg === '--department') {
+      options.department = next || '';
+      index += 1;
+      continue;
+    }
+
+    if (arg === '--country') {
+      options.country = next || '';
+      index += 1;
+      continue;
+    }
+
+    if (arg === '--location') {
+      options.location = next || '';
+      index += 1;
+      continue;
+    }
+
+    if (arg === '--work-mode' || arg === '--workMode') {
+      options.workMode = next || '';
+      index += 1;
+      continue;
+    }
+
+    if (arg === '--contract') {
+      options.contract = next || '';
+      index += 1;
+      continue;
+    }
+
+    if (arg === '--seniority') {
+      options.seniority = next || '';
+      index += 1;
+      continue;
+    }
+
+    if (arg === '--status') {
+      options.status = next || '';
+      index += 1;
+      continue;
+    }
+
     throw new Error(`Argomento non supportato: ${arg}`);
   }
 
@@ -145,7 +195,7 @@ function parseArgs(argv) {
 
 function printHelp() {
   console.log(`Uso:
-  npm run import -- --type <blog|portfolio> --lang <it|en|es> --title "Titolo" --image-url <url>
+  npm run import -- --type <blog|portfolio|job> --lang <it|en|es> --title "Titolo" --image-url <url>
 
 Modalita:
   1. Interattiva: lancia solo il comando e incolla il testo quando richiesto
@@ -153,11 +203,11 @@ Modalita:
   3. Via flag:     --body "# Titolo\n\nTesto..."
 
 Opzioni principali:
-  --type          blog o portfolio
+  --type          blog, portfolio o job
   --lang          lingua del contenuto (default: it)
   --title         titolo del contenuto
   --slug          slug personalizzato (opzionale)
-  --image-url     URL dell'immagine da scaricare
+  --image-url     URL dell'immagine da scaricare (blog e portfolio)
   --text-file     file locale con il corpo MD/MDX
   --body          corpo MD/MDX inline
   --date          data editoriale in formato YYYY-MM-DD (default: oggi)
@@ -172,6 +222,15 @@ Opzioni portfolio:
   --tag           etichetta card (es. Cloud / DevOps)
   --tone          blue, green, purple, dark
   --order         ordine opzionale
+
+Opzioni job:
+  --department    area o dipartimento
+  --country       paese
+  --location      sede
+  --work-mode     remoto, ibrido, onsite
+  --contract      contratto
+  --seniority     livello
+  --status        open o closed
 `);
 }
 
@@ -279,10 +338,10 @@ async function promptMissingFields(options) {
   const rl = readline.createInterface({ input, output });
 
   try {
-    if (!options.type) options.type = (await rl.question('Tipo (blog|portfolio): ')).trim();
+    if (!options.type) options.type = (await rl.question('Tipo (blog|portfolio|job): ')).trim();
     if (!options.lang) options.lang = (await rl.question('Lingua (it|en|es): ')).trim() || 'it';
     if (!options.title) options.title = (await rl.question('Titolo: ')).trim();
-    if (!options.imageUrl) options.imageUrl = (await rl.question('URL immagine: ')).trim();
+    if (options.type !== 'job' && !options.imageUrl) options.imageUrl = (await rl.question('URL immagine: ')).trim();
 
     if (options.type === 'blog' && !options.tags) {
       options.tags = (await rl.question('Tags blog (separati da virgola): ')).trim();
@@ -290,6 +349,15 @@ async function promptMissingFields(options) {
 
     if (options.type === 'portfolio' && !options.tag) {
       options.tag = (await rl.question('Tag card portfolio: ')).trim();
+    }
+
+    if (options.type === 'job') {
+      if (!options.department) options.department = (await rl.question('Area job: ')).trim();
+      if (!options.country) options.country = (await rl.question('Paese: ')).trim();
+      if (!options.location) options.location = (await rl.question('Sede: ')).trim();
+      if (!options.workMode) options.workMode = (await rl.question('Modalita lavoro: ')).trim();
+      if (!options.contract) options.contract = (await rl.question('Contratto: ')).trim();
+      if (!options.seniority) options.seniority = (await rl.question('Seniorita: ')).trim();
     }
   } finally {
     rl.close();
@@ -307,14 +375,14 @@ async function main() {
   await promptMissingFields(options);
 
   if (!(options.type in contentRoots)) {
-    throw new Error('Il tipo deve essere blog o portfolio');
+    throw new Error('Il tipo deve essere blog, portfolio o job');
   }
 
   if (!options.title) {
     throw new Error('Titolo obbligatorio');
   }
 
-  if (!options.imageUrl) {
+  if (options.type !== 'job' && !options.imageUrl) {
     throw new Error('URL immagine obbligatorio');
   }
 
@@ -338,11 +406,16 @@ async function main() {
   const contentDir = path.join(contentRoots[options.type], options.lang);
   const mdxPath = path.join(contentDir, `${slug}.mdx`);
 
-  const imageProbe = await fetch(options.imageUrl, { method: 'HEAD' }).catch(() => null);
-  const extension = inferExtension(options.type, options.imageUrl, imageProbe?.headers.get('content-type') || '');
-  const imageFileName = `${slug}${extension}`;
-  const imagePublicPath = `${imageRoots[options.type]}/${imageFileName}`;
-  const imageDiskPath = path.join(projectRoot, 'public', imagePublicPath.replace(/^?\//, ''));
+  let imagePublicPath = '';
+  let imageDiskPath = '';
+
+  if (options.type !== 'job') {
+    const imageProbe = await fetch(options.imageUrl, { method: 'HEAD' }).catch(() => null);
+    const extension = inferExtension(options.type, options.imageUrl, imageProbe?.headers.get('content-type') || '');
+    const imageFileName = `${slug}${extension}`;
+    imagePublicPath = `${imageRoots[options.type]}/${imageFileName}`;
+    imageDiskPath = path.join(projectRoot, 'public', imagePublicPath.replace(/^?\//, ''));
+  }
 
   const excerpt = options.excerpt
     || (options.dryRun || options.skipBeautify
@@ -370,7 +443,7 @@ async function main() {
       '---',
       '',
     ].join('\n');
-  } else {
+  } else if (options.type === 'portfolio') {
     frontmatter = [
       '---',
       `title: "${escapeYaml(options.title)}"`,
@@ -383,6 +456,22 @@ async function main() {
       '---',
       '',
     ].join('\n');
+  } else {
+    frontmatter = [
+      '---',
+      `title: "${escapeYaml(options.title)}"`,
+      `excerpt: "${escapeYaml(excerpt)}"`,
+      `department: "${escapeYaml(options.department)}"`,
+      `country: "${escapeYaml(options.country)}"`,
+      `location: "${escapeYaml(options.location)}"`,
+      `workMode: "${escapeYaml(options.workMode)}"`,
+      `contract: "${escapeYaml(options.contract)}"`,
+      `seniority: "${escapeYaml(options.seniority)}"`,
+      `status: "${escapeYaml(options.status || 'open')}"`,
+      `date: "${escapeYaml(editorialDate)}"`,
+      '---',
+      '',
+    ].join('\n');
   }
 
   const mdxContent = `${frontmatter}${formattedBody.trim()}\n`;
@@ -392,7 +481,9 @@ async function main() {
   console.log(`Slug: ${slug}`);
   console.log(`Data: ${editorialDate}`);
   console.log(`MDX: ${path.relative(projectRoot, mdxPath)}`);
-  console.log(`Immagine: ${path.relative(projectRoot, imageDiskPath)}`);
+  if (imageDiskPath) {
+    console.log(`Immagine: ${path.relative(projectRoot, imageDiskPath)}`);
+  }
   console.log(`Beautify MDX: ${options.skipBeautify ? 'saltato' : `Ollama ${DEFAULT_OLLAMA_MODEL}`}`);
 
   if (options.dryRun) {
@@ -401,7 +492,9 @@ async function main() {
 
   await mkdir(path.dirname(mdxPath), { recursive: true });
   await writeFile(mdxPath, mdxContent, 'utf8');
-  await downloadImage({ imageUrl: options.imageUrl, targetPath: imageDiskPath, dryRun: options.dryRun });
+  if (imageDiskPath) {
+    await downloadImage({ imageUrl: options.imageUrl, targetPath: imageDiskPath, dryRun: options.dryRun });
+  }
 
   console.log('Contenuto creato con successo.');
 }

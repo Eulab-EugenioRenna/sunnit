@@ -51,8 +51,7 @@ export default function Header({ dict, lang, availableLocales }: { dict: Diction
   }, [pathname]);
 
   const navItems: NavItem[] = [
-        { href: `/${lang}/about`, label: dict.common.header.about },
-
+    { href: `/${lang}/about`, label: dict.common.header.about },
     { href: `/${lang}/services`, label: dict.common.header.services },
     { 
       href: `/${lang}/sunnitai`, 
@@ -63,6 +62,7 @@ export default function Header({ dict, lang, availableLocales }: { dict: Diction
       ]
     },
     { href: `/${lang}/blog`, label: dict.common.header.blog },
+    { href: `/${lang}/jobs`, label: dict.common.header.jobs },
     { href: `/${lang}/contact`, label: dict.common.header.contact },
   ];
 

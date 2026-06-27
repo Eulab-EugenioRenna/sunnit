@@ -77,6 +77,8 @@ export async function middleware(request: NextRequest) {
   // Exclude static files and API routes
   if (
     pathname.startsWith(`/_next/`) ||
+    pathname === '/cms' ||
+    pathname.startsWith('/cms/') ||
     pathname.includes('/api/') ||
     pathname.match(/\.(.*)$/)
   ) {

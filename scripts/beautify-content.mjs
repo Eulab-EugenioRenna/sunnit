@@ -14,6 +14,7 @@ const projectRoot = path.resolve(__dirname, '..');
 const contentRoots = {
   blog: path.join(projectRoot, 'content', 'blog'),
   portfolio: path.join(projectRoot, 'content', 'portfolio'),
+  job: path.join(projectRoot, 'content', 'jobs'),
 };
 
 function parseArgs(argv) {
@@ -90,13 +91,13 @@ function parseArgs(argv) {
 function printHelp() {
   console.log(`Uso:
   npm run beautify
-  npm run beautify -- --type <blog|portfolio> --lang <lang|all|lang1,lang2> --slug <slug>
-  npm run beautify -- --type <blog|portfolio> --lang <lang|all|lang1,lang2> --scan
+  npm run beautify -- --type <blog|portfolio|job> --lang <lang|all|lang1,lang2> --slug <slug>
+  npm run beautify -- --type <blog|portfolio|job> --lang <lang|all|lang1,lang2> --scan
   npm run beautify -- --file <percorso-file.mdx>
   npm run beautify -- --excerpt-only --file <percorso-file.mdx>
 
 Opzioni:
-  --type      blog o portfolio
+  --type      blog, portfolio o job
   --lang      lingua/e del contenuto: una lingua disponibile, all oppure lista separata da virgole
   --slug      slug del contenuto da rifinire
   --file      percorso file MDX alternativo
@@ -190,10 +191,10 @@ async function promptMissingOptions(options) {
     }
 
     if (needsType) {
-      const selectedType = (await rl.question('Tipo contenuto da beautify (blog|portfolio): ')).trim();
+      const selectedType = (await rl.question('Tipo contenuto da beautify (blog|portfolio|job): ')).trim();
 
       if (!(selectedType in contentRoots)) {
-        throw new Error('Il tipo deve essere blog o portfolio');
+        throw new Error('Il tipo deve essere blog, portfolio o job');
       }
 
       options.type = selectedType;
@@ -250,7 +251,7 @@ function resolveTargetPath(options) {
   }
 
   if (!(options.type in contentRoots)) {
-    throw new Error('Il tipo deve essere blog o portfolio');
+    throw new Error('Il tipo deve essere blog, portfolio o job');
   }
 
   if (!options.slug) {
@@ -267,7 +268,7 @@ function resolveTargetPath(options) {
 
 async function listContentEntries(contentType, lang) {
   if (!(contentType in contentRoots)) {
-    throw new Error('Il tipo deve essere blog o portfolio');
+    throw new Error('Il tipo deve essere blog, portfolio o job');
   }
 
   const targetDir = path.join(contentRoots[contentType], lang);
@@ -364,6 +365,10 @@ async function promptForScanSelection(options) {
 }
 
 function inferTypeFromPath(filePath) {
+  if (filePath.includes(`${path.sep}jobs${path.sep}`) || filePath.includes('/jobs/')) {
+    return 'job';
+  }
+
   if (filePath.includes(`${path.sep}portfolio${path.sep}`) || filePath.includes('/portfolio/')) {
     return 'portfolio';
   }

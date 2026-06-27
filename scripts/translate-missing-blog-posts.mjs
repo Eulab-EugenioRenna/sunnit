@@ -14,6 +14,7 @@ const langDir = path.join(projectRoot, 'lang');
 const contentRoots = {
   blog: path.join(projectRoot, 'content', 'blog'),
   portfolio: path.join(projectRoot, 'content', 'portfolio'),
+  job: path.join(projectRoot, 'content', 'jobs'),
 };
 
 const localeLabels = {
@@ -101,14 +102,14 @@ function parseArgs(argv) {
 function printHelp() {
 console.log(`Uso:
   npm run translate
-  npm run translate:blog -- [--dry-run] [--model <nome>] [--base-url <url>] [--source <locale>] [--type <blog|portfolio|all>]
+  npm run translate:blog -- [--dry-run] [--model <nome>] [--base-url <url>] [--source <locale>] [--type <blog|portfolio|job|all>]
 
 Opzioni:
   --dry-run         Mostra i file mancanti senza tradurli
   --model           Modello Ollama da usare (default: env OLLAMA_MODEL o gemma4:31b-cloud)
   --base-url        URL API Ollama (default: env OLLAMA_URL o http://127.0.0.1:11434)
   --source          Lingua sorgente preferita se disponibile (default: env BLOG_TRANSLATION_SOURCE o it)
-  --type            Contenuto da tradurre: blog, portfolio o all
+  --type            Contenuto da tradurre: blog, portfolio, job o all
   --help, -h        Mostra questo messaggio
 `);
 }
@@ -121,7 +122,7 @@ async function promptMissingOptions(options) {
   const rl = readline.createInterface({ input, output });
 
   try {
-    const selectedType = (await rl.question('Cosa vuoi tradurre? (blog|portfolio|all): ')).trim().toLowerCase();
+    const selectedType = (await rl.question('Cosa vuoi tradurre? (blog|portfolio|job|all): ')).trim().toLowerCase();
 
     if (!selectedType) {
       throw new Error('Tipo contenuto obbligatorio');

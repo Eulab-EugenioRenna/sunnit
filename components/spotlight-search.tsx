@@ -2,13 +2,13 @@
 
 import { useEffect, useState, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { Search, FileText, CornerDownLeft, Laptop, Info, Mail, Award, Cpu, BookOpen, Briefcase } from "lucide-react";
+import { Search, FileText, CornerDownLeft, Laptop, Info, Mail, Award, Cpu, BookOpen, Briefcase, UserRoundPlus } from "lucide-react";
 
 interface SearchItem {
   title: string;
   subtitle: string;
   searchText: string;
-  category: "pagine" | "articoli" | "portfolio";
+  category: "pagine" | "articoli" | "portfolio" | "jobs";
   href: string;
   icon: React.ReactNode;
   portfolioSlug?: string;
@@ -32,12 +32,28 @@ type SpotlightPortfolioProject = {
   href: string;
 };
 
+type SpotlightJob = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  department: string;
+  country: string;
+  location: string;
+  workMode: string;
+  contract: string;
+  seniority: string;
+  href: string;
+};
+
 export default function SpotlightSearch({
   articles,
   portfolioProjects,
+  jobs,
 }: {
   articles: SpotlightArticle[];
   portfolioProjects: SpotlightPortfolioProject[];
+  jobs: SpotlightJob[];
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -60,6 +76,8 @@ export default function SpotlightSearch({
         aboutSubtitle: "Our history, team, and digital philosophy",
         blogTitle: "Blog & Insights",
         blogSubtitle: "Articles, news, and technical guides",
+        jobsTitle: "Jobs",
+        jobsSubtitle: "Open roles across SUNNIT teams and countries",
         contactTitle: "Contact Us",
         contactSubtitle: "Get in touch for a technical assessment",
         placeholder: "Search pages, posts... (Esc to close)",
@@ -83,6 +101,8 @@ export default function SpotlightSearch({
           aboutSubtitle: "Nuestra historia, el equipo y la filosofia digital",
           blogTitle: "Blog e Insights",
           blogSubtitle: "Articulos, noticias y guias tecnicas",
+          jobsTitle: "Jobs",
+          jobsSubtitle: "Posiciones abiertas en equipos y paises SUNNIT",
           contactTitle: "Contactanos",
           contactSubtitle: "Ponte en contacto para una evaluacion tecnica",
           placeholder: "Buscar paginas, articulos... (Esc para cerrar)",
@@ -105,6 +125,8 @@ export default function SpotlightSearch({
           aboutSubtitle: "La nostra storia, il team e la filosofia digitale",
           blogTitle: "Blog & Insights",
           blogSubtitle: "Articoli, news e guide tecniche",
+          jobsTitle: "Jobs",
+          jobsSubtitle: "Posizioni aperte nei team e nei paesi SUNNIT",
           contactTitle: "Contattaci",
           contactSubtitle: "Entra in contatto per una valutazione tecnica",
           placeholder: "Cerca pagine, articoli... (Esc per chiudere)",
@@ -169,6 +191,14 @@ export default function SpotlightSearch({
         icon: <BookOpen className="search-icon-svg" size={18} />
       },
       {
+        title: copy.jobsTitle,
+        subtitle: copy.jobsSubtitle,
+        searchText: `${copy.jobsTitle} ${copy.jobsSubtitle}`.toLowerCase(),
+        category: "pagine",
+        href: `/${lang}/jobs`,
+        icon: <UserRoundPlus className="search-icon-svg" size={18} />
+      },
+      {
         title: copy.contactTitle,
         subtitle: copy.contactSubtitle,
         searchText: `${copy.contactTitle} ${copy.contactSubtitle}`.toLowerCase(),
@@ -197,7 +227,27 @@ export default function SpotlightSearch({
       portfolioSlug: project.slug,
     }));
 
-    return [...pages, ...portfolioItems, ...articleItems];
+    const jobItems: SearchItem[] = jobs.map((job) => ({
+      title: job.title,
+      subtitle: `${job.department} - ${job.location} - ${job.contract}`,
+      searchText: [
+        job.title,
+        job.excerpt,
+        job.content,
+        job.department,
+        job.country,
+        job.location,
+        job.workMode,
+        job.contract,
+        job.seniority,
+        job.slug,
+      ].join(" ").toLowerCase(),
+      category: "jobs",
+      href: `${job.href}?job=${encodeURIComponent(job.slug)}`,
+      icon: <UserRoundPlus className="search-icon-svg" size={18} />,
+    }));
+
+    return [...pages, ...jobItems, ...portfolioItems, ...articleItems];
   };
 
   const allItems = getSearchItems();

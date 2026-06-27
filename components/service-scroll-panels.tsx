@@ -58,6 +58,11 @@ export default function ServiceScrollPanels({
       const expandedWidth = "70%";
       const navWrap = document.querySelector<HTMLElement>(".site-header .nav-wrap");
       const pinOffset = (navWrap?.offsetHeight ?? 72) + 60;
+      const getScrollDistance = () => {
+        const viewportSpan = window.innerHeight * 1.35;
+        const trackSpan = track.offsetHeight * 1.85;
+        return Math.max(viewportSpan, trackSpan);
+      };
 
       gsap.set(panelNodes[0], { width: expandedWidth, zIndex: 3 });
       gsap.set(panelNodes[1], { width: collapsedWidth, zIndex: 2 });
@@ -67,11 +72,11 @@ export default function ServiceScrollPanels({
 
       const timeline = gsap.timeline({
         scrollTrigger: {
-          trigger: section,
+          trigger: track,
           start: () => `top top+=${pinOffset}`,
-          end: "+=185%",
+          end: () => `+=${getScrollDistance()}`,
           scrub: 0.8,
-          pin: section,
+          pin: stage,
           pinSpacing: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,

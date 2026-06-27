@@ -5,6 +5,7 @@
       "sunnitai": "SunnitAI",
       "about": "Quiénes somos",
       "blog": "Blog",
+      "jobs": "Jobs",
       "contact": "Contáctanos",
       "cta": "Solicita una consultoría"
     },
@@ -681,6 +682,49 @@
     },
     "list": {
       "suffix": " Esta es una práctica absolutamente esencial para cualquier proyecto digital que desee un impacto medible."
+    }
+  },
+  "jobs": {
+    "hero": {
+      "title": "Jobs",
+      "crumb": "Jobs",
+      "text": "Posiciones abiertas de SUNNIT para equipos tecnicos, AI, cloud y proyectos multipais."
+    },
+    "intro": {
+      "eyebrow": "Trabaja con nosotros",
+      "title": "Roles abiertos filtrables por competencia, pais y modalidad de trabajo.",
+      "text": "Cada candidatura llega directamente al equipo SUNNIT con CV e informacion esencial."
+    },
+    "filters": {
+      "search": "Busca rol, competencia o sede",
+      "all": "Todos",
+      "department": "Area",
+      "country": "Pais",
+      "workMode": "Modalidad",
+      "contract": "Contrato",
+      "seniority": "Senioridad",
+      "reset": "Reset filtros",
+      "results": "posiciones",
+      "empty": "Ninguna posicion coincide con los filtros seleccionados."
+    },
+    "card": {
+      "apply": "Candidati",
+      "statusOpen": "Abierta"
+    },
+    "application": {
+      "title": "Enviar candidatura",
+      "subtitle": "El CV y la informacion del formulario se envian al equipo de SUNNIT.",
+      "name": "Nombre y apellido",
+      "email": "Email",
+      "phone": "Telefono",
+      "cv": "Arrastra aqui el CV o selecciona PDF, DOC, DOCX",
+      "message": "Mensaje",
+      "submit": "Enviar candidatura",
+      "sending": "Enviando",
+      "success": "Candidatura completada.",
+      "missing": "Completa nombre, email y adjunta el CV.",
+      "error": "Envio no realizado. Intentalo mas tarde.",
+      "close": "Cerrar"
     }
   }
 }

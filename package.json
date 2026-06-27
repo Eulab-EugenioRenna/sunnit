@@ -9,7 +9,10 @@
     "lint": "next lint",
     "translate": "node scripts/translate-missing-blog-posts.mjs",
     "import": "node scripts/import-content.mjs",
-    "beautify": "node scripts/beautify-content.mjs"
+    "import:job": "node scripts/import-content.mjs --type job",
+    "beautify": "node scripts/beautify-content.mjs",
+    "beautify:job": "node scripts/beautify-content.mjs --type job",
+    "translate:job": "node scripts/translate-missing-blog-posts.mjs --type job"
   },
   "dependencies": {
     "@amcharts/amcharts5": "^5.17.2",
@@ -24,7 +27,8 @@
     "negotiator": "^1.0.0",
     "next": "^15.3.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "resend": "^6.16.0"
   },
   "devDependencies": {
     "@types/negotiator": "^0.6.4",
