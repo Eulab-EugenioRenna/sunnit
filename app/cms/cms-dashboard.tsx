@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Languages, LogOut, Plus, Save, Sparkles, TextQuote, Trash2 } from "lucide-react";
+import { Languages, Plus, Save, Sparkles, TextQuote, Trash2 } from "lucide-react";
 
 type CmsContentType = "blog" | "portfolio" | "job";
 
@@ -130,6 +130,7 @@ export default function CmsDashboard() {
   const [isLoading, setIsLoading] = useState(false);
   const [activeCommand, setActiveCommand] = useState("");
   const [message, setMessage] = useState("");
+  const [exitDialogOpen, setExitDialogOpen] = useState(false);
   const activeTabLabel = tabs.find((tab) => tab.type === activeType)?.label || "contenuto";
   const stagedEntriesRef = useRef(stagedEntries);
   const pendingDeletesRef = useRef(pendingDeletes);
@@ -224,6 +225,23 @@ export default function CmsDashboard() {
     setActiveEntry(nextActive);
   };
 
+  const clearQueueState = () => {
+    setStagedEntries({});
+    setPendingDeletes({});
+    stagedEntriesRef.current = {};
+    pendingDeletesRef.current = {};
+  };
+
+  const resetWorkspace = () => {
+    clearQueueState();
+    setEntries([]);
+    setActiveDraftKey("");
+    setActiveEntry(makeDraftEntry(makeBlankEntry(activeType, lang), makeDraftKey()));
+    setActiveCommand("");
+    setMessage("");
+    setExitDialogOpen(false);
+  };
+
   useEffect(() => {
     const loadSession = async () => {
       const response = await fetch("/api/cms/session");
@@ -295,6 +313,7 @@ export default function CmsDashboard() {
   const logout = async () => {
     await fetch("/api/cms/logout", { method: "POST" });
     setAuthenticated(false);
+    resetWorkspace();
   };
 
   const updateFrontmatter = (key: string, value: string) => {
@@ -309,7 +328,7 @@ export default function CmsDashboard() {
     stageEntry(nextEntry);
   };
 
-  const saveAllEntries = async () => {
+  const pushQueuedChanges = async () => {
     setIsLoading(true);
     setActiveCommand("save");
     setMessage("");
@@ -336,18 +355,44 @@ export default function CmsDashboard() {
       if (!response.ok) throw new Error(await response.text());
 
       await response.json();
-      setMessage("Salvataggio completato. Uscita pronta.");
-      setStagedEntries({});
-      setPendingDeletes({});
-      stagedEntriesRef.current = {};
-      pendingDeletesRef.current = {};
+      setMessage("Modifiche pronte al push.");
+      clearQueueState();
       await loadEntries(activeType, lang);
+      return true;
     } catch {
-      setMessage("Salvataggio non riuscito.");
+      setMessage("Push non riuscito.");
+      return false;
     } finally {
       setIsLoading(false);
       setActiveCommand("");
     }
+  };
+
+  const openExitDialog = () => {
+    setExitDialogOpen(true);
+  };
+
+  const cancelExitDialog = () => {
+    setExitDialogOpen(false);
+  };
+
+  const acceptExit = async () => {
+    const pushed = await pushQueuedChanges();
+    if (!pushed) return;
+
+    await logout();
+  };
+
+  const discardQueuedChanges = async () => {
+    clearQueueState();
+    setExitDialogOpen(false);
+    setMessage("Modifiche scartate.");
+    await loadEntries(activeType, lang);
+  };
+
+  const importCurrentEntry = () => {
+    stageEntry(activeEntry);
+    setMessage("Articolo importato in coda.");
   };
 
   const runBeautify = async (mode: "full" | "excerpt-only") => {
@@ -437,7 +482,7 @@ export default function CmsDashboard() {
 
     const nextEntry = { ...activeEntry, pendingDelete: true };
     stageEntry(nextEntry, { pendingDelete: true });
-    setMessage("Eliminazione messa in coda. Conferma con Salva ed esci.");
+    setMessage("Eliminazione messa in coda. Conferma dal dialog di uscita.");
   };
 
   if (!configured) {
@@ -519,11 +564,9 @@ export default function CmsDashboard() {
             </select>
           </label>
 
-
-
-          <button type="button" className="cms-logout" onClick={logout}>
-            <LogOut size={16} aria-hidden />
-            Logout
+          <button type="button" className="cms-logout" onClick={openExitDialog}>
+            <Save size={16} aria-hidden />
+            Salva ed esci
           </button>
         </div>
       </nav>
@@ -567,9 +610,9 @@ export default function CmsDashboard() {
               <Trash2 size={15} aria-hidden />
               Elimina
             </button>
-            <button type="button" className="dark-btn tiny" onClick={saveAllEntries} disabled={isLoading}>
-              <Save size={15} aria-hidden />
-              {activeCommand === "save" ? "Salvataggio..." : "Salva ed esci"}
+            <button type="button" className="dark-btn tiny" onClick={importCurrentEntry} disabled={isLoading}>
+              <Plus size={15} aria-hidden />
+              Importa
             </button>
           </div>
         </div>
@@ -632,6 +675,35 @@ export default function CmsDashboard() {
 
         {message ? <p className="cms-message">{message}</p> : null}
       </section>
+
+      {exitDialogOpen ? (
+        <div className="cms-dialog-backdrop" role="presentation" onClick={cancelExitDialog}>
+          <div
+            className="cms-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cms-exit-dialog-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <h2 id="cms-exit-dialog-title">Salvare la coda e uscire?</h2>
+            <p>
+              Hai {Object.keys(stagedEntries).length} elementi in bozza e {Object.keys(pendingDeletes).length} cancellazioni in coda.
+              Puoi pushare tutto, restare nel CMS oppure scartare le modifiche.
+            </p>
+            <div className="cms-dialog__actions">
+              <button type="button" className="dark-btn" onClick={acceptExit} disabled={isLoading}>
+                Accetta
+              </button>
+              <button type="button" className="outline-btn" onClick={cancelExitDialog} disabled={isLoading}>
+                Annulla
+              </button>
+              <button type="button" className="outline-btn" onClick={discardQueuedChanges} disabled={isLoading}>
+                Discard
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </main>
   );
 }
