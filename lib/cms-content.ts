@@ -21,6 +21,17 @@ type ContentConfig = {
   imageRoot?: string;
 };
 
+type FileWrite = {
+  relativePath: string;
+  content: string | Buffer;
+};
+
+type CmsDeleteTarget = {
+  type: CmsContentType;
+  lang: string;
+  slug: string;
+};
+
 const projectRoot = process.cwd();
 
 const contentConfigs: Record<CmsContentType, ContentConfig> = {
@@ -270,7 +281,7 @@ async function resolveRemoteImage({ type, slug, imageUrl }: { type: CmsContentTy
   const imageRoot = contentConfigs[type].imageRoot;
 
   if (!imageRoot || !isRemoteImage(imageUrl)) {
-    return imageUrl;
+    return { image: imageUrl, writes: [] as FileWrite[] };
   }
 
   const response = await fetch(imageUrl);
@@ -285,9 +296,10 @@ async function resolveRemoteImage({ type, slug, imageUrl }: { type: CmsContentTy
   const relativePath = getPublicRelativePath(publicPath);
   const buffer = Buffer.from(await response.arrayBuffer());
 
-  await persistBinaryContent(relativePath, buffer, `cms: save ${type} image ${slug}`);
-
-  return publicPath;
+  return {
+    image: publicPath,
+    writes: [{ relativePath, content: buffer }],
+  } satisfies { image: string; writes: FileWrite[] };
 }
 
 export async function listCmsEntries(typeInput: string, lang: string) {
@@ -329,27 +341,8 @@ export async function listCmsEntries(typeInput: string, lang: string) {
 }
 
 export async function saveCmsEntry(input: CmsEntry) {
-  assertContentType(input.type);
-  assertSafeSegment(input.lang, "language");
-
-  const slug = slugify(input.slug || input.frontmatter.title);
-
-  if (!slug) {
-    throw new Error("Slug or title is required.");
-  }
-
-  const frontmatter = { ...contentConfigs[input.type].defaults, ...input.frontmatter };
-  frontmatter.image = await resolveRemoteImage({
-    type: input.type,
-    slug,
-    imageUrl: frontmatter.image || "",
-  });
-  const content = serializeMdx(input.type, frontmatter, input.body || "");
-  const relativePath = getRepoRelativePath(input.type, input.lang, slug);
-
-  await persistContent(relativePath, content, `cms: save ${input.type} ${input.lang}/${slug}`);
-
-  return { ...input, slug, frontmatter, body: input.body || "" } satisfies CmsEntry;
+  const result = await commitCmsBatch({ upserts: [input], deletes: [] }, `cms: save ${input.type} ${input.lang}/${input.slug || input.frontmatter.title}`);
+  return result.saved[0];
 }
 
 export async function deleteCmsEntry(typeInput: string, lang: string, slug: string) {
@@ -357,8 +350,7 @@ export async function deleteCmsEntry(typeInput: string, lang: string, slug: stri
   assertSafeSegment(lang, "language");
   assertSafeSegment(slug, "slug");
 
-  const relativePath = getRepoRelativePath(typeInput, lang, slug);
-  await deleteContent(relativePath, `cms: delete ${typeInput} ${lang}/${slug}`);
+  await commitCmsBatch({ upserts: [], deletes: [{ type: typeInput, lang, slug }] }, `cms: delete ${typeInput} ${lang}/${slug}`);
 }
 
 function getGitHubConfig() {
@@ -376,142 +368,214 @@ function withBasePath(relativePath: string) {
   return basePath ? path.posix.join(basePath, relativePath) : relativePath;
 }
 
-async function getGitHubFileSha(repoPath: string) {
-  const { owner, repo, branch, token } = getGitHubConfig();
-  const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${repoPath}?ref=${encodeURIComponent(branch)}`, {
+async function getGitHubJson(pathname: string) {
+  const github = getGitHubConfig();
+  const response = await fetch(`https://api.github.com/repos/${github.owner}/${github.repo}${pathname}`, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${github.token}`,
       Accept: "application/vnd.github+json",
       "X-GitHub-Api-Version": "2022-11-28",
     },
   });
 
-  if (response.status === 404) return "";
+  if (!response.ok) {
+    throw new Error(`GitHub request failed: ${response.status} ${await response.text()}`);
+  }
+
+  return response.json();
+}
+
+async function getGitHubRefSha(branch: string) {
+  const github = getGitHubConfig();
+  const data = await getGitHubJson(`/git/ref/heads/${encodeURIComponent(branch)}`);
+  return typeof data?.object?.sha === "string" ? data.object.sha : "";
+}
+
+async function getGitHubCommitSha(commitSha: string) {
+  const data = await getGitHubJson(`/git/commits/${encodeURIComponent(commitSha)}`);
+  return typeof data?.tree?.sha === "string" ? data.tree.sha : "";
+}
+
+async function createGitHubBlob(content: string | Buffer) {
+  const github = getGitHubConfig();
+  const response = await fetch(`https://api.github.com/repos/${github.owner}/${github.repo}/git/blobs`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${github.token}`,
+      Accept: "application/vnd.github+json",
+      "Content-Type": "application/json",
+      "X-GitHub-Api-Version": "2022-11-28",
+    },
+    body: JSON.stringify({
+      content: (typeof content === "string" ? Buffer.from(content, "utf8") : content).toString("base64"),
+      encoding: "base64",
+    }),
+  });
 
   if (!response.ok) {
-    throw new Error(`GitHub read failed: ${response.status} ${await response.text()}`);
+    throw new Error(`GitHub blob creation failed: ${response.status} ${await response.text()}`);
   }
 
   const data = await response.json();
-  return typeof data.sha === "string" ? data.sha : "";
+  return typeof data?.sha === "string" ? data.sha : "";
 }
 
-async function persistContent(relativePath: string, content: string, message: string) {
+async function createGitHubTree(baseTreeSha: string, writes: FileWrite[], deletes: CmsDeleteTarget[]) {
+  const github = getGitHubConfig();
+  const tree: Array<{ path: string; mode: "100644"; type: "blob"; sha: string | null }> = [];
+
+  for (const write of writes) {
+    const sha = await createGitHubBlob(write.content);
+    tree.push({ path: withBasePath(write.relativePath), mode: "100644", type: "blob", sha });
+  }
+
+  for (const deleteTarget of deletes) {
+    tree.push({ path: withBasePath(getRepoRelativePath(deleteTarget.type, deleteTarget.lang, deleteTarget.slug)), mode: "100644", type: "blob", sha: null });
+  }
+
+  const response = await fetch(`https://api.github.com/repos/${github.owner}/${github.repo}/git/trees`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${github.token}`,
+      Accept: "application/vnd.github+json",
+      "Content-Type": "application/json",
+      "X-GitHub-Api-Version": "2022-11-28",
+    },
+    body: JSON.stringify({ base_tree: baseTreeSha, tree }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`GitHub tree creation failed: ${response.status} ${await response.text()}`);
+  }
+
+  const data = await response.json();
+  return typeof data?.sha === "string" ? data.sha : "";
+}
+
+async function createGitHubCommit(treeSha: string, message: string, parentSha: string) {
+  const github = getGitHubConfig();
+  const response = await fetch(`https://api.github.com/repos/${github.owner}/${github.repo}/git/commits`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${github.token}`,
+      Accept: "application/vnd.github+json",
+      "Content-Type": "application/json",
+      "X-GitHub-Api-Version": "2022-11-28",
+    },
+    body: JSON.stringify({ message, tree: treeSha, parents: [parentSha] }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`GitHub commit creation failed: ${response.status} ${await response.text()}`);
+  }
+
+  const data = await response.json();
+  return typeof data?.sha === "string" ? data.sha : "";
+}
+
+async function updateGitHubRef(branch: string, commitSha: string) {
+  const github = getGitHubConfig();
+  const response = await fetch(`https://api.github.com/repos/${github.owner}/${github.repo}/git/refs/heads/${encodeURIComponent(branch)}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${github.token}`,
+      Accept: "application/vnd.github+json",
+      "Content-Type": "application/json",
+      "X-GitHub-Api-Version": "2022-11-28",
+    },
+    body: JSON.stringify({ sha: commitSha, force: false }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`GitHub ref update failed: ${response.status} ${await response.text()}`);
+  }
+}
+
+async function prepareCmsEntryWrite(input: CmsEntry) {
+  assertContentType(input.type);
+  assertSafeSegment(input.lang, "language");
+
+  const slug = slugify(input.slug || input.frontmatter.title);
+
+  if (!slug) {
+    throw new Error("Slug or title is required.");
+  }
+
+  const frontmatter = { ...contentConfigs[input.type].defaults, ...input.frontmatter };
+  const resolvedImage = await resolveRemoteImage({
+    type: input.type,
+    slug,
+    imageUrl: frontmatter.image || "",
+  });
+
+  frontmatter.image = resolvedImage.image;
+
+  return {
+    saved: { ...input, slug, frontmatter, body: input.body || "" } satisfies CmsEntry,
+    writes: [
+      ...resolvedImage.writes,
+      {
+        relativePath: getRepoRelativePath(input.type, input.lang, slug),
+        content: serializeMdx(input.type, frontmatter, input.body || ""),
+      },
+    ],
+  };
+}
+
+async function writeCmsBatchToDisk(writes: FileWrite[], deletes: CmsDeleteTarget[]) {
+  for (const deleteTarget of deletes) {
+    await fs.rm(path.join(projectRoot, getRepoRelativePath(deleteTarget.type, deleteTarget.lang, deleteTarget.slug)), { force: true });
+  }
+
+  for (const write of writes) {
+    const diskPath = path.join(projectRoot, write.relativePath);
+    await fs.mkdir(path.dirname(diskPath), { recursive: true });
+    await fs.writeFile(diskPath, write.content);
+  }
+}
+
+export async function commitCmsBatch(
+  {
+    upserts,
+    deletes,
+  }: {
+    upserts: CmsEntry[];
+    deletes: CmsDeleteTarget[];
+  },
+  message: string,
+) {
+  const prepared = [];
+  const writes: FileWrite[] = [];
+
+  for (const input of upserts) {
+    const plan = await prepareCmsEntryWrite(input);
+    prepared.push(plan.saved);
+    writes.push(...plan.writes);
+  }
+
+  if (!writes.length && !deletes.length) {
+    return { saved: prepared };
+  }
+
   const github = getGitHubConfig();
 
   if (github.configured) {
-    const repoPath = withBasePath(relativePath);
-    const sha = await getGitHubFileSha(repoPath);
-    const payload: Record<string, string> = {
-      message,
-      content: Buffer.from(content, "utf8").toString("base64"),
-      branch: github.branch,
-    };
-
-    if (sha) {
-      payload.sha = sha;
+    const headSha = await getGitHubRefSha(github.branch);
+    if (!headSha) {
+      throw new Error(`GitHub branch not found: ${github.branch}`);
     }
 
-    const response = await fetch(`https://api.github.com/repos/${github.owner}/${github.repo}/contents/${repoPath}`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${github.token}`,
-        Accept: "application/vnd.github+json",
-        "Content-Type": "application/json",
-        "X-GitHub-Api-Version": "2022-11-28",
-      },
-      body: JSON.stringify(payload),
-    });
-
-    if (!response.ok) {
-      throw new Error(`GitHub save failed: ${response.status} ${await response.text()}`);
-    }
-
-    return;
+    const baseTreeSha = await getGitHubCommitSha(headSha);
+    const treeSha = await createGitHubTree(baseTreeSha, writes, deletes);
+    const commitSha = await createGitHubCommit(treeSha, message, headSha);
+    await updateGitHubRef(github.branch, commitSha);
+    return { saved: prepared };
   }
 
   if (process.env.NODE_ENV === "production") {
     throw new Error("CMS_GITHUB_TOKEN, CMS_GITHUB_OWNER and CMS_GITHUB_REPO are required on Vercel.");
   }
 
-  const diskPath = path.join(projectRoot, relativePath);
-  await fs.mkdir(path.dirname(diskPath), { recursive: true });
-  await fs.writeFile(diskPath, content, "utf8");
-}
-
-async function persistBinaryContent(relativePath: string, content: Buffer, message: string) {
-  const github = getGitHubConfig();
-
-  if (github.configured) {
-    const repoPath = withBasePath(relativePath);
-    const sha = await getGitHubFileSha(repoPath);
-    const payload: Record<string, string> = {
-      message,
-      content: content.toString("base64"),
-      branch: github.branch,
-    };
-
-    if (sha) {
-      payload.sha = sha;
-    }
-
-    const response = await fetch(`https://api.github.com/repos/${github.owner}/${github.repo}/contents/${repoPath}`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${github.token}`,
-        Accept: "application/vnd.github+json",
-        "Content-Type": "application/json",
-        "X-GitHub-Api-Version": "2022-11-28",
-      },
-      body: JSON.stringify(payload),
-    });
-
-    if (!response.ok) {
-      throw new Error(`GitHub binary save failed: ${response.status} ${await response.text()}`);
-    }
-
-    return;
-  }
-
-  if (process.env.NODE_ENV === "production") {
-    throw new Error("CMS_GITHUB_TOKEN, CMS_GITHUB_OWNER and CMS_GITHUB_REPO are required on Vercel.");
-  }
-
-  const diskPath = path.join(projectRoot, relativePath);
-  await fs.mkdir(path.dirname(diskPath), { recursive: true });
-  await fs.writeFile(diskPath, content);
-}
-
-async function deleteContent(relativePath: string, message: string) {
-  const github = getGitHubConfig();
-
-  if (github.configured) {
-    const repoPath = withBasePath(relativePath);
-    const sha = await getGitHubFileSha(repoPath);
-
-    if (!sha) return;
-
-    const response = await fetch(`https://api.github.com/repos/${github.owner}/${github.repo}/contents/${repoPath}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${github.token}`,
-        Accept: "application/vnd.github+json",
-        "Content-Type": "application/json",
-        "X-GitHub-Api-Version": "2022-11-28",
-      },
-      body: JSON.stringify({ message, sha, branch: github.branch }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`GitHub delete failed: ${response.status} ${await response.text()}`);
-    }
-
-    return;
-  }
-
-  if (process.env.NODE_ENV === "production") {
-    throw new Error("CMS_GITHUB_TOKEN, CMS_GITHUB_OWNER and CMS_GITHUB_REPO are required on Vercel.");
-  }
-
-  await fs.rm(path.join(projectRoot, relativePath), { force: true });
+  await writeCmsBatchToDisk(writes, deletes);
+  return { saved: prepared };
 }

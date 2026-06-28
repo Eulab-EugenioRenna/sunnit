@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isCmsRequestAuthenticated } from "@/lib/cms-auth";
-import { beautifyCmsEntry, translateAndSaveCmsEntry, translateAndSaveEmptyCmsEntries } from "@/lib/cms-ai";
+import { beautifyCmsEntry, translateCmsEntry, translateEmptyCmsEntries } from "@/lib/cms-ai";
 import type { CmsEntry } from "@/lib/cms-content";
 
 export const runtime = "nodejs";
@@ -30,14 +30,14 @@ export async function POST(request: NextRequest) {
 
     if (!targetLang) {
       const locales = Array.isArray(body.locales) ? body.locales.filter((locale: unknown): locale is string => typeof locale === "string") : [];
-      return NextResponse.json(await translateAndSaveEmptyCmsEntries({ entry, locales }));
+      return NextResponse.json(await translateEmptyCmsEntries({ entry, locales }));
     }
 
     if (!targetLang || targetLang === entry.lang) {
       return NextResponse.json({ error: "Invalid target language." }, { status: 400 });
     }
 
-    return NextResponse.json({ entry: await translateAndSaveCmsEntry({ entry, targetLang }) });
+    return NextResponse.json({ entry: await translateCmsEntry({ entry, targetLang }) });
   }
 
   return NextResponse.json({ error: "Unsupported action." }, { status: 400 });

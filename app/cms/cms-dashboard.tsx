@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Languages, LogOut, Plus, Save, Sparkles, TextQuote, Trash2 } from "lucide-react";
 
 type CmsContentType = "blog" | "portfolio" | "job";
@@ -11,6 +11,12 @@ type CmsEntry = {
   slug: string;
   frontmatter: Record<string, string>;
   body: string;
+};
+
+type CmsDraftEntry = CmsEntry & {
+  draftKey: string;
+  sourceKey?: string;
+  pendingDelete?: boolean;
 };
 
 const tabs: Array<{ type: CmsContentType; label: string }> = [
@@ -91,6 +97,23 @@ function makeBlankEntry(type: CmsContentType, lang: string): CmsEntry {
   };
 }
 
+function makeDraftKey() {
+  return crypto.randomUUID();
+}
+
+function entryKey(entry: Pick<CmsEntry, "type" | "lang" | "slug">) {
+  return `${entry.type}:${entry.lang}:${entry.slug}`;
+}
+
+function makeDraftEntry(entry: CmsEntry, draftKey = entryKey(entry), sourceKey?: string, pendingDelete = false): CmsDraftEntry {
+  return {
+    ...entry,
+    draftKey,
+    sourceKey,
+    pendingDelete,
+  };
+}
+
 export default function CmsDashboard() {
   const [configured, setConfigured] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
@@ -99,12 +122,107 @@ export default function CmsDashboard() {
   const [locales, setLocales] = useState(["it", "en", "es"]);
   const [lang, setLang] = useState("it");
   const [activeType, setActiveType] = useState<CmsContentType>("blog");
-  const [entries, setEntries] = useState<CmsEntry[]>([]);
-  const [activeEntry, setActiveEntry] = useState<CmsEntry>(makeBlankEntry("blog", "it"));
+  const [entries, setEntries] = useState<CmsDraftEntry[]>([]);
+  const [stagedEntries, setStagedEntries] = useState<Record<string, CmsDraftEntry>>({});
+  const [pendingDeletes, setPendingDeletes] = useState<Record<string, true>>({});
+  const [activeDraftKey, setActiveDraftKey] = useState("");
+  const [activeEntry, setActiveEntry] = useState<CmsDraftEntry>(makeDraftEntry(makeBlankEntry("blog", "it"), makeDraftKey()));
   const [isLoading, setIsLoading] = useState(false);
   const [activeCommand, setActiveCommand] = useState("");
   const [message, setMessage] = useState("");
   const activeTabLabel = tabs.find((tab) => tab.type === activeType)?.label || "contenuto";
+  const stagedEntriesRef = useRef(stagedEntries);
+  const pendingDeletesRef = useRef(pendingDeletes);
+
+  stagedEntriesRef.current = stagedEntries;
+  pendingDeletesRef.current = pendingDeletes;
+
+  const stageEntry = (nextEntry: CmsDraftEntry, { pendingDelete = false }: { pendingDelete?: boolean } = {}) => {
+    const deleteKeys = [nextEntry.sourceKey, nextEntry.draftKey].filter(Boolean) as string[];
+
+    setActiveDraftKey(nextEntry.draftKey);
+    setActiveEntry({ ...nextEntry, pendingDelete });
+    setStagedEntries((current) => ({
+      ...current,
+      [nextEntry.draftKey]: { ...nextEntry, pendingDelete },
+    }));
+    stagedEntriesRef.current = {
+      ...stagedEntriesRef.current,
+      [nextEntry.draftKey]: { ...nextEntry, pendingDelete },
+    };
+    setPendingDeletes((current) => {
+      const next = { ...current };
+
+      for (const key of deleteKeys) {
+        delete next[key];
+      }
+
+      if (pendingDelete && nextEntry.sourceKey) {
+        next[nextEntry.sourceKey] = true;
+      }
+
+      return next;
+    });
+    const nextPendingDeletes = { ...pendingDeletesRef.current };
+    for (const key of deleteKeys) {
+      delete nextPendingDeletes[key];
+    }
+    if (pendingDelete && nextEntry.sourceKey) {
+      nextPendingDeletes[nextEntry.sourceKey] = true;
+    }
+    pendingDeletesRef.current = nextPendingDeletes;
+    setEntries((current) => {
+      const updated = current.map((entry) => (entry.draftKey === nextEntry.draftKey ? { ...nextEntry, pendingDelete } : entry));
+      if (current.some((entry) => entry.draftKey === nextEntry.draftKey)) {
+        return updated;
+      }
+
+      return [{ ...nextEntry, pendingDelete }, ...updated];
+    });
+  };
+
+  const rebuildEntries = (sourceEntries: CmsEntry[], nextType: CmsContentType, nextLang: string) => {
+    const stagedForContext = Object.values(stagedEntriesRef.current).filter((entry) => entry.type === nextType && entry.lang === nextLang);
+    const stagedBySourceKey = new Map(stagedForContext.filter((entry) => entry.sourceKey).map((entry) => [entry.sourceKey as string, entry]));
+    const pendingDeleteKeys = new Set(
+      Object.keys(pendingDeletesRef.current).filter((key) => {
+        const [type, entryLang] = key.split(":");
+        return type === nextType && entryLang === nextLang;
+      }),
+    );
+
+    const merged = sourceEntries.flatMap((entry) => {
+      const sourceKey = entryKey(entry);
+      if (pendingDeleteKeys.has(sourceKey)) {
+        return [];
+      }
+
+      const staged = stagedBySourceKey.get(sourceKey);
+      if (staged) {
+        return [{ ...staged, pendingDelete: Boolean(pendingDeletesRef.current[staged.sourceKey || staged.draftKey]) }];
+      }
+
+      return [makeDraftEntry(entry, sourceKey, sourceKey, false)];
+    });
+
+    for (const staged of stagedForContext) {
+      if (staged.sourceKey && sourceEntries.some((entry) => entryKey(entry) === staged.sourceKey)) {
+        continue;
+      }
+
+      if (!staged.sourceKey && !merged.some((entry) => entry.draftKey === staged.draftKey)) {
+        merged.unshift({ ...staged, pendingDelete: Boolean(pendingDeletesRef.current[staged.draftKey]) });
+      }
+    }
+
+    return merged;
+  };
+
+  const syncActiveEntry = (nextEntries: CmsDraftEntry[], fallback: CmsDraftEntry) => {
+    const nextActive = nextEntries.find((entry) => entry.draftKey === activeDraftKey) || nextEntries[0] || fallback;
+    setActiveDraftKey(nextActive.draftKey);
+    setActiveEntry(nextActive);
+  };
 
   useEffect(() => {
     const loadSession = async () => {
@@ -144,8 +262,9 @@ export default function CmsDashboard() {
 
       const data = await response.json();
       const loadedEntries = Array.isArray(data.entries) ? data.entries : [];
-      setEntries(loadedEntries);
-      setActiveEntry(loadedEntries[0] || makeBlankEntry(type, nextLang));
+      const mergedEntries = rebuildEntries(loadedEntries, type, nextLang);
+      setEntries(mergedEntries);
+      syncActiveEntry(mergedEntries, makeDraftEntry(makeBlankEntry(type, nextLang), makeDraftKey()));
     } catch {
       setMessage("Impossibile caricare i contenuti.");
     } finally {
@@ -179,36 +298,52 @@ export default function CmsDashboard() {
   };
 
   const updateFrontmatter = (key: string, value: string) => {
-    setActiveEntry((current) => ({
-      ...current,
+    const nextEntry = {
+      ...activeEntry,
       frontmatter: {
-        ...current.frontmatter,
+        ...activeEntry.frontmatter,
         [key]: value,
       },
-    }));
+    };
+
+    stageEntry(nextEntry);
   };
 
-  const saveEntry = async () => {
+  const saveAllEntries = async () => {
     setIsLoading(true);
     setActiveCommand("save");
     setMessage("");
 
     try {
-      const payload = { ...activeEntry, type: activeType, lang };
-      const response = await fetch("/api/cms/content", {
+      const upserts = Object.values(stagedEntriesRef.current)
+        .filter((entry) => !entry.pendingDelete && !pendingDeletesRef.current[entry.draftKey] && !pendingDeletesRef.current[entry.sourceKey || entry.draftKey])
+        .map(({ draftKey, sourceKey, pendingDelete, ...entry }) => entry);
+      const deletes = Object.keys(pendingDeletesRef.current).map((sourceKey) => {
+        const [type, entryLang, ...slugParts] = String(sourceKey).split(":");
+        return {
+          type: type as CmsContentType,
+          lang: entryLang,
+          slug: slugParts.join(":"),
+        };
+      });
+
+      const response = await fetch("/api/cms/commit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ upserts, deletes }),
       });
 
       if (!response.ok) throw new Error(await response.text());
 
-      const data = await response.json();
-      setMessage("Import/Salva completato. Se l'immagine era un URL remoto, e stata scaricata come nello script.");
+      await response.json();
+      setMessage("Salvataggio completato. Uscita pronta.");
+      setStagedEntries({});
+      setPendingDeletes({});
+      stagedEntriesRef.current = {};
+      pendingDeletesRef.current = {};
       await loadEntries(activeType, lang);
-      setActiveEntry(data.entry);
     } catch {
-      setMessage("Import/Salva non riuscito.");
+      setMessage("Salvataggio non riuscito.");
     } finally {
       setIsLoading(false);
       setActiveCommand("");
@@ -231,8 +366,8 @@ export default function CmsDashboard() {
       if (!response.ok) throw new Error(await response.text());
 
       const data = await response.json();
-      setActiveEntry(data.entry);
-      setMessage(mode === "excerpt-only" ? "Excerpt aggiornata. Salva per scrivere il file." : "Beautify completato. Salva per scrivere il file.");
+      stageEntry(makeDraftEntry(data.entry, activeEntry.draftKey, activeEntry.sourceKey, activeEntry.pendingDelete));
+      setMessage(mode === "excerpt-only" ? "Excerpt aggiornata. Rimane in bozza fino al salvataggio." : "Beautify completato. Rimane in bozza fino al salvataggio.");
     } catch {
       setMessage("Beautify non riuscito. Verifica Ollama/OLLAMA_URL.");
     } finally {
@@ -259,9 +394,18 @@ export default function CmsDashboard() {
       const data = await response.json();
       const created = Array.isArray(data.created) ? data.created.map((entry: CmsEntry) => entry.lang.toUpperCase()).join(", ") : "";
       const skipped = Array.isArray(data.skipped) ? data.skipped.map((locale: string) => locale.toUpperCase()).join(", ") : "";
+      if (Array.isArray(data.created)) {
+        for (const createdEntry of data.created as CmsEntry[]) {
+          const draftKey = entryKey(createdEntry);
+          const draft = makeDraftEntry(createdEntry, draftKey, draftKey, false);
+          setStagedEntries((current) => ({ ...current, [draft.draftKey]: draft }));
+          stagedEntriesRef.current = { ...stagedEntriesRef.current, [draft.draftKey]: draft };
+          setEntries((current) => [draft, ...current.filter((entry) => entry.draftKey !== draft.draftKey)]);
+        }
+      }
       setMessage(
         created
-          ? `Traduzioni create: ${created}.${skipped ? ` Gia presenti: ${skipped}.` : ""}`
+          ? `Traduzioni pronte: ${created}.${skipped ? ` Gia presenti: ${skipped}.` : ""}`
           : `Nessuna lingua vuota da tradurre.${skipped ? ` Gia presenti: ${skipped}.` : ""}`,
       );
     } catch {
@@ -274,27 +418,26 @@ export default function CmsDashboard() {
 
   const deleteEntry = async () => {
     if (!activeEntry.slug) return;
-    if (!window.confirm(`Eliminare ${activeEntry.slug}?`)) return;
+    if (!window.confirm(`Mettere in coda l'eliminazione di ${activeEntry.slug}?`)) return;
 
-    setIsLoading(true);
-    setActiveCommand("delete");
-    setMessage("");
-
-    try {
-      const response = await fetch(`/api/cms/content?type=${activeType}&lang=${lang}&slug=${activeEntry.slug}`, {
-        method: "DELETE",
+    if (!activeEntry.sourceKey) {
+      setStagedEntries((current) => {
+        const next = { ...current };
+        delete next[activeEntry.draftKey];
+        stagedEntriesRef.current = next;
+        return next;
       });
-
-      if (!response.ok) throw new Error(await response.text());
-
-      setMessage("Contenuto eliminato.");
-      await loadEntries(activeType, lang);
-    } catch {
-      setMessage("Eliminazione non riuscita.");
-    } finally {
-      setIsLoading(false);
-      setActiveCommand("");
+      setEntries((current) => current.filter((entry) => entry.draftKey !== activeEntry.draftKey));
+      const blankDraft = makeDraftEntry(makeBlankEntry(activeType, lang), makeDraftKey());
+      setActiveDraftKey(blankDraft.draftKey);
+      setActiveEntry(blankDraft);
+      setMessage("Bozza rimossa.");
+      return;
     }
+
+    const nextEntry = { ...activeEntry, pendingDelete: true };
+    stageEntry(nextEntry, { pendingDelete: true });
+    setMessage("Eliminazione messa in coda. Conferma con Salva ed esci.");
   };
 
   if (!configured) {
@@ -339,13 +482,26 @@ export default function CmsDashboard() {
               className={activeType === tab.type ? "active" : ""}
               onClick={() => {
                 setActiveType(tab.type);
-                setActiveEntry(makeBlankEntry(tab.type, lang));
+                const blankDraft = makeDraftEntry(makeBlankEntry(tab.type, lang), makeDraftKey());
+                setActiveDraftKey(blankDraft.draftKey);
+                setActiveEntry(blankDraft);
               }}
             >
               {tab.label}
             </button>
           ))}
-                    <button type="button" className="cms-new-btn" onClick={() => setActiveEntry(makeBlankEntry(activeType, lang))}>
+          <button
+            type="button"
+            className="cms-new-btn"
+            onClick={() => {
+              const blankDraft = makeDraftEntry(makeBlankEntry(activeType, lang), makeDraftKey());
+              setActiveDraftKey(blankDraft.draftKey);
+              setActiveEntry(blankDraft);
+              setStagedEntries((current) => ({ ...current, [blankDraft.draftKey]: blankDraft }));
+              stagedEntriesRef.current = { ...stagedEntriesRef.current, [blankDraft.draftKey]: blankDraft };
+              setEntries((current) => [blankDraft, ...current]);
+            }}
+          >
             <Plus size={16} aria-hidden />
             Nuovo {activeTabLabel}
           </button>
@@ -377,12 +533,16 @@ export default function CmsDashboard() {
         {isLoading ? <p>Caricamento...</p> : null}
         {entries.map((entry) => (
           <button
-            key={entry.slug}
+            key={entry.draftKey}
             type="button"
-            className={activeEntry.slug === entry.slug ? "active" : ""}
-            onClick={() => setActiveEntry(entry)}
+            className={`${activeEntry.draftKey === entry.draftKey ? "active" : ""}${entry.pendingDelete ? " pending-delete" : ""}`}
+            onClick={() => {
+              setActiveDraftKey(entry.draftKey);
+              setActiveEntry(entry);
+            }}
           >
             <strong>{entry.frontmatter.title || entry.slug}</strong>
+            {entry.pendingDelete ? <span> da eliminare</span> : null}
           </button>
         ))}
       </section>
@@ -391,16 +551,25 @@ export default function CmsDashboard() {
         <div className="cms-editor__topbar">
           <label className="cms-field">
             <span>Slug</span>
-            <input value={activeEntry.slug} onChange={(event) => setActiveEntry((current) => ({ ...current, slug: event.target.value }))} placeholder="auto-da-titolo" />
+            <input
+              value={activeEntry.slug}
+              onChange={(event) =>
+                stageEntry({
+                  ...activeEntry,
+                  slug: event.target.value,
+                })
+              }
+              placeholder="auto-da-titolo"
+            />
           </label>
           <div className="cms-editor__actions">
-            <button type="button" className="outline-btn tiny" onClick={deleteEntry} disabled={!activeEntry.slug || isLoading}>
+            <button type="button" className="outline-btn tiny" onClick={deleteEntry} disabled={!activeEntry.slug || isLoading || activeEntry.pendingDelete}>
               <Trash2 size={15} aria-hidden />
               Elimina
             </button>
-            <button type="button" className="dark-btn tiny" onClick={saveEntry} disabled={isLoading}>
+            <button type="button" className="dark-btn tiny" onClick={saveAllEntries} disabled={isLoading}>
               <Save size={15} aria-hidden />
-              {activeCommand === "save" ? "Import..." : "Import/Salva"}
+              {activeCommand === "save" ? "Salvataggio..." : "Salva ed esci"}
             </button>
           </div>
         </div>
@@ -450,7 +619,15 @@ export default function CmsDashboard() {
 
         <label className="cms-field cms-body-field">
           <span>Body MDX</span>
-          <textarea value={activeEntry.body} onChange={(event) => setActiveEntry((current) => ({ ...current, body: event.target.value }))} />
+          <textarea
+            value={activeEntry.body}
+            onChange={(event) =>
+              stageEntry({
+                ...activeEntry,
+                body: event.target.value,
+              })
+            }
+          />
         </label>
 
         {message ? <p className="cms-message">{message}</p> : null}

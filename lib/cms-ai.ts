@@ -1,7 +1,7 @@
 import "server-only";
 
 import type { CmsEntry } from "./cms-content";
-import { getCmsEntry, isCmsEntryEmpty, parseCmsMdxToEntry, saveCmsEntry, serializeCmsEntry } from "./cms-content";
+import { getCmsEntry, isCmsEntryEmpty, parseCmsMdxToEntry, serializeCmsEntry } from "./cms-content";
 
 const defaultOllamaModel = "gemma4:31b-cloud";
 const defaultOllamaUrl = "http://127.0.0.1:11434";
@@ -144,23 +144,22 @@ export async function beautifyCmsEntry(entry: CmsEntry, { mode = "full" }: { mod
   } satisfies CmsEntry;
 }
 
-export async function translateAndSaveCmsEntry({ entry, targetLang }: { entry: CmsEntry; targetLang: string }) {
+export async function translateCmsEntry({ entry, targetLang }: { entry: CmsEntry; targetLang: string }) {
   const translatedSource = await ollamaChat({
     messages: buildTranslateMessages({ entry, targetLang }),
     action: "translate",
     slug: entry.slug || entry.frontmatter.title,
   });
-  const translatedEntry = parseCmsMdxToEntry({
+
+  return parseCmsMdxToEntry({
     type: entry.type,
     lang: targetLang,
     slug: entry.slug,
     source: `${translatedSource.trim()}\n`,
   });
-
-  return saveCmsEntry(translatedEntry);
 }
 
-export async function translateAndSaveEmptyCmsEntries({ entry, locales }: { entry: CmsEntry; locales: string[] }) {
+export async function translateEmptyCmsEntries({ entry, locales }: { entry: CmsEntry; locales: string[] }) {
   const targets = locales
     .map((locale) => locale.trim())
     .filter((locale, index, source) => locale && locale !== entry.lang && source.indexOf(locale) === index);
@@ -176,7 +175,7 @@ export async function translateAndSaveEmptyCmsEntries({ entry, locales }: { entr
       continue;
     }
 
-    created.push(await translateAndSaveCmsEntry({ entry, targetLang }));
+    created.push(await translateCmsEntry({ entry, targetLang }));
   }
 
   return { created, skipped };
