@@ -26,7 +26,29 @@ export const metadata: Metadata = {
   ],
   creator: "EULAB - RENNA EUGENIO",
   publisher: "EULAB - RENNA EUGENIO",
-  keywords: ["SUNNIT", "Sunnit SRL", "Sunnit", " Cybersecurity", "Soluzioni Informatiche", "Trasformazione Digitale", "Consulenza", "AI", "Intelligenza Artificiale", "Cloud", "Data Analytics"]
+  keywords: ["SUNNIT", "Sunnit SRL", "Sunnit", " Cybersecurity", "Soluzioni Informatiche", "Trasformazione Digitale", "Consulenza", "AI", "Intelligenza Artificiale", "Cloud", "Data Analytics"],
+  openGraph: {
+    title: "SUNNIT",
+    description: "Sito Web di Sunnit SRL, specialista in soluzioni informatiche, cybersecurity e trasformazione digitale.",
+    url: "https://sunnit.it",
+    siteName: "SUNNIT",
+    images: [
+      {
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 1200,
+        alt: "SUNNIT - Innovation & Security",
+      },
+    ],
+    locale: "it_IT",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SUNNIT",
+    description: "Sito Web di Sunnit SRL, specialista in soluzioni informatiche, cybersecurity e trasformazione digitale.",
+    images: ["/images/og-image.png"],
+  },
 };
 
 export default async function RootLayout({
