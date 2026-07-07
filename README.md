@@ -30,6 +30,18 @@ Apri `http://localhost:3000`.
 
 Il template usa forme, gradienti e placeholder CSS per evitare dipendenze da asset remoti. Puoi sostituirli con immagini vere mantenendo classi e layout.
 
+## CMS AI in produzione (Vercel)
+
+Le route CMS AI girano lato server. In produzione, `localhost` o `127.0.0.1` puntano al server Vercel, non al browser dell'utente.
+
+Configura quindi variabili ambiente server:
+
+- `OLLAMA_URL`: URL completo e raggiungibile del tuo endpoint Ollama (es. `https://ollama.example.com`)
+- `OLLAMA_MODEL`: opzionale, default `gemma4:31b-cloud`
+
+Se `OLLAMA_URL` manca in produzione, oppure usa `localhost`, la route AI risponde con errore esplicito.
+
+Nota: convertire la route a Edge runtime non risolve questo problema di rete; serve un endpoint Ollama esposto/raggiungibile dal runtime server.
 
 ## Refinement 02
 

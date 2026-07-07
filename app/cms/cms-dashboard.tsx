@@ -408,13 +408,26 @@ export default function CmsDashboard() {
         body: JSON.stringify({ action: "beautify", mode, entry: payload }),
       });
 
-      if (!response.ok) throw new Error(await response.text());
+      if (!response.ok) {
+        const raw = await response.text();
+        let detail = raw;
+
+        try {
+          const parsed = JSON.parse(raw) as { error?: string };
+          if (parsed?.error) detail = parsed.error;
+        } catch {
+          // Keep raw response text if payload is not JSON.
+        }
+
+        throw new Error(detail || "Beautify non riuscito.");
+      }
 
       const data = await response.json();
       stageEntry(makeDraftEntry(data.entry, activeEntry.draftKey, activeEntry.sourceKey, activeEntry.pendingDelete));
       setMessage(mode === "excerpt-only" ? "Excerpt aggiornata. Rimane in bozza fino al salvataggio." : "Beautify completato. Rimane in bozza fino al salvataggio.");
-    } catch {
-      setMessage("Beautify non riuscito. Verifica Ollama/OLLAMA_URL.");
+    } catch (error) {
+      const detail = error instanceof Error ? error.message : "Beautify non riuscito.";
+      setMessage(detail);
     } finally {
       setIsLoading(false);
       setActiveCommand("");
@@ -434,7 +447,19 @@ export default function CmsDashboard() {
         body: JSON.stringify({ action: "translate", locales, entry: payload }),
       });
 
-      if (!response.ok) throw new Error(await response.text());
+      if (!response.ok) {
+        const raw = await response.text();
+        let detail = raw;
+
+        try {
+          const parsed = JSON.parse(raw) as { error?: string };
+          if (parsed?.error) detail = parsed.error;
+        } catch {
+          // Keep raw response text if payload is not JSON.
+        }
+
+        throw new Error(detail || "Traduzione non riuscita.");
+      }
 
       const data = await response.json();
       const created = Array.isArray(data.created) ? data.created.map((entry: CmsEntry) => entry.lang.toUpperCase()).join(", ") : "";
@@ -453,8 +478,9 @@ export default function CmsDashboard() {
           ? `Traduzioni pronte: ${created}.${skipped ? ` Gia presenti: ${skipped}.` : ""}`
           : `Nessuna lingua vuota da tradurre.${skipped ? ` Gia presenti: ${skipped}.` : ""}`,
       );
-    } catch {
-      setMessage("Traduzione non riuscita. Verifica Ollama/OLLAMA_URL.");
+    } catch (error) {
+      const detail = error instanceof Error ? error.message : "Traduzione non riuscita.";
+      setMessage(detail);
     } finally {
       setIsLoading(false);
       setActiveCommand("");

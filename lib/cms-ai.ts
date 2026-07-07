@@ -6,6 +6,37 @@ import { getCmsEntry, isCmsEntryEmpty, parseCmsMdxToEntry, serializeCmsEntry } f
 const defaultOllamaModel = "gemma4:31b-cloud";
 const defaultOllamaUrl = "http://127.0.0.1:11434";
 
+function isLocalHostname(hostname: string) {
+  const value = hostname.toLowerCase();
+  return value === "localhost" || value === "127.0.0.1" || value === "::1";
+}
+
+function resolveOllamaBaseUrl() {
+  const configured = String(process.env.OLLAMA_URL || "").trim();
+  const isProduction = process.env.NODE_ENV === "production";
+
+  if (!configured) {
+    if (isProduction) {
+      throw new Error("OLLAMA_URL is required in production and must point to a reachable Ollama endpoint.");
+    }
+
+    return defaultOllamaUrl;
+  }
+
+  let parsed: URL;
+  try {
+    parsed = new URL(configured);
+  } catch {
+    throw new Error("OLLAMA_URL is invalid. Use a full URL like https://ollama.example.com.");
+  }
+
+  if (isProduction && isLocalHostname(parsed.hostname)) {
+    throw new Error("OLLAMA_URL cannot use localhost/127.0.0.1 in production.");
+  }
+
+  return configured;
+}
+
 function stripCodeFence(value: string) {
   const trimmed = String(value || "").trim();
   const fenced = trimmed.match(/^```[a-zA-Z0-9_-]*\n([\s\S]*?)\n```$/);
@@ -21,7 +52,7 @@ async function ollamaChat({
   action: string;
   slug: string;
 }) {
-  const baseUrl = process.env.OLLAMA_URL || defaultOllamaUrl;
+  const baseUrl = resolveOllamaBaseUrl();
   const model = process.env.OLLAMA_MODEL || defaultOllamaModel;
   const response = await fetch(`${baseUrl.replace(/\/$/, "")}/api/chat`, {
     method: "POST",
