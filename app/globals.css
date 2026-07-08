@@ -5963,6 +5963,14 @@ svg {
   padding-left: 18px;
 }
 
+.job-modal__body code {
+  padding: 2px 5px;
+  color: var(--ink);
+  background: rgba(8, 47, 63, 0.08);
+  border-radius: 6px;
+  font-size: 0.9em;
+}
+
 .job-application-form {
   display: grid;
   gap: 12px;

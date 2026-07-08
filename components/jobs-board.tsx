@@ -81,6 +81,34 @@ function jobMatches(job: JobPost, query: string, filters: Record<FilterKey, stri
   return filterKeys.every((key) => !filters[key] || getFilterValue(job, key) === filters[key]);
 }
 
+function renderInlineMarkdown(text: string) {
+  const parts = text.split(/(\*\*\*[^*]+\*\*\*|\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g).filter(Boolean);
+
+  return parts.map((part, index) => {
+    if (part.startsWith("***") && part.endsWith("***")) {
+      return (
+        <strong key={`${part}-${index}`}>
+          <em>{part.slice(3, -3)}</em>
+        </strong>
+      );
+    }
+
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return <strong key={`${part}-${index}`}>{part.slice(2, -2)}</strong>;
+    }
+
+    if (part.startsWith("*") && part.endsWith("*")) {
+      return <em key={`${part}-${index}`}>{part.slice(1, -1)}</em>;
+    }
+
+    if (part.startsWith("`") && part.endsWith("`")) {
+      return <code key={`${part}-${index}`}>{part.slice(1, -1)}</code>;
+    }
+
+    return part;
+  });
+}
+
 function renderJobBody(body: string) {
   const blocks: ReactNode[] = [];
   const lines = body.split("\n");
@@ -90,9 +118,9 @@ function renderJobBody(body: string) {
 
     if (!line) continue;
 
-    const heading = line.match(/^#{2,4}\s+(.+)$/);
+    const heading = line.match(/^#{1,4}\s+(.+)$/);
     if (heading) {
-      blocks.push(<h3 key={`heading-${index}`}>{heading[1]}</h3>);
+      blocks.push(<h3 key={`heading-${index}`}>{renderInlineMarkdown(heading[1])}</h3>);
       continue;
     }
 
@@ -112,14 +140,14 @@ function renderJobBody(body: string) {
       blocks.push(
         <ul key={`list-${index}`}>
           {items.map((item, itemIndex) => (
-            <li key={`${item}-${itemIndex}`}>{item}</li>
+            <li key={`${item}-${itemIndex}`}>{renderInlineMarkdown(item)}</li>
           ))}
         </ul>,
       );
       continue;
     }
 
-    blocks.push(<p key={`paragraph-${index}`}>{line}</p>);
+    blocks.push(<p key={`paragraph-${index}`}>{renderInlineMarkdown(line)}</p>);
   }
 
   return blocks;
