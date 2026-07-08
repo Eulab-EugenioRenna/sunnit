@@ -2,6 +2,7 @@ import "server-only";
 
 import type { CmsEntry } from "./cms-content";
 import { getCmsEntry, isCmsEntryEmpty, parseCmsMdxToEntry, serializeCmsEntry } from "./cms-content";
+import { normalizeJobCountryValue } from "./job-countries";
 
 const defaultOllamaModel = "gemma4:31b-cloud";
 const defaultOllamaUrl = "http://127.0.0.1:11434";
@@ -67,13 +68,21 @@ async function ollamaChat({
   });
 
   if (!response.ok) {
-    throw new Error(`Ollama ${action} failed for ${slug}: ${response.status} ${await response.text()}`);
+    const errorBody = await response.text();
+    console.error(
+      `[cms-ai] Ollama error for ${action} (${slug}):`,
+      { status: response.status, headers: Object.fromEntries(response.headers.entries()), body: errorBody },
+    );
+    throw new Error(
+      `Ollama ${action} failed for ${slug}: ${response.status}. ${errorBody.substring(0, 200)}`,
+    );
   }
 
   const data = await response.json();
   const content = stripCodeFence(data?.message?.content || "");
 
   if (!content) {
+    console.error(`[cms-ai] Empty response from Ollama for ${action} (${slug}):`, { data });
     throw new Error(`Ollama returned an empty response for ${slug}.`);
   }
 
@@ -134,6 +143,7 @@ function buildTranslateMessages({ entry, targetLang }: { entry: CmsEntry; target
         "Keep the image path unchanged.",
         "Preserve markdown and MDX structure exactly as much as possible.",
         "Translate title, excerpt, headings, and body text into the target language.",
+        entry.type === "job" ? "Do not translate the country frontmatter value; it is a canonical routing key." : "",
         "Keep tags unchanged unless translating them is strictly necessary for meaning.",
         "Do not invent sections or content.",
       ].join(" "),
@@ -182,12 +192,24 @@ export async function translateCmsEntry({ entry, targetLang }: { entry: CmsEntry
     slug: entry.slug || entry.frontmatter.title,
   });
 
-  return parseCmsMdxToEntry({
+  const translatedEntry = parseCmsMdxToEntry({
     type: entry.type,
     lang: targetLang,
     slug: entry.slug,
     source: `${translatedSource.trim()}\n`,
   });
+
+  if (entry.type !== "job") {
+    return translatedEntry;
+  }
+
+  return {
+    ...translatedEntry,
+    frontmatter: {
+      ...translatedEntry.frontmatter,
+      country: normalizeJobCountryValue(entry.frontmatter.country),
+    },
+  } satisfies CmsEntry;
 }
 
 export async function translateEmptyCmsEntries({ entry, locales }: { entry: CmsEntry; locales: string[] }) {

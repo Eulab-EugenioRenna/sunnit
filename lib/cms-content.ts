@@ -2,6 +2,7 @@ import "server-only";
 
 import fs from "fs/promises";
 import path from "path";
+import { normalizeJobCountryValue } from "./job-countries";
 
 export type CmsContentType = "blog" | "portfolio" | "job";
 
@@ -206,9 +207,19 @@ function serializeMdx(type: CmsContentType, frontmatter: Record<string, string>,
   return `${lines.join("\n")}${body.trim()}\n`;
 }
 
+function normalizeCmsFrontmatter(type: CmsContentType, frontmatter: Record<string, string>) {
+  const normalized = { ...contentConfigs[type].defaults, ...frontmatter };
+
+  if (type === "job") {
+    normalized.country = normalizeJobCountryValue(normalized.country);
+  }
+
+  return normalized;
+}
+
 export function serializeCmsEntry(entry: CmsEntry) {
   assertContentType(entry.type);
-  return serializeMdx(entry.type, { ...contentConfigs[entry.type].defaults, ...entry.frontmatter }, entry.body || "");
+  return serializeMdx(entry.type, normalizeCmsFrontmatter(entry.type, entry.frontmatter), entry.body || "");
 }
 
 export function parseCmsMdxToEntry({ type, lang, slug, source }: { type: CmsContentType; lang: string; slug: string; source: string }) {
@@ -219,7 +230,7 @@ export function parseCmsMdxToEntry({ type, lang, slug, source }: { type: CmsCont
     type,
     lang,
     slug,
-    frontmatter: { ...contentConfigs[type].defaults, ...parsed.frontmatter },
+    frontmatter: normalizeCmsFrontmatter(type, parsed.frontmatter),
     body: parsed.body.trim(),
   } satisfies CmsEntry;
 }
@@ -331,7 +342,7 @@ export async function listCmsEntries(typeInput: string, lang: string) {
           type,
           lang,
           slug,
-          frontmatter: { ...contentConfigs[type].defaults, ...parsed.frontmatter },
+          frontmatter: normalizeCmsFrontmatter(type, parsed.frontmatter),
           body: parsed.body.trim(),
         } satisfies CmsEntry;
       }),
@@ -501,7 +512,7 @@ async function prepareCmsEntryWrite(input: CmsEntry) {
     throw new Error("Slug or title is required.");
   }
 
-  const frontmatter = { ...contentConfigs[input.type].defaults, ...input.frontmatter };
+  const frontmatter = normalizeCmsFrontmatter(input.type, input.frontmatter);
   const resolvedImage = await resolveRemoteImage({
     type: input.type,
     slug,

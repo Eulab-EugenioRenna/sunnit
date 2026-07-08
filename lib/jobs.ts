@@ -3,6 +3,7 @@ import "server-only";
 import fs from "fs";
 import path from "path";
 import { defaultLocale } from "./i18n";
+import { normalizeJobCountryValue } from "./job-countries";
 
 const JOBS_ROOT = path.join(process.cwd(), "content", "jobs");
 
@@ -162,7 +163,7 @@ function readJobFile(lang: JobLang, slug: string) {
     title: data.title || slugToTitle(slug),
     excerpt: data.excerpt || toExcerpt(body),
     department: data.department || "SUNNIT",
-    country: data.country || "",
+    country: normalizeJobCountryValue(data.country),
     location: data.location || "",
     workMode: data.workMode || "",
     contract: data.contract || "",
@@ -173,6 +174,10 @@ function readJobFile(lang: JobLang, slug: string) {
     slug,
     body,
   } satisfies JobPost;
+}
+
+export function getJobPost(lang: JobLang, slug: string) {
+  return readJobFile(lang, slug);
 }
 
 export function getAllJobs(lang: JobLang, { includeClosed = false } = {}) {

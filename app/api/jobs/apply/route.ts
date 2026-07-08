@@ -1,5 +1,7 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
+import { getJobApplicationEmail } from "@/lib/jobs-config";
+import { getJobPost } from "@/lib/jobs";
 
 export const runtime = "nodejs";
 
@@ -26,13 +28,6 @@ function requiredText(formData: FormData | Record<string, unknown>, key: string)
 
 function sanitize(value: string) {
   return value.replace(/[\r\n]+/g, " ").trim();
-}
-
-function parseRecipients(value: string | undefined) {
-  return String(value || "")
-    .split(",")
-    .map((item) => sanitize(item))
-    .filter(Boolean);
 }
 
 function normalizeSender(value: string) {
@@ -184,7 +179,7 @@ export async function POST(request: Request) {
 
   const { name, email, phone, message, jobTitle, jobSlug, lang, cv } = payload;
 
-  const missingFields = [!name ? "name" : "", !email ? "email" : "", !jobTitle ? "jobTitle" : "", !cv ? "cv" : ""].filter(Boolean);
+  const missingFields = [!name ? "name" : "", !email ? "email" : "", !jobTitle ? "jobTitle" : "", !jobSlug ? "jobSlug" : "", !cv ? "cv" : ""].filter(Boolean);
 
   if (missingFields.length > 0) {
     return NextResponse.json(
@@ -206,11 +201,22 @@ export async function POST(request: Request) {
 
   const apiKey = process.env.RESEND_API_KEY;
   const from = normalizeSender(process.env.JOBS_FROM_EMAIL || process.env.RESEND_FROM_EMAIL || "");
-  const recipients = parseRecipients(process.env.JOBS_TO_EMAIL);
 
-  if (!apiKey || !from || recipients.length === 0) {
+  // Get the job to extract country for routing
+  let country: string | undefined;
+  try {
+    const job = await getJobPost(lang, jobSlug);
+    country = job?.country;
+  } catch {
+    // Job not found or error reading it; routing will use job slug or default
+  }
+
+  // Determine recipient email based on routing config (by job slug or country)
+  const recipientEmail = getJobApplicationEmail({ jobSlug, country });
+
+  if (!apiKey || !from) {
     return NextResponse.json(
-      { error: "Email delivery is not configured. Set RESEND_API_KEY, JOBS_FROM_EMAIL and JOBS_TO_EMAIL." },
+      { error: "Email delivery is not configured. Set RESEND_API_KEY and JOBS_FROM_EMAIL." },
       { status: 503 },
     );
   }
@@ -234,7 +240,7 @@ export async function POST(request: Request) {
     const resend = new Resend(apiKey);
     const response = await resend.emails.send({
       from,
-      to: recipients,
+      to: recipientEmail,
       replyTo: sanitize(email),
       subject: `Candidatura SUNNIT - ${sanitize(jobTitle)} - ${sanitize(name)}`,
       text,

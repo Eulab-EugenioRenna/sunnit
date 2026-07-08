@@ -5932,6 +5932,37 @@ svg {
   color: var(--muted);
 }
 
+.job-modal__body {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 24px;
+  padding: 18px;
+  color: var(--ink);
+  background: rgba(8, 47, 63, 0.04);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+.job-modal__body h3 {
+  margin: 8px 0 0;
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.job-modal__body p,
+.job-modal__body ul {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.job-modal__body ul {
+  display: grid;
+  gap: 6px;
+  padding-left: 18px;
+}
+
 .job-application-form {
   display: grid;
   gap: 12px;

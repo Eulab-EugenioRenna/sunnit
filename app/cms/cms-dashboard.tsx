@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Languages, Plus, Save, Sparkles, TextQuote, Trash2 } from "lucide-react";
+import { getJobCountryOptions, normalizeJobCountryValue } from "@/lib/job-countries";
 
 type CmsContentType = "blog" | "portfolio" | "job";
 
@@ -25,7 +26,7 @@ const tabs: Array<{ type: CmsContentType; label: string }> = [
   { type: "job", label: "Job" },
 ];
 
-const fields: Record<CmsContentType, Array<{ key: string; label: string; kind?: "textarea" | "select" }>> = {
+const fields: Record<CmsContentType, Array<{ key: string; label: string; kind?: "country" | "textarea" | "select" }>> = {
   blog: [
     { key: "title", label: "Titolo" },
     { key: "excerpt", label: "Excerpt", kind: "textarea" },
@@ -46,7 +47,7 @@ const fields: Record<CmsContentType, Array<{ key: string; label: string; kind?: 
     { key: "title", label: "Titolo" },
     { key: "excerpt", label: "Excerpt", kind: "textarea" },
     { key: "department", label: "Area" },
-    { key: "country", label: "Paese" },
+    { key: "country", label: "Paese", kind: "country" },
     { key: "location", label: "Sede" },
     { key: "workMode", label: "Modalita" },
     { key: "contract", label: "Contratto" },
@@ -207,11 +208,13 @@ export default function CmsDashboard() {
     });
 
     for (const staged of stagedForContext) {
-      if (staged.sourceKey && sourceEntries.some((entry) => entryKey(entry) === staged.sourceKey)) {
+      const sourceExists = staged.sourceKey && sourceEntries.some((entry) => entryKey(entry) === staged.sourceKey);
+
+      if (sourceExists) {
         continue;
       }
 
-      if (!staged.sourceKey && !merged.some((entry) => entry.draftKey === staged.draftKey)) {
+      if (!merged.some((entry) => entry.draftKey === staged.draftKey)) {
         merged.unshift({ ...staged, pendingDelete: Boolean(pendingDeletesRef.current[staged.draftKey]) });
       }
     }
@@ -470,7 +473,10 @@ export default function CmsDashboard() {
           const draft = makeDraftEntry(createdEntry, draftKey, draftKey, false);
           setStagedEntries((current) => ({ ...current, [draft.draftKey]: draft }));
           stagedEntriesRef.current = { ...stagedEntriesRef.current, [draft.draftKey]: draft };
-          setEntries((current) => [draft, ...current.filter((entry) => entry.draftKey !== draft.draftKey)]);
+
+          if (createdEntry.type === activeType && createdEntry.lang === lang) {
+            setEntries((current) => [draft, ...current.filter((entry) => entry.draftKey !== draft.draftKey)]);
+          }
         }
       }
       setMessage(
@@ -668,6 +674,15 @@ export default function CmsDashboard() {
               <span>{field.label}</span>
               {field.kind === "textarea" ? (
                 <textarea value={activeEntry.frontmatter[field.key] || ""} onChange={(event) => updateFrontmatter(field.key, event.target.value)} />
+              ) : field.kind === "country" ? (
+                <select value={normalizeJobCountryValue(activeEntry.frontmatter[field.key])} onChange={(event) => updateFrontmatter(field.key, event.target.value)}>
+                  <option value="">Seleziona paese</option>
+                  {getJobCountryOptions(lang).map((option) => (
+                    <option key={option.key} value={option.key}>
+                      {option.value}
+                    </option>
+                  ))}
+                </select>
               ) : field.key === "tone" ? (
                 <select value={activeEntry.frontmatter[field.key] || "blue"} onChange={(event) => updateFrontmatter(field.key, event.target.value)}>
                   {["blue", "green", "purple", "dark"].map((value) => (

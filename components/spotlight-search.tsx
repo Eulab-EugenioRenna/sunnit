@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Search, FileText, CornerDownLeft, Laptop, Info, Mail, Award, Cpu, BookOpen, Briefcase, UserRoundPlus } from "lucide-react";
+import { getJobCountryLabel, getJobCountrySearchText } from "@/lib/job-countries";
 
 interface SearchItem {
   title: string;
@@ -229,13 +230,14 @@ export default function SpotlightSearch({
 
     const jobItems: SearchItem[] = jobs.map((job) => ({
       title: job.title,
-      subtitle: `${job.department} - ${job.location} - ${job.contract}`,
+      subtitle: `${job.department} - ${getJobCountryLabel(job.country, lang)} - ${job.location} - ${job.contract}`,
       searchText: [
         job.title,
         job.excerpt,
         job.content,
         job.department,
-        job.country,
+        getJobCountryLabel(job.country, lang),
+        getJobCountrySearchText(job.country),
         job.location,
         job.workMode,
         job.contract,

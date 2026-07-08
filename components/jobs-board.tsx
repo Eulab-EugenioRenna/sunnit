@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import { BriefcaseBusiness, CheckCircle2, FileText, MapPin, Search, SlidersHorizontal, UploadCloud, X } from "lucide-react";
 import type { JobPost } from "@/lib/jobs";
+import { getJobCountryLabel, getJobCountrySearchText, normalizeJobCountryValue } from "@/lib/job-countries";
 
 type JobsCopy = {
   filters: {
@@ -42,17 +43,28 @@ type FilterKey = "department" | "country" | "workMode" | "contract" | "seniority
 
 const filterKeys: FilterKey[] = ["department", "country", "workMode", "contract", "seniority"];
 
-function uniqueValues(jobs: JobPost[], key: FilterKey) {
-  return [...new Set(jobs.map((job) => job[key]).filter(Boolean))].sort((left, right) => left.localeCompare(right));
+function getFilterValue(job: JobPost, key: FilterKey) {
+  return key === "country" ? normalizeJobCountryValue(job.country) : job[key];
 }
 
-function jobMatches(job: JobPost, query: string, filters: Record<FilterKey, string>) {
+function getFilterLabel(key: FilterKey, value: string, lang: string) {
+  return key === "country" ? getJobCountryLabel(value, lang) : value;
+}
+
+function uniqueValues(jobs: JobPost[], key: FilterKey, lang: string) {
+  return [...new Set(jobs.map((job) => getFilterValue(job, key)).filter(Boolean))].sort((left, right) =>
+    getFilterLabel(key, left, lang).localeCompare(getFilterLabel(key, right, lang)),
+  );
+}
+
+function jobMatches(job: JobPost, query: string, filters: Record<FilterKey, string>, lang: string) {
   const normalizedQuery = query.trim().toLowerCase();
   const haystack = [
     job.title,
     job.excerpt,
     job.department,
-    job.country,
+    getJobCountryLabel(job.country, lang),
+    getJobCountrySearchText(job.country),
     job.location,
     job.workMode,
     job.contract,
@@ -66,7 +78,51 @@ function jobMatches(job: JobPost, query: string, filters: Record<FilterKey, stri
     return false;
   }
 
-  return filterKeys.every((key) => !filters[key] || job[key] === filters[key]);
+  return filterKeys.every((key) => !filters[key] || getFilterValue(job, key) === filters[key]);
+}
+
+function renderJobBody(body: string) {
+  const blocks: ReactNode[] = [];
+  const lines = body.split("\n");
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index].trim();
+
+    if (!line) continue;
+
+    const heading = line.match(/^#{2,4}\s+(.+)$/);
+    if (heading) {
+      blocks.push(<h3 key={`heading-${index}`}>{heading[1]}</h3>);
+      continue;
+    }
+
+    if (line.startsWith("* ") || line.startsWith("- ")) {
+      const items: string[] = [];
+
+      while (index < lines.length) {
+        const itemLine = lines[index].trim();
+
+        if (!itemLine.startsWith("* ") && !itemLine.startsWith("- ")) break;
+
+        items.push(itemLine.slice(2).trim());
+        index += 1;
+      }
+
+      index -= 1;
+      blocks.push(
+        <ul key={`list-${index}`}>
+          {items.map((item, itemIndex) => (
+            <li key={`${item}-${itemIndex}`}>{item}</li>
+          ))}
+        </ul>,
+      );
+      continue;
+    }
+
+    blocks.push(<p key={`paragraph-${index}`}>{line}</p>);
+  }
+
+  return blocks;
 }
 
 const maxCvSize = 10 * 1024 * 1024;
@@ -97,7 +153,7 @@ export default function JobsBoard({
   const [isCvDragging, setIsCvDragging] = useState(false);
   const cvInputRef = useRef<HTMLInputElement>(null);
 
-  const filteredJobs = jobs.filter((job) => jobMatches(job, query, filters));
+  const filteredJobs = jobs.filter((job) => jobMatches(job, query, filters, lang));
   const hasActiveFilters = query || filterKeys.some((key) => filters[key]);
 
   useEffect(() => {
@@ -186,9 +242,9 @@ export default function JobsBoard({
                 onChange={(event) => setFilters((current) => ({ ...current, [key]: event.target.value }))}
               >
                 <option value="">{copy.filters.all}</option>
-                {uniqueValues(jobs, key).map((value) => (
+                {uniqueValues(jobs, key, lang).map((value) => (
                   <option key={value} value={value}>
-                    {value}
+                    {getFilterLabel(key, value, lang)}
                   </option>
                 ))}
               </select>
@@ -238,7 +294,7 @@ export default function JobsBoard({
                 </span>
               </div>
               <div className="job-card__footer">
-                <span>{job.country}</span>
+                <span>{getJobCountryLabel(job.country, lang)}</span>
                 <span>{job.workMode}</span>
                 <button type="button" className="dark-btn tiny" onClick={() => openApplication(job)}>
                   {copy.card.apply}
@@ -270,6 +326,7 @@ export default function JobsBoard({
                   <h2>{copy.application.title}</h2>
                   <p>{copy.application.subtitle}</p>
                 </div>
+                {activeJob.body.trim() ? <div className="job-modal__body">{renderJobBody(activeJob.body)}</div> : null}
                 <form
                   className="job-application-form"
                   onSubmit={async (event) => {

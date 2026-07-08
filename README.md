@@ -43,6 +43,40 @@ Se `OLLAMA_URL` manca in produzione, oppure usa `localhost`, la route AI rispond
 
 Nota: convertire la route a Edge runtime non risolve questo problema di rete; serve un endpoint Ollama esposto/raggiungibile dal runtime server.
 
+## Job Applications Routing
+
+Le candidature ai job possono essere instradate a mail diverse in base al paese o allo specifico job.
+
+Configura il file `lib/jobs-routing.json`:
+
+```json
+{
+  "defaultEmail": "p.dimicco@sunnit.it",
+  "byCountry": {
+    "it": "p.dimicco@sunnit.it",
+    "es": "jobs.es@sunnit.it"
+  },
+  "byJobSlug": {
+    "senior-backend-developer": "backend-team@sunnit.it"
+  }
+}
+```
+
+Priorità di routing:
+1. Per `jobSlug` (se esatto match)
+2. Per `country` del job
+3. Email di default
+
+`country` viene letto dal frontmatter del job. La configurazione puo usare codici paese (`it`, `es`) e il resolver normalizza anche nomi localizzati come `Italia`, `Italy`, `Spagna`, `Spain` o `España`.
+Il valore canonico salvato nei job e usato per il routing e `country: "it"` o `country: "es"`. Le label visibili nel CMS e nel sito arrivano dalla mappa `lib/job-countries.ts`, per esempio `it -> Italia/Italy/Italien` in base alla lingua.
+Durante le traduzioni AI dei job, il campo `country` viene mantenuto/normalizzato dalla stessa mappa e non dalla risposta del modello.
+
+Richieste ambiente:
+- `JOBS_FROM_EMAIL`: mittente (es. `jobs@sunnit.it`)
+- `RESEND_API_KEY`: key API Resend
+
+
+
 ## Refinement 02
 
 - Layout portato a piena larghezza: le sezioni usano quasi tutto il viewport con gutter minimo.
