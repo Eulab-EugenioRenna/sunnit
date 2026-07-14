@@ -1,11 +1,17 @@
 #!/usr/bin/env node
 
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import { fileURLToPath } from 'node:url';
 import { beautifyMdxBody, beautifyMdxExcerpt, DEFAULT_OLLAMA_MODEL } from './mdx-beautify.mjs';
+import {
+  attachSanityImage,
+  deterministicDocumentId,
+  getSanityClient,
+  loadSanityEnv,
+} from './lib/sanity-content.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,10 +23,6 @@ const contentRoots = {
   job: path.join(projectRoot, 'content', 'jobs'),
 };
 
-const imageRoots = {
-  blog: '/images/posts',
-  portfolio: '/images/portfolio',
-};
 
 function parseArgs(argv) {
   const options = {
@@ -197,6 +199,8 @@ function printHelp() {
   console.log(`Uso:
   npm run import -- --type <blog|portfolio|job> --lang <it|en|es> --title "Titolo" --image-url <url>
 
+Il contenuto viene creato direttamente su Sanity.
+
 Modalita:
   1. Interattiva: lancia solo il comando e incolla il testo quando richiesto
   2. Via file:     --text-file ./mio-testo.md
@@ -211,7 +215,7 @@ Opzioni principali:
   --text-file     file locale con il corpo MD/MDX
   --body          corpo MD/MDX inline
   --date          data editoriale in formato YYYY-MM-DD (default: oggi)
-  --dry-run       non scrive file, mostra solo cosa farebbe
+  --dry-run       non scrive su Sanity, mostra solo cosa farebbe
   --skip-beautify salta la rifinitura MDX con Ollama
 
 Opzioni blog:
@@ -262,50 +266,12 @@ function toExcerpt(body) {
   return text.length > 180 ? `${text.slice(0, 177).trim()}...` : text;
 }
 
-function escapeYaml(value) {
-  return String(value || '').replace(/"/g, '\\"');
-}
 
 function getDefaultDate() {
   return new Date().toISOString().slice(0, 10);
 }
 
-function inferExtension(contentType, url, contentTypeHeader) {
-  const pathname = (() => {
-    try {
-      return new URL(url).pathname;
-    } catch {
-      return '';
-    }
-  })();
 
-  const extFromPath = path.extname(pathname).toLowerCase();
-  if (extFromPath && extFromPath.length <= 5) {
-    return extFromPath;
-  }
-
-  if (contentTypeHeader.includes('png')) return '.png';
-  if (contentTypeHeader.includes('webp')) return '.webp';
-  if (contentTypeHeader.includes('svg')) return '.svg';
-  if (contentTypeHeader.includes('gif')) return '.gif';
-  if (contentTypeHeader.includes('jpeg') || contentTypeHeader.includes('jpg')) return '.jpg';
-
-  return contentType === 'blog' ? '.jpg' : '.png';
-}
-
-async function downloadImage({ imageUrl, targetPath, dryRun }) {
-  if (dryRun) return;
-
-  const response = await fetch(imageUrl);
-
-  if (!response.ok) {
-    throw new Error(`Download immagine fallito con status ${response.status}`);
-  }
-
-  const arrayBuffer = await response.arrayBuffer();
-  await mkdir(path.dirname(targetPath), { recursive: true });
-  await writeFile(targetPath, Buffer.from(arrayBuffer));
-}
 
 async function getBodyContent(options) {
   if (options.body) {
@@ -365,6 +331,7 @@ async function promptMissingFields(options) {
 }
 
 async function main() {
+  await loadSanityEnv();
   const options = parseArgs(process.argv.slice(2));
 
   if (options.help) {
@@ -403,19 +370,6 @@ async function main() {
       });
 
   const slug = options.slug || slugify(options.title);
-  const contentDir = path.join(contentRoots[options.type], options.lang);
-  const mdxPath = path.join(contentDir, `${slug}.mdx`);
-
-  let imagePublicPath = '';
-  let imageDiskPath = '';
-
-  if (options.type !== 'job') {
-    const imageProbe = await fetch(options.imageUrl, { method: 'HEAD' }).catch(() => null);
-    const extension = inferExtension(options.type, options.imageUrl, imageProbe?.headers.get('content-type') || '');
-    const imageFileName = `${slug}${extension}`;
-    imagePublicPath = `${imageRoots[options.type]}/${imageFileName}`;
-    imageDiskPath = path.join(projectRoot, 'public', imagePublicPath.replace(/^?\//, ''));
-  }
 
   const excerpt = options.excerpt
     || (options.dryRun || options.skipBeautify
@@ -426,77 +380,59 @@ async function main() {
           slug,
         }));
 
-  let frontmatter = '';
-
-  if (options.type === 'blog') {
-    const tags = options.tags
-      ? options.tags.split(',').map((item) => item.trim()).filter(Boolean)
-      : [];
-
-    frontmatter = [
-      '---',
-      `title: "${escapeYaml(options.title)}"`,
-      `excerpt: "${escapeYaml(excerpt)}"`,
-      `image: "${imagePublicPath}"`,
-      `date: "${escapeYaml(editorialDate)}"`,
-      `tags: [${tags.map((tag) => `"${escapeYaml(tag)}"`).join(', ')}]`,
-      '---',
-      '',
-    ].join('\n');
-  } else if (options.type === 'portfolio') {
-    frontmatter = [
-      '---',
-      `title: "${escapeYaml(options.title)}"`,
-      `excerpt: "${escapeYaml(excerpt)}"`,
-      `image: "${imagePublicPath}"`,
-      `date: "${escapeYaml(editorialDate)}"`,
-      `tag: "${escapeYaml(options.tag || 'Project')}"`,
-      `tone: "${escapeYaml(options.tone || 'blue')}"`,
-      ...(options.order ? [`order: "${escapeYaml(options.order)}"`] : []),
-      '---',
-      '',
-    ].join('\n');
-  } else {
-    frontmatter = [
-      '---',
-      `title: "${escapeYaml(options.title)}"`,
-      `excerpt: "${escapeYaml(excerpt)}"`,
-      `department: "${escapeYaml(options.department)}"`,
-      `country: "${escapeYaml(options.country)}"`,
-      `location: "${escapeYaml(options.location)}"`,
-      `workMode: "${escapeYaml(options.workMode)}"`,
-      `contract: "${escapeYaml(options.contract)}"`,
-      `seniority: "${escapeYaml(options.seniority)}"`,
-      `status: "${escapeYaml(options.status || 'open')}"`,
-      `date: "${escapeYaml(editorialDate)}"`,
-      '---',
-      '',
-    ].join('\n');
-  }
-
-  const mdxContent = `${frontmatter}${formattedBody.trim()}\n`;
 
   console.log(`Tipo: ${options.type}`);
   console.log(`Lingua: ${options.lang}`);
   console.log(`Slug: ${slug}`);
   console.log(`Data: ${editorialDate}`);
-  console.log(`MDX: ${path.relative(projectRoot, mdxPath)}`);
-  if (imageDiskPath) {
-    console.log(`Immagine: ${path.relative(projectRoot, imageDiskPath)}`);
-  }
-  console.log(`Beautify MDX: ${options.skipBeautify ? 'saltato' : `Ollama ${DEFAULT_OLLAMA_MODEL}`}`);
+  console.log(`Destinazione: Sanity (${options.lang}/${slug})`);
+  console.log(`Beautify MDX: ${options.skipBeautify ? 'saltato' : `Ollama ${process.env.OLLAMA_MODEL || DEFAULT_OLLAMA_MODEL}`}`);
 
   if (options.dryRun) {
     return;
   }
 
-  await mkdir(path.dirname(mdxPath), { recursive: true });
-  await writeFile(mdxPath, mdxContent, 'utf8');
-  if (imageDiskPath) {
-    await downloadImage({ imageUrl: options.imageUrl, targetPath: imageDiskPath, dryRun: options.dryRun });
-  }
+  const typeNames = { blog: 'blogPost', portfolio: 'portfolioProject', job: 'job' };
+  const baseDocument = {
+    _id: deterministicDocumentId(options.type, options.lang, slug),
+    _type: typeNames[options.type],
+    title: options.title,
+    excerpt,
+    slug: { _type: 'slug', current: slug },
+    language: options.lang,
+    body: formattedBody.trim(),
+    publishedAt: new Date(editorialDate).toISOString(),
+  };
+  const document = options.type === 'blog'
+    ? {
+        ...baseDocument,
+        imageUrl: options.imageUrl,
+        tags: options.tags ? options.tags.split(',').map((item) => item.trim()).filter(Boolean) : [],
+      }
+    : options.type === 'portfolio'
+      ? {
+          ...baseDocument,
+          imageUrl: options.imageUrl,
+          tag: options.tag || 'Project',
+          tone: ['green', 'purple', 'dark'].includes(options.tone) ? options.tone : 'blue',
+          order: Number(options.order) || 999,
+        }
+      : {
+          ...baseDocument,
+          department: options.department || 'SUNNIT',
+          country: String(options.country || '').toLowerCase().includes('sp') || String(options.country || '').toLowerCase().startsWith('es') ? 'es' : 'it',
+          location: options.location || '',
+          workMode: options.workMode || '',
+          contract: options.contract || '',
+          seniority: options.seniority || '',
+          status: options.status === 'closed' ? 'closed' : 'open',
+        };
 
-  console.log('Contenuto creato con successo.');
+  const client = await getSanityClient({ write: true });
+  const withImage = await attachSanityImage(client, document);
+  await client.createOrReplace(withImage);
+
+  console.log('Contenuto creato su Sanity con successo.');
 }
 
 main().catch((error) => {

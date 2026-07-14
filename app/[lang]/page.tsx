@@ -22,7 +22,7 @@ export default async function Home({
   const dict = await getDictionary(lang);
   const content = (dict as any).common.content;
   const company = dict.common.company;
-  const posts = getAllBlogPosts(lang as BlogLang).slice(0, 3);
+  const posts = (await getAllBlogPosts(lang as BlogLang)).slice(0, 3);
 
   type client = {
     name: string;

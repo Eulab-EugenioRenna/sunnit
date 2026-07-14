@@ -1,460 +1,144 @@
 #!/usr/bin/env node
 
-import { readdir, readFile, writeFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
-import { fileURLToPath } from 'node:url';
 import { beautifyMdxDocument, DEFAULT_OLLAMA_MODEL } from './mdx-beautify.mjs';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const projectRoot = path.resolve(__dirname, '..');
-
-const contentRoots = {
-  blog: path.join(projectRoot, 'content', 'blog'),
-  portfolio: path.join(projectRoot, 'content', 'portfolio'),
-  job: path.join(projectRoot, 'content', 'jobs'),
-};
+import {
+  contentDefinitions,
+  getSanityClient,
+  loadSanityEnv,
+  mdxToSanityFields,
+  projectRoot,
+  sanityDocumentToMdx,
+} from './lib/sanity-content.mjs';
 
 function parseArgs(argv) {
-  const options = {
-    type: '',
-    lang: '',
-    slug: '',
-    file: '',
-    scan: false,
-    dryRun: false,
-    mode: '',
-  };
-
+  const options = { type: '', lang: '', slug: '', file: '', scan: false, dryRun: false, mode: '' };
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
-    const next = argv[index + 1];
-
-    if (arg === '--dry-run') {
-      options.dryRun = true;
-      continue;
-    }
-
-    if (arg === '--scan') {
-      options.scan = true;
-      continue;
-    }
-
-    if (arg === '--help' || arg === '-h') {
-      options.help = true;
-      continue;
-    }
-
-    if (arg === '--excerpt-only') {
-      options.mode = 'excerpt-only';
-      continue;
-    }
-
-    if (arg === '--mode') {
-      options.mode = next || 'full';
-      index += 1;
-      continue;
-    }
-
-    if (arg === '--type') {
-      options.type = next || '';
-      index += 1;
-      continue;
-    }
-
-    if (arg === '--lang') {
-      options.lang = next || '';
-      index += 1;
-      continue;
-    }
-
-    if (arg === '--slug') {
-      options.slug = next || '';
-      index += 1;
-      continue;
-    }
-
-    if (arg === '--file') {
-      options.file = next || '';
-      index += 1;
-      continue;
-    }
-
-    throw new Error(`Argomento non supportato: ${arg}`);
+    if (arg === '--dry-run') options.dryRun = true;
+    else if (arg === '--scan') options.scan = true;
+    else if (arg === '--help' || arg === '-h') options.help = true;
+    else if (arg === '--excerpt-only') options.mode = 'excerpt-only';
+    else if (arg === '--mode') options.mode = argv[++index] || 'full';
+    else if (arg === '--type') options.type = argv[++index] || '';
+    else if (arg === '--lang') options.lang = argv[++index] || '';
+    else if (arg === '--slug') options.slug = argv[++index] || '';
+    else if (arg === '--file') options.file = argv[++index] || '';
+    else throw new Error(`Argomento non supportato: ${arg}`);
   }
-
   return options;
 }
 
 function printHelp() {
-  console.log(`Uso:
-  npm run beautify
-  npm run beautify -- --type <blog|portfolio|job> --lang <lang|all|lang1,lang2> --slug <slug>
-  npm run beautify -- --type <blog|portfolio|job> --lang <lang|all|lang1,lang2> --scan
-  npm run beautify -- --file <percorso-file.mdx>
-  npm run beautify -- --excerpt-only --file <percorso-file.mdx>
-
-Opzioni:
-  --type      blog, portfolio o job
-  --lang      lingua/e del contenuto: una lingua disponibile, all oppure lista separata da virgole
-  --slug      slug del contenuto da rifinire
-  --file      percorso file MDX alternativo
-  --scan      scansiona la directory e fa scegliere uno o piu contenuti
-  --mode      full o excerpt-only
-  --excerpt-only  aggiorna solo l'excerpt via Ollama, senza toccare il body
-  --dry-run   non scrive il file, mostra solo l'azione
-  --help, -h  mostra questo messaggio
-
-Modello usato:
-  Ollama ${DEFAULT_OLLAMA_MODEL}
-`);
+  console.log(`Uso:\n  npm run beautify -- --type <blog|portfolio|job> --lang <it|en|es|all> --slug <slug>\n  npm run beautify -- --type <...> --lang <...> --scan\n  npm run beautify -- --file <file.mdx>\n\nSenza --file lo script legge e aggiorna direttamente Sanity.\n\nOpzioni:\n  --mode <full|excerpt-only>\n  --excerpt-only\n  --dry-run\n  --help\n\nModello Ollama: ${DEFAULT_OLLAMA_MODEL}`);
 }
 
 function normalizeMode(value) {
   const normalized = String(value || '').trim().toLowerCase();
-
-  if (normalized === 'f' || normalized === 'full') {
-    return 'full';
-  }
-
-  if (normalized === 'e' || normalized === 'excerpt-only') {
-    return 'excerpt-only';
-  }
-
+  if (normalized === 'e' || normalized === 'excerpt-only') return 'excerpt-only';
+  if (normalized === 'f' || normalized === 'full') return 'full';
   return '';
 }
 
-async function getAvailableLanguages(contentType) {
-  if (!(contentType in contentRoots)) {
-    return [];
-  }
-
-  const entries = await readdir(contentRoots[contentType], { withFileTypes: true });
-
-  return entries
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-    .sort((left, right) => left.localeCompare(right));
-}
-
-function parseLanguageSelection(value, availableLanguages) {
-  const trimmed = String(value || '').trim().toLowerCase();
-
-  if (!trimmed) {
-    return [];
-  }
-
-  if (trimmed === 'all' || trimmed === 'tutte') {
-    return [...availableLanguages];
-  }
-
-  const byIndex = parseSelectionAnswer(trimmed, availableLanguages.length);
-  if (byIndex.length > 0) {
-    return byIndex.map((index) => availableLanguages[index]);
-  }
-
-  const tokens = trimmed
-    .split(',')
-    .map((token) => token.trim())
-    .filter(Boolean);
-
-  return tokens.filter((token, index) => availableLanguages.includes(token) && tokens.indexOf(token) === index);
-}
-
-async function promptMissingOptions(options) {
-  const needsMode = !['full', 'excerpt-only'].includes(options.mode);
-  const needsType = !(options.type in contentRoots);
-  const needsLang = !options.lang;
-  const needsTargetSelection = !options.file && !options.scan && !options.slug;
-
-  if (!needsMode && (!options.file ? (!needsType && !needsLang && !needsTargetSelection) : true)) {
+async function promptOptions(options) {
+  if (options.file && options.mode) return options;
+  const rl = readline.createInterface({ input, output });
+  try {
+    if (!normalizeMode(options.mode)) {
+      options.mode = normalizeMode((await rl.question('Modalita beautify ([f]ull / [e]xcerpt-only, default: f): ')).trim() || 'f');
+    }
+    if (options.file) return options;
+    if (!(options.type in contentDefinitions)) {
+      options.type = (await rl.question('Tipo contenuto Sanity (blog|portfolio|job): ')).trim();
+    }
+    if (!(options.type in contentDefinitions)) throw new Error('Tipo contenuto non valido');
+    if (!options.lang) options.lang = (await rl.question('Lingua (it|en|es|all, default: it): ')).trim() || 'it';
+    if (!options.slug && !options.scan) {
+      const answer = (await rl.question('Slug (lascia vuoto per scegliere da elenco): ')).trim();
+      if (answer) options.slug = answer;
+      else options.scan = true;
+    }
     return options;
-  }
-
-  const rl = readline.createInterface({ input, output });
-
-  try {
-    if (needsMode) {
-      const selectedMode = normalizeMode((await rl.question('Modalita beautify ([f]ull / [e]xcerpt-only, default: f): ')).trim() || 'f');
-
-      if (!selectedMode) {
-        throw new Error('La modalita deve essere full o excerpt-only');
-      }
-
-      options.mode = selectedMode;
-    }
-
-    if (options.file) {
-      return options;
-    }
-
-    if (needsType) {
-      const selectedType = (await rl.question('Tipo contenuto da beautify (blog|portfolio|job): ')).trim();
-
-      if (!(selectedType in contentRoots)) {
-        throw new Error('Il tipo deve essere blog, portfolio o job');
-      }
-
-      options.type = selectedType;
-    }
-
-    if (needsLang) {
-      const availableLanguages = await getAvailableLanguages(options.type);
-
-      if (availableLanguages.length === 0) {
-        throw new Error(`Nessuna lingua disponibile per ${options.type}`);
-      }
-
-      console.log(`Lingue disponibili per ${options.type}:`);
-      for (const [index, lang] of availableLanguages.entries()) {
-        console.log(`${index + 1}. ${lang}`);
-      }
-
-      const answer = await rl.question('Seleziona lingue (es: 1,3 oppure all): ');
-      const selectedLanguages = parseLanguageSelection(answer, availableLanguages);
-
-      if (selectedLanguages.length === 0) {
-        throw new Error('Nessuna lingua valida selezionata');
-      }
-
-      options.lang = selectedLanguages.join(',');
-    }
-
-    if (needsTargetSelection) {
-      const mode = (await rl.question('Vuoi selezionare dalla directory? [Y/n]: ')).trim().toLowerCase();
-      options.scan = mode !== 'n';
-
-      if (!options.scan) {
-        options.slug = (await rl.question('Slug del contenuto: ')).trim();
-
-        if (!options.slug) {
-          throw new Error('Slug obbligatorio');
-        }
-      }
-    }
-  } finally {
-    rl.close();
-  }
-
-  return options;
-}
-
-function resolveTargetPath(options) {
-  if (options.file) {
-    return {
-      filePath: path.resolve(projectRoot, options.file),
-      contentType: options.type || inferTypeFromPath(options.file),
-      slug: path.basename(options.file, '.mdx'),
-    };
-  }
-
-  if (!(options.type in contentRoots)) {
-    throw new Error('Il tipo deve essere blog, portfolio o job');
-  }
-
-  if (!options.slug) {
-    throw new Error('Slug obbligatorio se non usi --file');
-  }
-
-  return getSelectedLanguages(options).map((lang) => ({
-    filePath: path.join(contentRoots[options.type], lang, `${options.slug}.mdx`),
-    contentType: options.type,
-    slug: options.slug,
-    lang,
-  }));
-}
-
-async function listContentEntries(contentType, lang) {
-  if (!(contentType in contentRoots)) {
-    throw new Error('Il tipo deve essere blog, portfolio o job');
-  }
-
-  const targetDir = path.join(contentRoots[contentType], lang);
-  const entries = await readdir(targetDir, { withFileTypes: true });
-
-  return entries
-    .filter((entry) => entry.isFile() && entry.name.endsWith('.mdx'))
-    .map((entry) => ({
-      slug: path.basename(entry.name, '.mdx'),
-      filePath: path.join(targetDir, entry.name),
-      contentType,
-      lang,
-    }))
-    .sort((left, right) => left.slug.localeCompare(right.slug));
-}
-
-async function listEntriesForLanguages(contentType, languages) {
-  const groups = await Promise.all(languages.map(async (lang) => listContentEntries(contentType, lang)));
-  return groups.flat();
-}
-
-function parseSelectionAnswer(answer, max) {
-  const trimmed = String(answer || '').trim().toLowerCase();
-
-  if (!trimmed) {
-    return [];
-  }
-
-  if (trimmed === 'all') {
-    return Array.from({ length: max }, (_, index) => index);
-  }
-
-  const indexes = new Set();
-
-  for (const token of trimmed.split(',')) {
-    const value = token.trim();
-
-    if (!value) continue;
-
-    const rangeMatch = value.match(/^(\d+)-(\d+)$/);
-
-    if (rangeMatch) {
-      const start = Number(rangeMatch[1]);
-      const end = Number(rangeMatch[2]);
-      const min = Math.min(start, end);
-      const maxRange = Math.max(start, end);
-
-      for (let current = min; current <= maxRange; current += 1) {
-        if (current >= 1 && current <= max) {
-          indexes.add(current - 1);
-        }
-      }
-
-      continue;
-    }
-
-    const numeric = Number(value);
-
-    if (Number.isInteger(numeric) && numeric >= 1 && numeric <= max) {
-      indexes.add(numeric - 1);
-    }
-  }
-
-  return [...indexes].sort((left, right) => left - right);
-}
-
-async function promptForScanSelection(options) {
-  const entries = await listEntriesForLanguages(options.type, getSelectedLanguages(options));
-
-  if (entries.length === 0) {
-    throw new Error(`Nessun contenuto trovato per ${options.type} nelle lingue selezionate`);
-  }
-
-  console.log(`Contenuti trovati in ${options.type} [${getSelectedLanguages(options).join(', ')}]:`);
-
-  for (const [index, entry] of entries.entries()) {
-    console.log(`${index + 1}. [${entry.lang}] ${entry.slug}`);
-  }
-
-  const rl = readline.createInterface({ input, output });
-
-  try {
-    const answer = await rl.question('Seleziona articoli/progetti (es: 1,3-5 oppure all): ');
-    const selectedIndexes = parseSelectionAnswer(answer, entries.length);
-
-    if (selectedIndexes.length === 0) {
-      throw new Error('Nessuna selezione valida ricevuta');
-    }
-
-    return selectedIndexes.map((index) => entries[index]);
   } finally {
     rl.close();
   }
 }
 
 function inferTypeFromPath(filePath) {
-  if (filePath.includes(`${path.sep}jobs${path.sep}`) || filePath.includes('/jobs/')) {
-    return 'job';
-  }
-
-  if (filePath.includes(`${path.sep}portfolio${path.sep}`) || filePath.includes('/portfolio/')) {
-    return 'portfolio';
-  }
-
+  if (filePath.includes('/jobs/') || filePath.includes(`${path.sep}jobs${path.sep}`)) return 'job';
+  if (filePath.includes('/portfolio/') || filePath.includes(`${path.sep}portfolio${path.sep}`)) return 'portfolio';
   return 'blog';
 }
 
-function getSelectedLanguages(options) {
-  if (!options.lang) {
-    return [];
+async function selectDocuments(documents) {
+  if (!documents.length) throw new Error('Nessun contenuto Sanity corrispondente');
+  console.log('Contenuti trovati:');
+  documents.forEach((document, index) => console.log(`${index + 1}. [${document.language}] ${document.slug.current} — ${document.title}`));
+  const rl = readline.createInterface({ input, output });
+  try {
+    const answer = (await rl.question('Seleziona numeri separati da virgole oppure all: ')).trim().toLowerCase();
+    if (answer === 'all') return documents;
+    const indexes = [...new Set(answer.split(',').map((value) => Number(value.trim()) - 1))]
+      .filter((value) => Number.isInteger(value) && value >= 0 && value < documents.length);
+    if (!indexes.length) throw new Error('Nessuna selezione valida');
+    return indexes.map((index) => documents[index]);
+  } finally {
+    rl.close();
   }
+}
 
-  return options.lang
-    .split(',')
-    .map((lang) => lang.trim())
-    .filter(Boolean);
+async function beautifyLocalFile(options) {
+  const filePath = path.resolve(projectRoot, options.file);
+  const source = await readFile(filePath, 'utf8');
+  const result = await beautifyMdxDocument({
+    source,
+    contentType: options.type || inferTypeFromPath(filePath),
+    slug: path.basename(filePath, '.mdx'),
+    mode: options.mode,
+  });
+  console.log(`File locale: ${path.relative(projectRoot, filePath)}`);
+  if (!options.dryRun) await writeFile(filePath, result, 'utf8');
 }
 
 async function main() {
-  const parsedOptions = parseArgs(process.argv.slice(2));
+  await loadSanityEnv();
+  const parsed = parseArgs(process.argv.slice(2));
+  if (parsed.help) return printHelp();
+  const options = await promptOptions(parsed);
+  options.mode = normalizeMode(options.mode);
+  if (!options.mode) throw new Error('La modalita deve essere full o excerpt-only');
+  console.log(`Modello: ${process.env.OLLAMA_MODEL || DEFAULT_OLLAMA_MODEL}`);
 
-  if (parsedOptions.help) {
-    printHelp();
+  if (options.file) {
+    await beautifyLocalFile(options);
+    console.log(options.dryRun ? 'Dry run completato.' : 'Beautify locale completato.');
     return;
   }
 
-  const options = await promptMissingOptions(parsedOptions);
+  const client = await getSanityClient({ write: !options.dryRun });
+  const languages = options.lang === 'all' ? null : options.lang.split(',').map((value) => value.trim()).filter(Boolean);
+  const documents = await client.fetch(
+    `*[_type == $type && !(_id in path("drafts.**")) && (!defined($languages) || language in $languages) && (!defined($slug) || slug.current == $slug)] | order(language asc, slug.current asc)`,
+    { type: contentDefinitions[options.type].sanityType, languages, slug: options.slug || null },
+  );
+  const targets = options.scan ? await selectDocuments(documents) : documents;
 
-  options.mode = normalizeMode(options.mode);
-
-  if (!['full', 'excerpt-only'].includes(options.mode)) {
-    throw new Error('La modalita deve essere full o excerpt-only');
-  }
-
-  if (!options.file && options.type) {
-    const availableLanguages = await getAvailableLanguages(options.type);
-    const selectedLanguages = parseLanguageSelection(options.lang, availableLanguages);
-
-    if (selectedLanguages.length === 0) {
-      throw new Error('Devi selezionare almeno una lingua valida');
-    }
-
-    options.lang = selectedLanguages.join(',');
-  }
-
-  const targets = options.scan
-    ? await promptForScanSelection(options)
-    : options.file
-      ? [resolveTargetPath(options)]
-      : resolveTargetPath(options);
-
-  console.log(`Modello: ${DEFAULT_OLLAMA_MODEL}`);
-  console.log(`Modalita: ${options.mode}`);
-  if (!options.file) {
-    console.log(`Lingue: ${getSelectedLanguages(options).join(', ')}`);
-  }
-  console.log(`Elementi selezionati: ${targets.length}`);
-
-  for (const target of targets) {
-    const source = await readFile(target.filePath, 'utf8');
-    const beautified = await beautifyMdxDocument({
-      source,
-      contentType: target.contentType,
-      slug: target.slug,
+  for (const document of targets) {
+    console.log(`[${document.language}] ${document.slug.current}`);
+    if (options.dryRun) continue;
+    const result = await beautifyMdxDocument({
+      source: sanityDocumentToMdx(document),
+      contentType: options.type,
+      slug: document.slug.current,
       mode: options.mode,
     });
-
-    console.log(`File: ${path.relative(projectRoot, target.filePath)}`);
-    console.log(`Tipo: ${target.contentType}`);
-    if (target.lang) {
-      console.log(`Lingua: ${target.lang}`);
-    }
-
-    if (options.dryRun) {
-      continue;
-    }
-
-    await writeFile(target.filePath, beautified, 'utf8');
+    const fields = mdxToSanityFields(result);
+    await client.patch(document._id).set(fields).commit();
   }
-
-  if (options.dryRun) {
-    console.log('Dry run completato, nessuna scrittura eseguita.');
-    return;
-  }
-
-  console.log('Beautify completato con successo.');
+  console.log(options.dryRun ? 'Dry run completato.' : 'Beautify Sanity completato.');
 }
 
 main().catch((error) => {

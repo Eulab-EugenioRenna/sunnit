@@ -24,7 +24,7 @@ export default async function JobsPage({
   const { lang } = await params;
   const { job = "" } = await searchParams;
   const dict = await getDictionary(lang);
-  const jobs = getAllJobs(lang as JobLang);
+  const jobs = await getAllJobs(lang as JobLang);
 
   return (
     <>

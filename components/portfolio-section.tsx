@@ -1,6 +1,6 @@
 import PortfolioExperience from "@/components/portfolio-experience";
 import SectionTitle from "@/components/section-title";
-import { getAllPortfolioProjects, getPortfolioProject } from "@/lib/portfolio";
+import { getAllPortfolioProjects } from "@/lib/portfolio";
 
 function getPortfolioLabels(lang: string) {
   if (lang === "it") {
@@ -35,7 +35,7 @@ export default async function PortfolioSection({
   eyebrow: string;
   title: string;
 }) {
-  const projects = getAllPortfolioProjects(lang);
+  const projects = await getAllPortfolioProjects(lang);
   const labels = getPortfolioLabels(lang);
 
   return (

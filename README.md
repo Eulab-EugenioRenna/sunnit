@@ -30,18 +30,43 @@ Apri `http://localhost:3000`.
 
 Il template usa forme, gradienti e placeholder CSS per evitare dipendenze da asset remoti. Puoi sostituirli con immagini vere mantenendo classi e layout.
 
-## CMS AI in produzione (Vercel)
+## Sanity CMS e Studio
 
-Le route CMS AI girano lato server. In produzione, `localhost` o `127.0.0.1` puntano al server Vercel, non al browser dell'utente.
+Blog, job e portfolio sono letti da Sanity. Lo Studio editoriale è integrato in Next.js e disponibile su `/studio`; il precedente CMS custom e le sue API non fanno più parte dell'applicazione.
 
-Configura quindi variabili ambiente server:
+1. Copia le variabili di `.env.example` in `.env.local` e valorizza almeno:
 
-- `OLLAMA_URL`: URL completo e raggiungibile del tuo endpoint Ollama (es. `https://ollama.example.com`)
-- `OLLAMA_MODEL`: opzionale, default `gemma4:31b-cloud`
+   - `NEXT_PUBLIC_SANITY_PROJECT_ID`
+   - `NEXT_PUBLIC_SANITY_DATASET`
+   - `SANITY_WRITE_TOKEN` per import e script editoriali
 
-Se `OLLAMA_URL` manca in produzione, oppure usa `localhost`, la route AI risponde con errore esplicito.
+2. Verifica project, dataset e token di scrittura senza contattare Ollama o modificare contenuti:
 
-Nota: convertire la route a Edge runtime non risolve questo problema di rete; serve un endpoint Ollama esposto/raggiungibile dal runtime server.
+   ```bash
+   npm run sanity:check
+   ```
+
+3. Controlla l'archivio MDX esistente con un dry run e poi importalo:
+
+   ```bash
+   npm run sanity:import -- --dry-run
+   npm run sanity:import
+   ```
+
+L'importatore gestisce esclusivamente `blog`, `job` e `portfolio`, usa ID deterministici e `createOrReplace`, quindi può essere rieseguito senza duplicare i documenti. Le immagini locali o remote vengono caricate negli asset Sanity; `--skip-images` conserva solo il percorso storico.
+
+### Ollama dopo la migrazione
+
+Gli script continuano a lavorare in Markdown/MDX, ma senza `--file` leggono e aggiornano direttamente Sanity:
+
+```bash
+npm run beautify -- --type blog --lang it --slug mio-articolo
+npm run beautify -- --type portfolio --lang all --scan
+npm run translate -- --type all --source it
+npm run import -- --type job --lang it --title "Titolo"
+```
+
+`beautify --file` resta disponibile per rifinire un file MDX locale. Configura `OLLAMA_URL` e `OLLAMA_MODEL` nel processo che esegue gli script; il token Sanity deve avere permessi di scrittura sul dataset.
 
 ## Job Applications Routing
 
@@ -67,8 +92,8 @@ Priorità di routing:
 2. Per `country` del job
 3. Email di default
 
-`country` viene letto dal frontmatter del job. La configurazione puo usare codici paese (`it`, `es`) e il resolver normalizza anche nomi localizzati come `Italia`, `Italy`, `Spagna`, `Spain` o `España`.
-Il valore canonico salvato nei job e usato per il routing e `country: "it"` o `country: "es"`. Le label visibili nel CMS e nel sito arrivano dalla mappa `lib/job-countries.ts`, per esempio `it -> Italia/Italy/Italien` in base alla lingua.
+`country` viene letto dal documento Sanity del job. La configurazione puo usare codici paese (`it`, `es`) e il resolver normalizza anche nomi localizzati come `Italia`, `Italy`, `Spagna`, `Spain` o `España`.
+Il valore canonico salvato nei job e usato per il routing e `country: "it"` o `country: "es"`. Le label visibili nello Studio e nel sito arrivano dalla mappa `lib/job-countries.ts`, per esempio `it -> Italia/Italy/Italien` in base alla lingua.
 Durante le traduzioni AI dei job, il campo `country` viene mantenuto/normalizzato dalla stessa mappa e non dalla risposta del modello.
 
 Richieste ambiente:

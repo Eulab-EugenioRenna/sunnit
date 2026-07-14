@@ -58,7 +58,7 @@ async function ollamaChat({ messages, slug, action, baseUrl = process.env.OLLAMA
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: DEFAULT_OLLAMA_MODEL,
+      model: process.env.OLLAMA_MODEL || DEFAULT_OLLAMA_MODEL,
       stream: false,
       messages,
     }),

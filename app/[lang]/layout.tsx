@@ -61,7 +61,12 @@ export default async function RootLayout({
   const { lang } = await params;
   const dict = await getDictionary(lang);
   const availableLocales = getAvailableLocales();
-  const articles = getAllBlogPosts(lang as BlogLang).map((post) => ({
+  const [blogPosts, projects, jobPosts] = await Promise.all([
+    getAllBlogPosts(lang as BlogLang),
+    getAllPortfolioProjects(lang as PortfolioLang),
+    getAllJobs(lang as JobLang),
+  ]);
+  const articles = blogPosts.map((post) => ({
     title: post.title,
     excerpt: post.excerpt,
     content: post.body,
@@ -69,7 +74,7 @@ export default async function RootLayout({
     href: `/${lang}/blog/${post.slug}`,
     tags: post.tags,
   }));
-  const portfolioProjects = getAllPortfolioProjects(lang as PortfolioLang).map((project) => ({
+  const portfolioProjects = projects.map((project) => ({
     slug: project.slug,
     title: project.title,
     excerpt: project.excerpt,
@@ -77,7 +82,7 @@ export default async function RootLayout({
     tag: project.tag,
     href: `/${lang}#cases`,
   }));
-  const jobs = getAllJobs(lang as JobLang).map((job) => ({
+  const jobs = jobPosts.map((job) => ({
     slug: job.slug,
     title: job.title,
     excerpt: job.excerpt,

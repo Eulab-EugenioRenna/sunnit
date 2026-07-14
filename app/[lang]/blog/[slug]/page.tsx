@@ -13,13 +13,13 @@ type BlogPostPageProps = {
   params: Promise<{ lang: string; slug: string }>;
 };
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
   return getAllBlogSlugs();
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { lang, slug } = await params;
-  const post = getBlogPost(lang as BlogLang, slug);
+  const post = await getBlogPost(lang as BlogLang, slug);
 
   if (!post) {
     return {};
@@ -50,13 +50,13 @@ async function getMdxContent(body: string) {
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { lang, slug } = await params;
-  const post = getBlogPost(lang as BlogLang, slug);
+  const post = await getBlogPost(lang as BlogLang, slug);
 
   if (!post) {
     notFound();
   }
 
-  const posts = getAllBlogPosts(lang as BlogLang);
+  const posts = await getAllBlogPosts(lang as BlogLang);
   const allTags = Array.from(new Set(posts.flatMap((item) => item.tags))).sort((left, right) =>
     left.localeCompare(right)
   );

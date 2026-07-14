@@ -22,7 +22,7 @@ export default async function BlogPage({
   const { lang } = await params;
   const { search = "", page = "1", tag = "" } = await searchParams;
   const dict = await getDictionary(lang);
-  const posts = getAllBlogPosts(lang as BlogLang);
+  const posts = await getAllBlogPosts(lang as BlogLang);
 
   const filteredPosts = posts.filter((post) => {
     const matchesSearch =
