@@ -44,6 +44,7 @@ export default function Footer({ dict, lang }: { dict: Dictionary; lang: string 
           <Link href={`/${lang}`}>Home</Link>
           <Link href={`/${lang}/about`}>About Us</Link>
           <Link href={`/${lang}/services`}>Services</Link>
+          <Link href={`/${lang}/ecosystem`}>{dict.common.header.ecosystem}</Link>
           <Link href={`/${lang}/blog`}>Blog</Link>
           <Link href={`/${lang}/jobs`}>Jobs</Link>
         </div>
