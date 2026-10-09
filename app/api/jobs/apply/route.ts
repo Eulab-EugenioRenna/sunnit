@@ -263,6 +263,38 @@ export async function POST(request: Request) {
       );
     }
 
+    // The application has been delivered. A confirmation failure must not
+    // ask the candidate to submit the same application again.
+    try {
+      const confirmation = await resend.emails.send({
+        from,
+        to: sanitize(email),
+        replyTo: recipientEmail,
+        subject: `We've received your application for ${sanitize(jobTitle)}`,
+        text: [
+          `Hi ${sanitize(name)},`,
+          "",
+          `Thank you for applying for the ${sanitize(jobTitle)} position at SUNNIT. We're glad you're interested in joining us.`,
+          "",
+          "We've received your application and our team will review it carefully. If your profile matches what we're looking for, we'll contact you to discuss next steps. Due to the number of applications we receive, we may not be able to respond to everyone individually.",
+          "",
+          "In the meantime, you can learn more about us at https://sunnit.it/en/jobs.",
+          "",
+          "Thanks again for your time and interest.",
+          "",
+          "Best regards,",
+          "Recruitment Team",
+          "SUNNIT",
+        ].join("\n"),
+      });
+
+      if (confirmation.error) {
+        console.error("Resend application confirmation failed", confirmation.error);
+      }
+    } catch (error) {
+      console.error("Resend application confirmation failed", error);
+    }
+
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("Resend email send failed", error);

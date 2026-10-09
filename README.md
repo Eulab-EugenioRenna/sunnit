@@ -70,6 +70,8 @@ npm run import -- --type job --lang it --title "Titolo"
 
 ## Job Applications Routing
 
+Per caricare, aggiornare e tradurre le posizioni, consulta la [guida operativa dei job](docs/GUIDA-JOB.md), con procedure da Studio, comandi degli script e limiti delle traduzioni automatiche.
+
 Le candidature ai job possono essere instradate a mail diverse in base al paese o allo specifico job.
 
 Configura il file `lib/jobs-routing.json`:
@@ -79,7 +81,7 @@ Configura il file `lib/jobs-routing.json`:
   "defaultEmail": "p.dimicco@sunnit.it",
   "byCountry": {
     "it": "p.dimicco@sunnit.it",
-    "es": "jobs.es@sunnit.it"
+    "es": "administracion@sunnitspain.es"
   },
   "byJobSlug": {
     "senior-backend-developer": "backend-team@sunnit.it"
@@ -99,6 +101,8 @@ Durante le traduzioni AI dei job, il campo `country` viene mantenuto/normalizzat
 Richieste ambiente:
 - `JOBS_FROM_EMAIL`: mittente (es. `jobs@sunnit.it`)
 - `RESEND_API_KEY`: key API Resend
+
+Quando Resend accetta l'email con il CV al referente, viene inviata anche una conferma in inglese al candidato, con nome, posizione, link alla pagina carriere e firma “Recruitment Team, SUNNIT”. La conferma usa lo stesso mittente e le risposte vengono indirizzate al referente selezionato dal routing. Se l'invio della conferma fallisce, l'errore viene registrato nei log e la candidatura resta riuscita, evitando un nuovo invio del CV.
 
 
 
