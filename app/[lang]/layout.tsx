@@ -13,6 +13,10 @@ import DebugDomErrors from "@/components/debug-dom-errors";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://sunnit.it"),
+  icons: {
+    icon: { url: "/favicon.svg", type: "image/svg+xml" },
+    shortcut: "/favicon.svg",
+  },
   title: {
     default: "SUNNIT",
     template: "%s | SUNNIT"
