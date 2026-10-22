@@ -104,7 +104,7 @@
 .backButton:hover { color: white; }
 .expandedMap { aspect-ratio: 1.7; min-height: 740px; }
 .scope { position: absolute; inset: 0; pointer-events: none; }
-.scopeDescription { position: absolute; left: 5%; top: 42%; width: 29%; animation: detailIn .55s .25s both; pointer-events: auto; }
+.scopeDescription { max-height: calc(58% - 30px); overflow-y: auto; overscroll-behavior: contain; position: absolute; left: 5%; top: 42%; width: 29%; animation: detailIn .55s .25s both; pointer-events: auto; }
 .scopeDescription .eyebrow { font-size: 9px; letter-spacing: .11em; color: #ff7c91; margin-bottom: 15px; }
 .scopeDescription h2 { margin: 0 0 16px; font-size: clamp(24px, 2.3vw, 36px); line-height: 1.15; font-weight: 550; letter-spacing: -.04em; }
 .scopeDescription > p:not(.eyebrow) { color: #b9c9cf; font-size: 13px; line-height: 1.75; margin: 0; }
@@ -152,7 +152,7 @@
   .backButton { font-size: 11px; }
   .scopeConnectionsDesktop { display: none; }
   .scopeConnectionsMobile { display: block; }
-  .scopeDescription { left: 7%; top: 18%; width: 86%; }
+  .scopeDescription { left: 7%; top: 18%; width: 86%; max-height: calc(42% - 19.5vw - 30px); }
   .scopeDescription h2 { font-size: 27px; margin-bottom: 12px; }
   .scopeDescription .eyebrow { font-size: 8px; margin-bottom: 10px; }
   .scopeDescription > p:not(.eyebrow) { font-size: 12px; line-height: 1.6; }

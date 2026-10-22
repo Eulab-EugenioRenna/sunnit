@@ -30,7 +30,7 @@ function escapeYamlDoubleQuoted(value) {
     .replace(/"/g, '\\"');
 }
 
-function upsertExcerpt(frontmatter, excerpt) {
+export function upsertExcerpt(frontmatter, excerpt) {
   if (!frontmatter || !excerpt) {
     return frontmatter;
   }
@@ -41,7 +41,9 @@ function upsertExcerpt(frontmatter, excerpt) {
   const excerptIndex = bodyLines.findIndex((line) => /^excerpt\s*:/.test(line.trim()));
 
   if (excerptIndex >= 0) {
-    bodyLines[excerptIndex] = excerptLine;
+    const nextFieldIndex = bodyLines.findIndex((line, index) => index > excerptIndex && /^\S/.test(line));
+    const excerptEndIndex = nextFieldIndex >= 0 ? nextFieldIndex : bodyLines.length;
+    bodyLines.splice(excerptIndex, excerptEndIndex - excerptIndex, excerptLine);
   } else {
     const titleIndex = bodyLines.findIndex((line) => /^title\s*:/.test(line.trim()));
     const insertAt = titleIndex >= 0 ? titleIndex + 1 : bodyLines.length;

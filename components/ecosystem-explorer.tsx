@@ -27,11 +27,12 @@ export default function EcosystemExplorer({ lang, content: { copy, departments }
   const buttons = useRef<(HTMLButtonElement | null)[]>([]);
   const projectButtons = useRef<(HTMLButtonElement | null)[]>([]);
   const scrollFrame = useRef<number | null>(null);
+  const totalProjects = departments.reduce((count, department) => count + department.projects.length, 0);
   const selected = departments[active];
   const project = projectIndex === null ? null : selected.projects[projectIndex];
   const motionPaused = paused || reducedMotion;
-  const satellitePositions = selected.projects.length === 4 ? projectPositions : [[54, 25], [81, 51], [54, 77]];
-  const mobileSatellitePositions = selected.projects.length === 4 ? mobileProjectPositions : [[27, 60], [73, 60], [50, 84]];
+  const satellitePositions = (selected.projects.length === 4 ? projectPositions : [[54, 25], [81, 51], [54, 77]]).slice(0, selected.projects.length);
+  const mobileSatellitePositions = (selected.projects.length === 4 ? mobileProjectPositions : [[27, 60], [73, 60], [50, 84]]).slice(0, selected.projects.length);
 
   useEffect(() => {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -133,7 +134,7 @@ export default function EcosystemExplorer({ lang, content: { copy, departments }
       <section ref={stage} id="ecosystem-map" className={`container ${styles.stage} ${expanded ? styles.stageExpanded : ''} ${motionPaused ? styles.paused : ''}`} aria-label={copy.map}
         onKeyDown={event => { if (event.key === 'Escape') { event.preventDefault(); if (projectIndex !== null) closeProject(); else if (expanded) returnToMap(); } }}>
         <div className={styles.stageTop}>
-          {expanded ? <button type="button" className={styles.backButton} onClick={returnToMap}><ArrowLeft size={15} aria-hidden="true" />{copy.back}</button> : <div className={styles.liveLabel}><span />SUNNIT / CONNECTED EXPERTISE</div>}
+          {expanded ? <button type="button" className={styles.backButton} onClick={returnToMap}><ArrowLeft size={15} aria-hidden="true" />{copy.back}</button> : <div className={styles.liveLabel}><span />{copy.mapTag}</div>}
           <button className={styles.motionButton} type="button" onClick={() => setPaused(!paused)} aria-label={motionPaused ? copy.play : copy.pause} disabled={reducedMotion} title={motionPaused ? copy.play : copy.pause}>
             {motionPaused ? <Play size={15} aria-hidden="true" /> : <Pause size={15} aria-hidden="true" />}
           </button>
@@ -209,11 +210,11 @@ export default function EcosystemExplorer({ lang, content: { copy, departments }
         </div>
         <div className={styles.stageBottom}>
           <p aria-live="polite" aria-atomic="true">{expanded ? `${selected.title}. ${copy.scopeHint}` : copy.explore}</p>
-          <span><b>{expanded ? String(selected.projects.length).padStart(2, '0') : '09'}</b> {expanded ? copy.projects : copy.team}{!expanded && <><i /><b>28</b> {copy.projects}</>}</span>
+          <span><b>{expanded ? String(selected.projects.length).padStart(2, '0') : '09'}</b> {expanded ? copy.projects : copy.team}{!expanded && <><i /><b>{String(totalProjects).padStart(2, '0')}</b> {copy.projects}</>}</span>
         </div>
       </section>
       <section className={`container ${styles.cta}`}>
-        <div><p className={styles.eyebrow}>LET’S CONNECT</p><h2>{copy.ctaTitle}</h2><p>{copy.ctaText}</p></div>
+        <div><p className={styles.eyebrow}>{copy.ctaEyebrow}</p><h2>{copy.ctaTitle}</h2><p>{copy.ctaText}</p></div>
         <Link href={`/${lang}/contact`} className={styles.ctaLink}><ArrowUpRight size={36} aria-hidden="true" /><span>{copy.contact}</span></Link>
       </section>
     </div>

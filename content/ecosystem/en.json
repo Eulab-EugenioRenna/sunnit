@@ -1,0 +1,306 @@
+{
+  "copy": {
+    "back": "Back to the ecosystem",
+    "close": "Close details",
+    "projectDetails": "Explore the project",
+    "projectLabel": "Project",
+    "relatedSkills": "Expertise in this area",
+    "scopeHint": "Select a project for details. Click the parent node again to return.",
+    "nav": "Ecosystem",
+    "eyebrow": "THE SUNNIT ECOSYSTEM",
+    "title": "Different expertise.",
+    "accent": "One shared direction.",
+    "intro": "Nine specialist teams, connected through a single partner. Explore the expertise that shapes your next project.",
+    "explore": "Select a bubble and discover what we can build together.",
+    "map": "Interactive map of Sunnit expertise",
+    "team": "Specialist teams",
+    "projects": "Featured projects",
+    "partner": "One connected partner",
+    "contact": "Let’s talk about your project",
+    "all": "Explore the ecosystem",
+    "pause": "Pause animations",
+    "play": "Enable animations",
+    "ctaTitle": "Your next project,\nthe right expertise.",
+    "ctaText": "We connect the people and technology you need, from the first conversation to delivery.",
+    "meta": "Explore nine Sunnit specialisms: Data, AI, development, apps, QA, cloud, networks, cybersecurity and business. Connected teams and real projects.",
+    "ctaEyebrow": "LET’S CONNECT",
+    "mapTag": "SUNNIT / CONNECTED EXPERTISE"
+  },
+  "departments": [
+    {
+      "id": "data",
+      "label": "Data",
+      "title": "Data & Analytics",
+      "headline": "Data that drives decisions.",
+      "description": "From distributed sources to a shared view. We build reliable, governed data architectures ready for analytics and AI.",
+      "skills": [
+        "Lakehouse & Data Warehouse",
+        "ETL/ELT pipelines & DataOps",
+        "Data governance & quality",
+        "Database administration & tuning"
+      ],
+      "projects": [
+        {
+          "title": "Big Data for a bank",
+          "sector": "Banking",
+          "description": "Batch and streaming processing for reliable data and regulatory reporting."
+        },
+        {
+          "title": "Data architecture with Databricks",
+          "sector": "Retail",
+          "description": "A Lakehouse architecture connecting store, logistics and loyalty data."
+        },
+        {
+          "title": "Data & AI for pharmacy inventory",
+          "sector": "Pharma · Health",
+          "description": "Pipelines and predictive models for inventory management and replenishment."
+        },
+        {
+          "title": "Database administration for insurance",
+          "sector": "Insurance",
+          "description": "Administration, optimization and high availability for critical databases."
+        }
+      ]
+    },
+    {
+      "id": "ai",
+      "label": "AI",
+      "title": "AI & GenAI",
+      "headline": "AI connected to your business.",
+      "description": "We connect models, data and processes to bring artificial intelligence into everyday workflows.",
+      "skills": [
+        "Multi-agent systems & GenAI",
+        "Predictive models & MLOps",
+        "NLP, chatbots & assistants",
+        "AI integrated into CRM & platforms"
+      ],
+      "projects": [
+        {
+          "title": "Multi-agent, multi-database system",
+          "sector": "Insurance",
+          "description": "AI agents that query and orchestrate multiple databases using natural language."
+        },
+        {
+          "title": "AI with Salesforce integrations",
+          "sector": "Cross-industry · CRM",
+          "description": "AI capabilities connected to client systems for sales and customer service."
+        },
+        {
+          "title": "AI for gaming platforms",
+          "sector": "Gaming",
+          "description": "AI features that personalize the experience on online gaming platforms."
+        }
+      ]
+    },
+    {
+      "id": "developing",
+      "label": "Developing",
+      "title": "Software & Backend",
+      "headline": "Robust, scalable backend systems.",
+      "description": "We engineer the foundations of digital platforms: services, integrations and software that grow with your business.",
+      "skills": [
+        "Java, .NET & microservices",
+        "APIs & integrations",
+        "High availability & performance",
+        "Legacy modernization"
+      ],
+      "projects": [
+        {
+          "title": "Java backend for invoicing",
+          "sector": "Electronic invoicing",
+          "description": "Backend services for high-volume e-invoicing platforms with tax requirements."
+        },
+        {
+          "title": "Backend for logistics software",
+          "sector": "Logistics",
+          "description": "Services and APIs integrating real-time flows in a logistics platform."
+        },
+        {
+          "title": ".NET development for insurance policies",
+          "sector": "Insurance",
+          "description": "A .NET application to digitize the insurance policy underwriting cycle."
+        }
+      ]
+    },
+    {
+      "id": "apps",
+      "label": "Apps",
+      "title": "Front-end, Mobile & Gaming",
+      "headline": "Digital experiences with impact.",
+      "description": "From web interfaces to mobile apps, we focus on people and the quality of every interaction.",
+      "skills": [
+        "Web front-end, SPA & PWA",
+        "Native & hybrid mobile apps",
+        "UX/UI & design systems",
+        "Gamification & engagement"
+      ],
+      "projects": [
+        {
+          "title": "Account area front-end",
+          "sector": "Gambling",
+          "description": "Player registration, profiles and account management with security and compliance requirements."
+        },
+        {
+          "title": "Gamification platforms",
+          "sector": "Gaming · Corporate",
+          "description": "Platforms that motivate teams through challenges and rewards."
+        },
+        {
+          "title": "Apps & mobile development",
+          "sector": "Banking · Gambling · Energy",
+          "description": "Mobile apps for three regulated industries, focused on performance and security."
+        }
+      ]
+    },
+    {
+      "id": "qa",
+      "label": "QA",
+      "title": "QA & Testing",
+      "headline": "Quality built into every release.",
+      "description": "We support development with functional testing, automation and load testing for more reliable releases.",
+      "skills": [
+        "Functional & regression testing",
+        "E2E automation",
+        "Load & performance testing",
+        "QA integrated into CI/CD"
+      ],
+      "projects": [
+        {
+          "title": "Software QA testing",
+          "sector": "Gaming",
+          "description": "Functional and regression testing for gaming platforms with short release cycles."
+        },
+        {
+          "title": "E2E test automation",
+          "sector": "Retail · E-commerce",
+          "description": "An end-to-end testing framework integrated into the CI/CD pipeline."
+        },
+        {
+          "title": "Load & performance testing",
+          "sector": "Banking",
+          "description": "Load tests on online payments to identify bottlenecks and validate peak traffic."
+        }
+      ]
+    },
+    {
+      "id": "cloud",
+      "label": "Cloud",
+      "title": "Cloud & DevOps",
+      "headline": "Infrastructure. Continuous delivery.",
+      "description": "Cloud architectures and automated pipelines connect development and operations, from the first release to platform evolution.",
+      "skills": [
+        "Azure, AWS & Google Cloud",
+        "CI/CD, IaC & containers",
+        "Observability & SRE",
+        "Cloud security & governance"
+      ],
+      "projects": [
+        {
+          "title": "DevOps for banking",
+          "sector": "Banking",
+          "description": "CI/CD pipelines and deployment automation for repeatable, auditable releases."
+        },
+        {
+          "title": "DevOps for insurance platforms",
+          "sector": "Insurance",
+          "description": "Deployment automation to reduce risk and time with each release."
+        },
+        {
+          "title": "Cloud infrastructure",
+          "sector": "Banking",
+          "description": "Cloud infrastructure designed for banking security and resilience requirements."
+        }
+      ]
+    },
+    {
+      "id": "networks",
+      "label": "Networks",
+      "title": "Infrastructure, Systems & Networks",
+      "headline": "Keeping systems and networks running.",
+      "description": "We design and manage the infrastructure behind everyday work: workplace, systems, connectivity and monitoring.",
+      "skills": [
+        "Microsoft 365 & workplace",
+        "Windows systems & Azure AD",
+        "Networks, WiFi & communications",
+        "Support & monitoring"
+      ],
+      "projects": [
+        {
+          "title": "Workplace 365 architecture",
+          "sector": "Cross-industry",
+          "description": "A Microsoft 365 digital workplace for collaboration, security and identity."
+        },
+        {
+          "title": "Microsoft systems administration",
+          "sector": "Insurance",
+          "description": "Server, directory and Microsoft environment administration for critical systems."
+        },
+        {
+          "title": "Network administration",
+          "sector": "Hospitality",
+          "description": "Design, management and maintenance of hotel networks."
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "label": "Security",
+      "title": "Cybersecurity",
+      "headline": "Security at every layer.",
+      "description": "From prevention to response, we protect applications, infrastructure and data with an integrated approach to risk.",
+      "skills": [
+        "Pentesting & red teaming",
+        "Vulnerabilities & hardening",
+        "SIEM, SOC & incident response",
+        "ISO 27001, NIS2 & ENS"
+      ],
+      "projects": [
+        {
+          "title": "Cybersecurity penetration testing",
+          "sector": "Enterprise",
+          "description": "Penetration testing on applications and infrastructure with remediation priorities."
+        },
+        {
+          "title": "Hardening & vulnerabilities",
+          "sector": "Energy",
+          "description": "Server and corporate network hardening with configuration reviews."
+        },
+        {
+          "title": "SIEM implementation",
+          "sector": "Banking · Fintech",
+          "description": "SIEM deployment with use cases, alerts and threat detection dashboards."
+        }
+      ]
+    },
+    {
+      "id": "business",
+      "label": "Business",
+      "title": "Enterprise Platforms & Digital Business",
+      "headline": "Platforms connecting business and customers.",
+      "description": "We bring together CRM, processes and digital channels for a shared customer view and a more connected business.",
+      "skills": [
+        "Dynamics 365 & Salesforce",
+        "ERP & third-party integrations",
+        "Process automation",
+        "Digital marketing & advertising"
+      ],
+      "projects": [
+        {
+          "title": "Dynamics CRM development & management",
+          "sector": "Cross-industry",
+          "description": "Dynamics implementation, customization and evolution for centralized processes and reporting."
+        },
+        {
+          "title": "Salesforce management & development",
+          "sector": "Cross-industry",
+          "description": "Salesforce development, administration and integrations for evolving processes."
+        },
+        {
+          "title": "Marketing & advertising",
+          "sector": "Digital trust",
+          "description": "Campaign management and digital strategy for a digital trust company."
+        }
+      ]
+    }
+  ]
+}

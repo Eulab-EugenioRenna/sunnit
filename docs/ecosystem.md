@@ -33,3 +33,31 @@ Le animazioni possono essere messe in pausa e rispettano `prefers-reduced-motion
 - Ispezione visiva degli screenshot desktop e mobile.
 
 Avvio: `npm run dev`, poi aprire `/it/ecosystem`. Per la build di produzione: `npm run build` e `npm run start`.
+
+## Preparazione del passaggio a Sanity
+
+Il collegamento è preparato in locale e rimane disattivato finché `ECOSYSTEM_CONTENT_SOURCE` non è impostato a `sanity`. Con il valore predefinito `local` la demo usa i contenuti locali e non legge l’ecosistema dal CMS.
+
+I contenuti canonici di fallback e import sono ora in `content/ecosystem/it.json`, `es.json` ed `en.json`. Ognuna delle tre lingue comprende nove ambiti e 28 progetti. Non esiste una seconda copia da aggiornare nel codice TypeScript.
+
+Studio contiene una sezione **Ecosistema** con tre pagine fisse per Italiano, Español ed English. Lo schema `ecosystemPage` comprende testi pagina, SEO, etichette dell’interfaccia, competenze, tecnologie e progetti. Anche la voce del menu e del footer legge `copy.nav` quando è attiva la sorgente Sanity. Lingua e identità dei nodi sono stabili; icone e posizioni rimangono definite dall’interfaccia. Riordinare gli ambiti in Studio non altera l’associazione fra nodo e icona. I progetti si possono riordinare e ogni ambito ammette da uno a quattro progetti; il contatore totale è calcolato dai contenuti.
+
+Lo script dedicato prepara tre documenti **bozza** con ID `drafts.ecosystemPage.it`, `drafts.ecosystemPage.es` e `drafts.ecosystemPage.en`. Oggetti e progetti hanno chiavi deterministiche. Il comando predefinito è un dry-run, senza connessioni o scritture al CMS:
+
+```sh
+npm run sanity:ecosystem -- --dry-run
+npm run sanity:ecosystem -- --dry-run --output /tmp/sunnit-ecosystem-drafts.ndjson
+npm run test:ecosystem-content
+```
+
+Dopo l’approvazione della demo, l’importazione potrà essere eseguita con:
+
+```sh
+npm run sanity:ecosystem -- --apply
+```
+
+`--apply` crea soltanto bozze mancanti. Se esiste una bozza o una pagina pubblicata per la lingua, la salta. Non pubblica e non sovrascrive documenti. Le mutazioni utilizzano [`createIfNotExists`](https://www.sanity.io/docs/apis-and-sdks/js-client-mutations).
+
+Dopo la revisione e pubblicazione in Studio, impostare `ECOSYSTEM_CONTENT_SOURCE=sanity` nell’ambiente del sito e distribuire la nuova configurazione. La pagina e i metadata usano soltanto i documenti pubblicati e la lettura segue la cache di 60 secondi già usata dal sito. Se il documento manca, contiene un modello incompleto o il CMS non risponde, viene usato l’intero fallback della stessa lingua. Non si mescolano porzioni di contenuto italiano e inglese/spagnolo. Il rollback della sorgente consiste nel riportare il valore a `local`.
+
+Verifiche della preparazione: TypeScript, build, dry-run delle tre lingue e nove test automatizzati superati. I test includono la validazione dei contenuti, l’ordinamento canonico dei nodi, il limite dei progetti, la preparazione delle bozze, la reimportazione con documenti già presenti, la sorgente locale senza fetch, la lettura abilitata e il fallback su CMS assente/incompleto/non disponibile. Le scritture sono testate con un client simulato: nessuna importazione o pubblicazione è stata eseguita nel dataset reale. Il lavoro di preparazione non è incluso nel commit della demo `dd8b30f` già pubblicato.
