@@ -14,7 +14,9 @@
     "beautify:job": "node scripts/beautify-content.mjs --type job",
     "translate:job": "node scripts/translate-missing-blog-posts.mjs --type job",
     "sanity:import": "node scripts/import-existing-to-sanity.mjs",
-    "sanity:check": "node scripts/import-existing-to-sanity.mjs --check-env"
+    "sanity:check": "node scripts/import-existing-to-sanity.mjs --check-env",
+    "sanity:ecosystem": "node scripts/import-ecosystem-to-sanity.mjs",
+    "test:ecosystem-content": "node --test scripts/ecosystem-content.test.mjs"
   },
   "dependencies": {
     "@amcharts/amcharts5": "^5.17.2",

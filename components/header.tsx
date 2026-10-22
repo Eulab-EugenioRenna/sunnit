@@ -53,6 +53,7 @@ export default function Header({ dict, lang, availableLocales }: { dict: Diction
   const navItems: NavItem[] = [
     { href: `/${lang}/about`, label: dict.common.header.about },
     { href: `/${lang}/services`, label: dict.common.header.services },
+    { href: `/${lang}/ecosystem`, label: dict.common.header.ecosystem },
     { 
       href: `/${lang}/sunnitai`, 
       label: dict.common.header.sunnitai,

@@ -1,6 +1,7 @@
 {
   "common": {
     "header": {
+      "ecosystem": "Ecosystem",
       "services": "What we do",
       "sunnitai": "SunnitAI",
       "about": "About us",
