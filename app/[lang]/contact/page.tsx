@@ -1,3 +1,4 @@
+import StaticPageStructuredData from "@/components/page-structured-data";
 import { staticPageMetadata } from "@/lib/seo-pages";
 import Link from "next/link";
 import ContactMailtoForm from "@/components/contact-mailto-form";
@@ -22,6 +23,7 @@ export default async function ContactPage({
 
   return (
     <>
+      <StaticPageStructuredData lang={lang} path="contact" dictionary={dict} />
       <PageHero
         title={dict.contact.hero.title}
         crumb={dict.contact.hero.crumb}

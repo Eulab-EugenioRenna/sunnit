@@ -12,6 +12,7 @@ type PortfolioSliderProject = {
 };
 
 export default function PortfolioSlider({
+  lang,
   projects,
   openLabel,
   onOpenProject,
@@ -19,6 +20,7 @@ export default function PortfolioSlider({
   autoplayInterval = 4200,
   scrollDuration = 900,
 }: {
+  lang: string;
   projects: PortfolioSliderProject[];
   openLabel: string;
   onOpenProject: (slug: string) => void;
@@ -162,7 +164,6 @@ export default function PortfolioSlider({
         <div
           className="news-track"
           ref={trackRef}
-          role="list"
           onTransitionEnd={handleTransitionEnd}
           style={{
             width: itemWidth ? `${trackProjects.length * itemWidth + Math.max(trackProjects.length - 1, 0) * 16}px` : undefined,
@@ -171,14 +172,17 @@ export default function PortfolioSlider({
           }}
         >
           {trackProjects.map((project, index) => (
-            <button
-              type="button"
+            <a
+              href={`/${lang}/portfolio/${project.slug}`}
               key={`${project.slug}-${index}`}
               className="news-item portfolio-card-link"
-              role="listitem"
               aria-label={`${openLabel}: ${project.title}`}
               style={{ width: itemWidth ? `${itemWidth}px` : `${100 / effectiveVisible}%` }}
-              onClick={() => onOpenProject(project.slug)}
+              onClick={(event) => {
+                if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
+                event.preventDefault();
+                onOpenProject(project.slug);
+              }}
             >
               <article className={`case-card portfolio-card ${project.tone}`}>
                 {project.image ? (
@@ -193,7 +197,7 @@ export default function PortfolioSlider({
                   <p>{project.excerpt}</p>
                 </div>
               </article>
-            </button>
+            </a>
           ))}
         </div>
       </div>

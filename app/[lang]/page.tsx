@@ -1,3 +1,4 @@
+import StaticPageStructuredData from "@/components/page-structured-data";
 import { staticPageMetadata } from "@/lib/seo-pages";
 import Link from "next/link";
 import HeroDynamicCopy from "@/components/hero-dynamic-copy";
@@ -37,6 +38,7 @@ export default async function Home({
 
   return (
     <>
+      <StaticPageStructuredData lang={lang} path="" dictionary={dict} />
       <section className="hero-shell hero-full full-bleed-section">
         <div className="hero-content">
           <HeroDynamicCopy dict={dict} />

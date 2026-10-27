@@ -177,7 +177,7 @@ export default function ServiceScrollPanels({
               >
                 <div className="service-mobile-card__inner">
                   <p className="card-eyebrow">{panel.label}</p>
-                  <h3>{panel.title}</h3>
+                  <h2>{panel.title}</h2>
                   <TextLines text={panel.desc} />
                   <Link href={panel.href} className="outline-btn">
                     {panel.cta}
@@ -197,7 +197,7 @@ export default function ServiceScrollPanels({
               >
                 <div className="service-scroll-panel__content">
                   <p className="card-eyebrow">{panel.label}</p>
-                  <h3>{panel.title}</h3>
+                  <h2>{panel.title}</h2>
                   <TextLines text={panel.desc} />
                   <Link href={panel.href} className="outline-btn">
                     {panel.cta}

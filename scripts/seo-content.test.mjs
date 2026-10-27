@@ -89,3 +89,59 @@ test('canonical resolver uses the approved domain matrix and JSON-LD escapes scr
   assert(!f.jsonLd(dangerous).includes('<'));
   assert.deepEqual(JSON.parse(f.jsonLd(dangerous)), dangerous);
 });
+
+async function loadTypeScript(relative, dependencies = {}) {
+  const context = { exports: {}, URL, require: name => {
+    assert(name in dependencies, `Unexpected dependency ${name}`);
+    return dependencies[name];
+  } };
+  const source = await readFile(new URL(relative, import.meta.url), 'utf8');
+  runInNewContext(ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText, context);
+  return context.exports;
+}
+
+test('metadata content comes from the existing localized page content, including editorial updates', async () => {
+  const { getPageContent } = await loadTypeScript('../lib/seo-content.ts');
+  for (const lang of ['it', 'en', 'es']) {
+    const dictionary = JSON.parse(await readFile(new URL(`../lang/${lang}.json`, import.meta.url), 'utf8'));
+    for (const page of ['services', 'sunnitai', 'about', 'contact', 'jobs', 'blog']) {
+      assert.equal(getPageContent(dictionary, page, lang).name, dictionary[page].hero.title);
+    }
+    assert.equal(getPageContent(dictionary, 'about', lang).description, dictionary.about.intro.desc);
+    dictionary.services.hero.title = 'Edited service page';
+    assert.equal(getPageContent(dictionary, 'services', lang).name, 'Edited service page');
+  }
+});
+
+test('schema connects the actual service to its page, website and organization without invented claims', async () => {
+  const domains = await loadTypeScript('../lib/i18n.ts');
+  const seo = await loadTypeScript('../lib/seo.ts', { './i18n': domains });
+  const schema = await loadTypeScript('../lib/structured-data.ts', { './seo': seo });
+  const service = { title: 'Existing service title', summary: 'Existing description', accent: 'cloud' };
+  const entity = schema.serviceSchema('es', service, 'cloud');
+  const page = schema.webPageSchema({ lang: 'es', path: 'services/cloud', name: service.title, description: service.summary, mainEntity: entity });
+  assert.equal(page.url, 'https://sunnitspain.es/es/services/cloud');
+  assert.equal(page.mainEntity.name, service.title);
+  assert.equal(page.mainEntity.description, service.summary);
+  assert.equal(page.mainEntity.mainEntityOfPage['@id'], page['@id']);
+  assert.equal(page.isPartOf['@id'], 'https://sunnit.it/#website');
+  assert.equal(page.mainEntity.provider['@id'], 'https://sunnit.it/#organization');
+  assert(!('offers' in entity));
+  assert(!('aggregateRating' in entity));
+  assert.equal(schema.itemListSchema([entity]).numberOfItems, 1);
+});
+
+test('real MDX rendering preserves body text and puts its headings below the page H1 without skipping levels', async () => {
+  const { normalizeMdxHeadings } = await loadTypeScript('../lib/mdx-headings.ts');
+  const { evaluate } = await import('@mdx-js/mdx');
+  const runtime = await import('react/jsx-runtime');
+  const { createElement } = await import('react');
+  const { renderToStaticMarkup } = await import('react-dom/server');
+  const { default: Content } = await evaluate('# Existing title\n\n### Nested heading\n\nBody text.\n\n## Another heading', { ...runtime, remarkPlugins: [normalizeMdxHeadings] });
+  const html = renderToStaticMarkup(createElement(Content));
+  assert(!html.includes('<h1'));
+  assert(html.includes('<h2>Existing title</h2>'));
+  assert(html.includes('<h3>Nested heading</h3>'));
+  assert(html.includes('<h3>Another heading</h3>'));
+  assert(html.includes('Body text.'));
+});

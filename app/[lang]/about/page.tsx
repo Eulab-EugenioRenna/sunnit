@@ -1,3 +1,4 @@
+import StaticPageStructuredData from "@/components/page-structured-data";
 import { staticPageMetadata } from "@/lib/seo-pages";
 import Link from "next/link";
 import Image from "next/image";
@@ -33,6 +34,7 @@ export default async function AboutPage({
 
   return (
     <>
+      <StaticPageStructuredData lang={lang} path="about" dictionary={dict} />
       <PageHero title={dict.about.hero.title} crumb={dict.about.hero.crumb} />
 
       <section className="container about-intro">

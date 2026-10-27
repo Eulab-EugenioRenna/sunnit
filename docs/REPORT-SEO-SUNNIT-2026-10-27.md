@@ -2,19 +2,19 @@
 
 **Aggiornamento del 27 ottobre 2026**
 
-Ho riportato di seguito le richieste del piano SEO, gli interventi che ho realizzato e le attività ancora da completare. Ho pubblicato gli aggiornamenti e aggiunto **sunnit.it a Google Search Console**.
+Ho riportato di seguito le richieste del piano SEO, gli interventi che ho realizzato e le attività ancora da completare. Ho pubblicato gli aggiornamenti e aggiunto **sunnit.it a Google Search Console**. L'ultimo allineamento SEO ai contenuti esistenti è pronto per una nuova pubblicazione.
 
 ## 1. Interventi sul sito
 
 | Cosa veniva chiesto | Cosa ho fatto | Cosa manca da fare |
 | --- | --- | --- |
 | Aiutare Google a trovare le pagine del sito. | Ho preparato le mappe delle pagine pubbliche e le indicazioni per la scansione, separate per dominio e lingua. | Verificare l'invio delle mappe in Search Console e monitorare le pagine rilevate. |
-| Migliorare titoli e descrizioni delle pagine. | Ho inserito titoli e descrizioni dedicati alle pagine principali, in italiano, inglese e spagnolo. | Valutare nel tempo quali pagine ricevono visite e affinare i testi in base ai risultati. |
+| Migliorare titoli e descrizioni delle pagine. | Ho collegato titoli e descrizioni ai testi già presenti nelle pagine, in italiano, inglese e spagnolo. | Valutare nel tempo quali pagine ricevono visite e affinare i testi in base ai risultati. |
 | Curare l'anteprima dei link condivisi. | Ho aggiornato le informazioni che accompagnano le pagine quando vengono condivise. | Controllare la resa delle anteprime nei canali utilizzati dall'azienda. |
 | Gestire correttamente le lingue. | Ho evitato che i contenuti italiani vengano mostrati come traduzioni quando manca la versione richiesta. Ho corretto anche la gestione degli indirizzi inesistenti. | Revisionare qualità e completezza delle traduzioni con i referenti aziendali. |
 | Rendere più visibili i singoli servizi. | Ho aggiunto pagine dedicate a software su misura, sviluppo web, dati e analytics, cloud e DevOps, collegate alla pagina generale dei servizi. | Arricchire i testi con esempi, esigenze dei clienti e informazioni commerciali confermate. |
-| Dare un indirizzo proprio ai progetti del portfolio. | Ho creato pagine dedicate ai progetti, mantenendo le modalità interattive di consultazione già presenti. | Completare i casi con ruolo di SUNNIT e risultati documentabili, dove disponibili. |
-| Rendere leggibili le competenze dell'ecosistema. | Ho affiancato alla mappa interattiva una presentazione testuale di competenze e progetti. | Mantenere aggiornate le informazioni con i responsabili dei diversi ambiti. |
+| Dare un indirizzo proprio ai progetti del portfolio. | Ho collegato le schede già presenti alle pagine dei progetti, mantenendo le modali ed eliminando l'elenco testuale aggiuntivo. | Completare i casi con ruolo di SUNNIT e risultati documentabili, dove disponibili. |
+| Rendere leggibili le competenze dell'ecosistema. | Ho mantenuto le competenze nei nodi interattivi e collegato allo schema SEO le informazioni già presenti, senza aggiungere un riepilogo testuale. | Mantenere aggiornate le informazioni con i responsabili dei diversi ambiti. |
 
 ## 2. Pubblicazione, domini e Search Console
 
@@ -31,7 +31,7 @@ Ho riportato di seguito le richieste del piano SEO, gli interventi che ho realiz
 
 | Cosa veniva chiesto | Cosa ho fatto | Cosa manca da fare |
 | --- | --- | --- |
-| Fornire informazioni più chiare su azienda e articoli. | Ho aggiunto indicazioni che aiutano i motori di ricerca a riconoscere SUNNIT, il sito, gli articoli e i percorsi di navigazione. | Completare autore, date di revisione e informazioni aziendali solo con dati confermati. |
+| Fornire informazioni più chiare su azienda e articoli. | Ho collegato nello schema SEO sito, pagine, servizi, articoli e progetti usando i contenuti esistenti. Ho ordinato i titoli ed eliminato le frasi generiche aggiunte agli estratti. | Completare autore, date di revisione e informazioni aziendali solo con dati confermati. |
 | Gestire correttamente i contenuti pubblicati. | Ho escluso bozze e contenuti con data futura e preparato la gestione delle informazioni SEO nel sistema editoriale. | Verificare online i tempi di aggiornamento dopo pubblicazione, modifica o rimozione di un contenuto. |
 | Misurare i contatti dal sito. | Ho predisposto un segnale che distingue l'apertura del programma email dai contatti effettivamente ricevuti. | Se richiesto, completare l'invio dei messaggi direttamente dal sito e la conferma di ricezione. |
 | Configurare misurazione e consenso. | Ho mantenuto separata l'apertura dell'email dalla ricezione di una richiesta, senza trasmettere i dati del modulo agli strumenti di misurazione. | Definire e configurare analytics, consenso e obiettivi commerciali nei servizi esterni. |

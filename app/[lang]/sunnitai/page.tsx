@@ -1,3 +1,4 @@
+import StaticPageStructuredData from "@/components/page-structured-data";
 import { staticPageMetadata } from "@/lib/seo-pages";
 import FAQ from "@/components/faq";
 import PageHero from "@/components/page-hero";
@@ -21,6 +22,7 @@ export default async function SunnitAIPage({
 
   return (
     <>
+      <StaticPageStructuredData lang={lang} path="sunnitai" dictionary={dict} />
       <PageHero title={dict.sunnitai.hero.title} crumb={dict.sunnitai.hero.crumb} />
 
       <section className="container ai-hero-card">

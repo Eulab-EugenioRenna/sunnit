@@ -1,3 +1,4 @@
+import StaticPageStructuredData from "@/components/page-structured-data";
 import { staticPageMetadata } from "@/lib/seo-pages";
 import JobsBoard from "@/components/jobs-board";
 import PageHero from "@/components/page-hero";
@@ -22,6 +23,7 @@ export default async function JobsPage({
 
   return (
     <>
+      <StaticPageStructuredData lang={lang} path="jobs" dictionary={dict} />
       <PageHero title={dict.jobs.hero.title} crumb={dict.jobs.hero.crumb} text={dict.jobs.hero.text} />
       <section className="container jobs-section">
         <div className="jobs-section__intro">

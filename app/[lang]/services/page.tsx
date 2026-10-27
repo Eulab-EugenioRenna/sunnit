@@ -1,4 +1,4 @@
-import { serviceSlugs } from "@/lib/seo";
+import StaticPageStructuredData from "@/components/page-structured-data";
 import { staticPageMetadata } from "@/lib/seo-pages";
 import Link from "next/link";
 import PageHero from "@/components/page-hero";
@@ -41,6 +41,7 @@ export default async function ServicesPage({
 
   return (
     <>
+      <StaticPageStructuredData lang={lang} path="services" dictionary={dict} />
       <PageHero
         title={content.hero.title}
         crumb={content.hero.crumb}
@@ -79,10 +80,8 @@ export default async function ServicesPage({
         </GsapReveal>
       </section>
 
-      <nav className="container" aria-label={content.hero.title}><ul>
-        {content.categories.map((item: { accent: string; title: string }, index: number) => <li key={item.accent}><Link href={`/${lang}/services/${serviceSlugs[index]}`}>{item.title}</Link></li>)}
-      </ul></nav>
       <ServicesScrollStory
+        lang={lang}
         eyebrow={content.intro.eyebrow}
         title={content.hero.title}
         items={content.categories}

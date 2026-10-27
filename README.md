@@ -123,3 +123,5 @@ Il [report di implementazione](docs/REPORT-SEO-SUNNIT-2026-10-27.md) descrive mo
 Gli schemi Sanity supportano campi facoltativi SEO, autore, revisione editoriale e `translationKey`. Associare la stessa chiave soltanto a traduzioni equivalenti dello stesso contenuto. Le query escludono bozze, date future e fallback automatici in italiano sulle URL di altre lingue.
 
 La build controlla anche che i file delle lingue siano inclusi nei pacchetti delle route Vercel, comprese le pagine articolo rigenerate. Il controllo HTTP pubblico del 27 ottobre è registrato in `docs/seo/verifica-produzione-2026-10-27.json`; la correzione successiva richiede un nuovo deploy e collaudo.
+
+La SEO usa come fonte i contenuti già mostrati nelle pagine: metadati e schema condividono i testi editoriali esistenti. La gerarchia collega Organization/WebSite, WebPage e il contenuto pertinente. Non aggiungere elenchi, paragrafi o blocchi nascosti solo per la SEO; integrare i collegamenti nelle schede e nei titoli esistenti.

@@ -1,5 +1,8 @@
 "use client";
 
+import Link from "next/link";
+import { serviceSlugs } from "@/lib/seo";
+
 import { useEffect, useMemo, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -27,10 +30,12 @@ const sectionIdByAccent: Record<ServiceStoryItem["accent"], string> = {
 };
 
 export default function ServicesScrollStory({
+  lang,
   eyebrow,
   title,
   items,
 }: {
+  lang: string;
   eyebrow: string;
   title: string;
   items: readonly ServiceStoryItem[];
@@ -118,7 +123,7 @@ export default function ServicesScrollStory({
             >
               <div className="services-story-card__meta">
                 <span>{item.number}</span>
-                <h3>{item.title}</h3>
+                <h3><Link href={`/${lang}/services/${serviceSlugs[index]}`}>{item.title}</Link></h3>
               </div>
               <p className="services-story-card__summary">{item.summary}</p>
               {item.description.map((paragraph) => (

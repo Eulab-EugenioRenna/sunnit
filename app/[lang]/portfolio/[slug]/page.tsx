@@ -1,3 +1,5 @@
+import { normalizeMdxHeadings } from "@/lib/mdx-headings";
+import { PageStructuredData } from "@/components/page-structured-data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { evaluate } from "@mdx-js/mdx";
@@ -20,8 +22,9 @@ export default async function PortfolioPage({ params }: Props) {
   const { lang, slug } = await params;
   const project = await getPortfolioProject(lang, slug);
   if (!project) notFound();
-  const { default: Content } = await evaluate(project.body, { ...runtime, useMDXComponents: () => useMDXComponents({}) });
+  const { default: Content } = await evaluate(project.body, { ...runtime, remarkPlugins: [normalizeMdxHeadings], useMDXComponents: () => useMDXComponents({}) });
   return <>
+    <PageStructuredData lang={lang} path={`portfolio/${slug}`} name={project.title} description={project.excerpt} mainEntity={{ "@type": "CreativeWork", "@id": `${pageUrl(lang, `portfolio/${slug}`)}#project`, name: project.title, description: project.excerpt, mainEntityOfPage: { "@id": `${pageUrl(lang, `portfolio/${slug}`)}#webpage` } }} />
     <SeoBreadcrumbs lang={lang} items={[{ name: project.title, path: `portfolio/${slug}` }]} />
     <PageHero title={project.title} crumb="Portfolio" text={project.excerpt} />
     <article className="container blog-post-card"><div className="blog-post-content"><Content /></div>

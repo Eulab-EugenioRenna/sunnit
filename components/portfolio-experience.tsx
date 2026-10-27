@@ -1,5 +1,7 @@
 "use client";
 
+import { normalizeMdxHeadings } from "@/lib/mdx-headings";
+
 import { evaluate } from "@mdx-js/mdx";
 import * as runtime from "react/jsx-runtime";
 import { useEffect, useMemo, useState, type ComponentType } from "react";
@@ -23,6 +25,7 @@ type MdxContentComponent = ComponentType<Record<string, never>>;
 async function getMdxContent(body: string) {
   const result = await evaluate(body, {
     ...runtime,
+    remarkPlugins: [normalizeMdxHeadings],
     useMDXComponents: () => useMDXComponents({}),
   });
 
@@ -30,6 +33,7 @@ async function getMdxContent(body: string) {
 }
 
 export default function PortfolioExperience({
+  lang,
   projects,
   openLabel,
   closeLabel,
@@ -100,6 +104,7 @@ export default function PortfolioExperience({
     <>
       <GsapReveal className="portfolio-grid" distance={24}>
         <PortfolioSlider
+          lang={lang}
           projects={projects}
           openLabel={openLabel}
           onOpenProject={updateActiveProject}

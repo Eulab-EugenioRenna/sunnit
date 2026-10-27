@@ -1,3 +1,5 @@
+import { normalizeMdxHeadings } from "@/lib/mdx-headings";
+import { PageStructuredData } from "@/components/page-structured-data";
 import { pageMetadata, pageUrl, jsonLd, siteOrigin, seoLocales } from "@/lib/seo";
 import { getContentLanguages } from "@/lib/sanity/content";
 import SeoBreadcrumbs from "@/components/seo-breadcrumbs";
@@ -38,6 +40,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 async function getMdxContent(body: string) {
   const result = await evaluate(body, {
     ...runtime,
+    remarkPlugins: [normalizeMdxHeadings],
     useMDXComponents: () => useMDXComponents({}),
   });
 
@@ -64,10 +67,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <>
+      <PageStructuredData lang={lang} path={`blog/${post.slug}`} name={post.title} description={post.excerpt} mainEntity={{ "@id": `${shareUrl}#article` }} />
       <SeoBreadcrumbs lang={lang} items={[{ name: "Blog", path: "blog" }, { name: post.title, path: `blog/${post.slug}` }]} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd({
-        "@context": "https://schema.org", "@type": "BlogPosting", headline: post.title, description: post.excerpt,
-        mainEntityOfPage: shareUrl, url: shareUrl, inLanguage: lang,
+        "@context": "https://schema.org", "@type": "BlogPosting", "@id": `${shareUrl}#article`, headline: post.title, description: post.excerpt,
+        mainEntityOfPage: { "@id": `${shareUrl}#webpage` }, url: shareUrl, inLanguage: lang,
         datePublished: post.createdAt, dateModified: post.contentUpdatedAt || post.createdAt,
         ...(post.image ? { image: new URL(post.image, siteOrigin).href } : {}),
         author: { "@type": post.author ? "Person" : "Organization", name: post.author || "SUNNIT" },

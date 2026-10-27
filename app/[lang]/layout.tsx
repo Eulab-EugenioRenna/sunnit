@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { isSupportedLocale } from "@/lib/i18n-server";
-import { siteOrigin, jsonLd } from "@/lib/seo";
+import { siteOrigin, jsonLd, seoLocales } from "@/lib/seo";
 import type { Metadata } from "next";
 import Script from "next/script";
 import Header from "@/components/header";
@@ -98,7 +98,7 @@ eulabconsult@gmail.com
           <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd({
             "@context": "https://schema.org", "@graph": [
               { "@type": "Organization", "@id": `${siteOrigin}/#organization`, name: "SUNNIT", url: siteOrigin, logo: `${siteOrigin}/favicon.svg` },
-              { "@type": "WebSite", "@id": `${siteOrigin}/#website`, name: "SUNNIT", url: siteOrigin, publisher: { "@id": `${siteOrigin}/#organization` } },
+              { "@type": "WebSite", "@id": `${siteOrigin}/#website`, name: "SUNNIT", url: siteOrigin, inLanguage: [...seoLocales], publisher: { "@id": `${siteOrigin}/#organization` } },
             ],
           }) }} />
           <main>{children}</main>

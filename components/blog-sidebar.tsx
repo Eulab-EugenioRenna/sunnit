@@ -1,3 +1,4 @@
+import { getBlogDescription } from "@/lib/seo-content";
 import Link from "next/link";
 import { Facebook, Linkedin, Mail, MessageCircle, Send, Twitter } from "lucide-react";
 import type { BlogPost } from "@/lib/blog";
@@ -61,7 +62,7 @@ export default function BlogSidebar({
 }: BlogSidebarProps) {
   const copy = lang === "en"
     ? {
-        author: "Practical articles on software delivery, cloud architecture, AI, and product quality.",
+        author: getBlogDescription(lang),
         searchPlaceholder: "Search articles",
         share: "Share article",
         recent: "Recent posts",
@@ -71,7 +72,7 @@ export default function BlogSidebar({
       }
     : lang === "es"
       ? {
-          author: "Articulos practicos sobre entrega de software, arquitectura cloud, IA y calidad de producto.",
+          author: getBlogDescription(lang),
           searchPlaceholder: "Buscar articulos",
           share: "Compartir articulo",
           recent: "Articulos recientes",
@@ -80,7 +81,7 @@ export default function BlogSidebar({
           popular: "Tags populares",
         }
       : {
-          author: "Articoli pratici su delivery software, architetture cloud, AI e qualita di prodotto.",
+          author: getBlogDescription(lang),
           searchPlaceholder: "Cerca articoli",
           share: "Condividi articolo",
           recent: "Articoli recenti",

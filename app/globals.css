@@ -802,7 +802,7 @@ main {
   gap: 1rem;
 }
 
-.service-scroll-panel__content h3 {
+.service-scroll-panel__content h2 {
   margin: 0;
   font-size: clamp(2.2rem, 4.1vw, 4rem);
   line-height: 0.96;
@@ -900,7 +900,7 @@ main {
   gap: 14px;
 }
 
-.service-mobile-card__inner h3 {
+.service-mobile-card__inner h2 {
   margin: 0;
   font-size: clamp(2rem, 8vw, 2.75rem);
   line-height: 0.96;
@@ -949,7 +949,7 @@ main {
     font-size: 1.2rem;
   }
 
-  .service-scroll-panel__content h3,
+  .service-scroll-panel__content h2,
   .service-scroll-panel__content p:not(.card-eyebrow) {
     min-height: 0;
   }
@@ -4573,7 +4573,7 @@ body {
   border: 1px dashed var(--line);
 }
 
-.blog-empty-state h3 {
+.blog-empty-state h2 {
   font-size: 24px;
   letter-spacing: -0.04em;
   margin: 0 0 8px;
@@ -5596,7 +5596,7 @@ svg {
   gap: 0.8rem;
 }
 
-.service-scroll-panel__content h3 {
+.service-scroll-panel__content h2 {
   font-size: clamp(1.9rem, 3.2vw, 3.2rem);
   min-height: 4.4rem;
 }

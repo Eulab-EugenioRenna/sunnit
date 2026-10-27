@@ -1,3 +1,6 @@
+import { itemListSchema } from "@/lib/structured-data";
+import { pageUrl } from "@/lib/seo";
+import StaticPageStructuredData from "@/components/page-structured-data";
 import { staticPageMetadata } from "@/lib/seo-pages";
 import Link from "next/link";
 import BlogSidebar from "@/components/blog-sidebar";
@@ -93,6 +96,7 @@ export default async function BlogPage({
 
   return (
     <>
+      <StaticPageStructuredData lang={lang} path="blog" dictionary={dict} mainEntity={itemListSchema(displayedPosts.map(post => ({ "@type": "WebPage", "@id": `${pageUrl(lang, `blog/${post.slug}`)}#webpage`, name: post.title, description: post.excerpt, url: pageUrl(lang, `blog/${post.slug}`) })))} />
       <PageHero title={dict.blog.hero.title} crumb={dict.blog.hero.crumb} />
 
       <section className="container blog-layout">
@@ -113,7 +117,7 @@ export default async function BlogPage({
                     {post.tags[0] ? ` / ${post.tags[0]}` : ""}
                   </small>
                   <h2>{post.title}</h2>
-                  <TextLines text={`${post.excerpt} ${dict.blog.list.suffix}`} />
+                  <TextLines text={post.excerpt} />
                   <span className="article-preview-action">
                     {copy.open}
                   </span>
@@ -122,7 +126,7 @@ export default async function BlogPage({
             ))
           ) : (
             <div className="blog-empty-state">
-              <h3>{copy.emptyTitle}</h3>
+              <h2>{copy.emptyTitle}</h2>
               <TextLines text={copy.emptyText} />
               <Link href={`/${lang}/blog`} className="outline-btn tiny" style={{ marginTop: "18px" }}>
                 {copy.reset}

@@ -1,3 +1,5 @@
+import { PageStructuredData } from "@/components/page-structured-data";
+import { serviceSchema } from "@/lib/structured-data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getDictionary } from "@/lib/dictionaries";
@@ -20,11 +22,11 @@ export default async function ServicePage({ params }: Props) {
   if (!service) notFound();
   const dictionary = await getDictionary(lang);
   return <>
+    <PageStructuredData lang={lang} path={`services/${slug}`} name={service.title} description={service.summary} mainEntity={serviceSchema(lang, service, slug)} />
     <SeoBreadcrumbs lang={lang} items={[{ name: dictionary.services.hero.title, path: "services" }, { name: service.title, path: `services/${slug}` }]} />
     <PageHero title={service.title} crumb={dictionary.services.hero.title} text={service.summary} />
     <article className="container blog-post-card">
       {service.description.map((text: string) => <p key={text}>{text}</p>)}
-      <h2>{dictionary.services.intro.title}</h2>
       {service.detail.map((text: string) => <p key={text}>{text}</p>)}
       <ul>{service.bullets.map((text: string) => <li key={text}>{text}</li>)}</ul>
       <Link className="outline-btn" href={`/${lang}/contact`}>{dictionary.services.closing.cta}</Link>
