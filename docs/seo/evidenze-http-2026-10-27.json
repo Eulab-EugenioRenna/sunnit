@@ -1,0 +1,535 @@
+{
+  "checked_on": "2026-10-27",
+  "method": "Public HTTP GET; redirects followed; raw HTML tag extraction; no JavaScript execution or authenticated access",
+  "scope": "Sample of four SUNNIT domains and current Astrea marketing domain; not an exhaustive site crawl",
+  "results": [
+    {
+      "url": "https://sunnit.it/",
+      "final": "https://sunnit.it/it",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "it"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 215394
+    },
+    {
+      "url": "https://sunnit.it/it",
+      "final": "https://sunnit.it/it",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "it"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 215394
+    },
+    {
+      "url": "https://sunnit.it/en",
+      "final": "https://sunnit.it/en",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "en"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 211769
+    },
+    {
+      "url": "https://sunnit.it/robots.txt",
+      "final": "https://sunnit.it/robots.txt",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "robots.txt"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 216209
+    },
+    {
+      "url": "https://sunnit.it/sitemap.xml",
+      "final": "https://sunnit.it/sitemap.xml",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "sitemap.xml"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 216313
+    },
+    {
+      "url": "https://sunnit.it/zz",
+      "final": "https://sunnit.it/it",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "it"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 215226
+    },
+    {
+      "url": "https://sunnit.it/it/seo-url-inesistente-20261027",
+      "final": "https://sunnit.it/it/seo-url-inesistente-20261027",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [],
+      "title": [
+        "404: This page could not be found."
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 5318
+    },
+    {
+      "url": "https://sunnit.eu/",
+      "final": "https://sunnit.eu/en",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "en"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 211769
+    },
+    {
+      "url": "https://sunnit.eu/it",
+      "final": "https://sunnit.eu/it",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "it"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 215394
+    },
+    {
+      "url": "https://sunnit.eu/en",
+      "final": "https://sunnit.eu/en",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "en"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 211769
+    },
+    {
+      "url": "https://sunnit.eu/robots.txt",
+      "final": "https://sunnit.eu/robots.txt",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "robots.txt"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 216209
+    },
+    {
+      "url": "https://sunnit.eu/sitemap.xml",
+      "final": "https://sunnit.eu/sitemap.xml",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "sitemap.xml"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 216313
+    },
+    {
+      "url": "https://sunnit.eu/zz",
+      "final": "https://sunnit.eu/en",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "en"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 211769
+    },
+    {
+      "url": "https://sunnit.eu/it/seo-url-inesistente-20261027",
+      "final": "https://sunnit.eu/it/seo-url-inesistente-20261027",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [],
+      "title": [
+        "404: This page could not be found."
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 5318
+    },
+    {
+      "url": "https://sunnit.co.uk/",
+      "final": "https://sunnit.co.uk/en",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "en"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 211769
+    },
+    {
+      "url": "https://sunnit.co.uk/it",
+      "final": "https://sunnit.co.uk/it",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "it"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 215394
+    },
+    {
+      "url": "https://sunnit.co.uk/en",
+      "final": "https://sunnit.co.uk/en",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "en"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 211769
+    },
+    {
+      "url": "https://sunnit.co.uk/robots.txt",
+      "final": "https://sunnit.co.uk/robots.txt",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "robots.txt"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 215998
+    },
+    {
+      "url": "https://sunnit.co.uk/sitemap.xml",
+      "final": "https://sunnit.co.uk/sitemap.xml",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "sitemap.xml"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 216313
+    },
+    {
+      "url": "https://sunnit.co.uk/zz",
+      "final": "https://sunnit.co.uk/en",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "en"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 211769
+    },
+    {
+      "url": "https://sunnit.co.uk/it/seo-url-inesistente-20261027",
+      "final": "https://sunnit.co.uk/it/seo-url-inesistente-20261027",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [],
+      "title": [
+        "404: This page could not be found."
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 5318
+    },
+    {
+      "url": "https://sunnitspain.es/",
+      "final": "https://sunnitspain.es/es",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "es"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 219544
+    },
+    {
+      "url": "https://sunnitspain.es/it",
+      "final": "https://sunnitspain.es/it",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "it"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 215394
+    },
+    {
+      "url": "https://sunnitspain.es/en",
+      "final": "https://sunnitspain.es/en",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "en"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 211769
+    },
+    {
+      "url": "https://sunnitspain.es/robots.txt",
+      "final": "https://sunnitspain.es/robots.txt",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "robots.txt"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 216209
+    },
+    {
+      "url": "https://sunnitspain.es/sitemap.xml",
+      "final": "https://sunnitspain.es/sitemap.xml",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "sitemap.xml"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 216270
+    },
+    {
+      "url": "https://sunnitspain.es/zz",
+      "final": "https://sunnitspain.es/es",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "es"
+      ],
+      "title": [
+        "SUNNIT"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 219544
+    },
+    {
+      "url": "https://sunnitspain.es/it/seo-url-inesistente-20261027",
+      "final": "https://sunnitspain.es/it/seo-url-inesistente-20261027",
+      "status": 404,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [],
+      "title": [
+        "404: This page could not be found."
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 1,
+      "x_robots": null,
+      "bytes": 5318
+    },
+    {
+      "url": "https://astrea.sunnit.ai/",
+      "final": "https://astrea.sunnit.ai/",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "it"
+      ],
+      "title": [
+        "Astrea — assistenza legale con AI per studi legali"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 0,
+      "x_robots": null,
+      "bytes": 10909
+    },
+    {
+      "url": "https://astrea.sunnit.ai/robots.txt",
+      "final": "https://astrea.sunnit.ai/robots.txt",
+      "status": 200,
+      "type": "text/plain; charset=utf-8",
+      "html_lang": [],
+      "title": [],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 0,
+      "x_robots": null,
+      "bytes": 729
+    },
+    {
+      "url": "https://astrea.sunnit.ai/sitemap.xml",
+      "final": "https://astrea.sunnit.ai/sitemap.xml",
+      "status": 200,
+      "type": "application/xml",
+      "html_lang": [],
+      "title": [],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 0,
+      "x_robots": null,
+      "bytes": 2055
+    },
+    {
+      "url": "https://astrea.sunnit.ai/seo-url-inesistente-20261027",
+      "final": "https://astrea.sunnit.ai/seo-url-inesistente-20261027",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "html_lang": [
+        "it"
+      ],
+      "title": [
+        "Astrea — assistenza legale con AI per studi legali"
+      ],
+      "canonical": [],
+      "hreflang": [],
+      "h1_count": 0,
+      "x_robots": null,
+      "bytes": 10909
+    }
+  ]
+}

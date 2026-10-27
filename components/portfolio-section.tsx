@@ -1,3 +1,4 @@
+import Link from "next/link";
 import PortfolioExperience from "@/components/portfolio-experience";
 import SectionTitle from "@/components/section-title";
 import { getAllPortfolioProjects } from "@/lib/portfolio";
@@ -42,6 +43,10 @@ export default async function PortfolioSection({
     <section id="cases" className="container home-anchor-section">
       <SectionTitle eyebrow={eyebrow} title={title} align="center" />
 
+      <ul className="portfolio-detail-links">{projects.map(project => <li key={project.slug}>
+        <Link href={`/${lang}/portfolio/${project.slug}`}>{project.title}</Link>
+        <p>{project.excerpt}</p>
+      </li>)}</ul>
       <PortfolioExperience
         lang={lang}
         projects={projects.map((project) => ({

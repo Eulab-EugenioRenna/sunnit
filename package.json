@@ -16,7 +16,9 @@
     "sanity:import": "node scripts/import-existing-to-sanity.mjs",
     "sanity:check": "node scripts/import-existing-to-sanity.mjs --check-env",
     "sanity:ecosystem": "node scripts/import-ecosystem-to-sanity.mjs",
-    "test:ecosystem-content": "node --test scripts/ecosystem-content.test.mjs"
+    "test:ecosystem-content": "node --test scripts/ecosystem-content.test.mjs",
+    "check:seo": "node scripts/check-seo.mjs",
+    "test:seo": "node --test scripts/seo-content.test.mjs"
   },
   "dependencies": {
     "@amcharts/amcharts5": "^5.17.2",
@@ -46,6 +48,7 @@
     "@types/react-dom": "^19.0.0",
     "eslint": "^9.0.0",
     "eslint-config-next": "^15.3.0",
+    "groq-js": "^1.30.3",
     "typescript": "^5.7.0"
   }
 }

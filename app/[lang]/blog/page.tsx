@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { staticPageMetadata } from "@/lib/seo-pages";
 import Link from "next/link";
 import BlogSidebar from "@/components/blog-sidebar";
 import PageHero from "@/components/page-hero";
@@ -7,10 +7,9 @@ import { getAllBlogPosts, type BlogLang } from "@/lib/blog";
 import { getDictionary } from "@/lib/dictionaries";
 import TextLines from "@/components/text-lines";
 
-export const metadata: Metadata = {
-  title: "Blog",
-  description: "Insight su software development, cloud, dati, AI e design."
-};
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
+  return staticPageMetadata((await params).lang, "blog");
+}
 
 export default async function BlogPage({
   params,

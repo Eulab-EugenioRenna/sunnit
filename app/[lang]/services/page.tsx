@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
+import { serviceSlugs } from "@/lib/seo";
+import { staticPageMetadata } from "@/lib/seo-pages";
 import Link from "next/link";
 import PageHero from "@/components/page-hero";
 import GsapReveal from "@/components/gsap-reveal";
 import ServicesScrollStory from "@/components/services-scroll-story";
 import { getDictionary } from "@/lib/dictionaries";
 
-export const metadata: Metadata = {
-  title: "Services",
-  description: "Sviluppo software personalizzato, web, data, cloud e DevOps per aziende."
-};
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
+  return staticPageMetadata((await params).lang, "services");
+}
 
 export default async function ServicesPage({
   params,
@@ -79,6 +79,9 @@ export default async function ServicesPage({
         </GsapReveal>
       </section>
 
+      <nav className="container" aria-label={content.hero.title}><ul>
+        {content.categories.map((item: { accent: string; title: string }, index: number) => <li key={item.accent}><Link href={`/${lang}/services/${serviceSlugs[index]}`}>{item.title}</Link></li>)}
+      </ul></nav>
       <ServicesScrollStory
         eyebrow={content.intro.eyebrow}
         title={content.hero.title}

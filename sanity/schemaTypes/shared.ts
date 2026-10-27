@@ -61,3 +61,13 @@ export const bodyField = defineField({
   rows: 28,
   validation: (rule) => rule.required(),
 });
+
+export const seoFields = [
+  defineField({ name: "seo", title: "SEO", type: "object", fields: [
+    defineField({ name: "title", title: "Titolo SEO", type: "string" }),
+    defineField({ name: "description", title: "Descrizione SEO", type: "text", rows: 3 }),
+  ] }),
+  defineField({ name: "author", title: "Autore", type: "string" }),
+  defineField({ name: "contentUpdatedAt", title: "Ultima revisione del contenuto", type: "datetime", description: "Aggiornare solo dopo una modifica sostanziale del contenuto." }),
+  defineField({ name: "translationKey", title: "Identificativo traduzioni", type: "string", description: "Stesso valore solo per traduzioni equivalenti dello stesso contenuto, anche con slug diversi." }),
+];

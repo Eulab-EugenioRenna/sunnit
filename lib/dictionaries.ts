@@ -7,7 +7,7 @@ export const getAvailableLocales = (): string[] => {
   return getSupportedLocales();
 };
 
-export const getDictionary = async (locale: string) => {
+export const getDictionary = async (locale: string): Promise<Dictionary> => {
   try {
     const normalizedLocale = isSupportedLocale(locale) ? locale : defaultLocale;
 

@@ -81,6 +81,9 @@ export default function ContactMailtoForm({
           .filter(Boolean)
           .join("\n");
 
+        // An email-client opening is not proof of delivery or a qualified lead.
+        // The analytics/consent integration can subscribe without receiving form values.
+        window.dispatchEvent(new CustomEvent("sunnit:contact-email-open", { detail: { lang, context } }));
         window.location.href = `mailto:${recipientEmail}?subject=${encodeURIComponent(copy.subject)}&body=${encodeURIComponent(body)}`;
       }}
     >

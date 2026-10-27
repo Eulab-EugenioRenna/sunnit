@@ -1,3 +1,6 @@
+import { notFound } from "next/navigation";
+import { isSupportedLocale } from "@/lib/i18n-server";
+import { siteOrigin, jsonLd } from "@/lib/seo";
 import type { Metadata } from "next";
 import Script from "next/script";
 import Header from "@/components/header";
@@ -11,48 +14,11 @@ import { getDictionary, getAvailableLocales } from "@/lib/dictionaries";
 import GsapProvider from "@/components/gsap-provider";
 import DebugDomErrors from "@/components/debug-dom-errors";
 
+export const revalidate = 60;
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://sunnit.it"),
-  icons: {
-    icon: { url: "/favicon.svg", type: "image/svg+xml" },
-    shortcut: "/favicon.svg",
-  },
-  title: {
-    default: "SUNNIT",
-    template: "%s | SUNNIT"
-  },
-  description: "Sito Web di Sunnit SRL, specialista in soluzioni informatiche, cybersecurity e trasformazione digitale.",
-  authors: [
-    {
-      name: "EULAB - RENNA EUGENIO",
-      url: "https://eulab.cloud"
-    }
-  ],
-  creator: "EULAB - RENNA EUGENIO",
-  publisher: "EULAB - RENNA EUGENIO",
-  keywords: ["SUNNIT", "Sunnit SRL", "Sunnit", " Cybersecurity", "Soluzioni Informatiche", "Trasformazione Digitale", "Consulenza", "AI", "Intelligenza Artificiale", "Cloud", "Data Analytics"],
-  openGraph: {
-    title: "SUNNIT",
-    description: "Sito Web di Sunnit SRL, specialista in soluzioni informatiche, cybersecurity e trasformazione digitale.",
-    url: "https://sunnit.it",
-    siteName: "SUNNIT",
-    images: [
-      {
-        url: "/images/og-image.png",
-        width: 1200,
-        height: 1200,
-        alt: "SUNNIT - Innovation & Security",
-      },
-    ],
-    locale: "it_IT",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "SUNNIT",
-    description: "Sito Web di Sunnit SRL, specialista in soluzioni informatiche, cybersecurity e trasformazione digitale.",
-    images: ["/images/og-image.png"],
-  },
+  metadataBase: new URL(siteOrigin),
+  icons: { icon: { url: "/favicon.svg", type: "image/svg+xml" }, shortcut: "/favicon.svg" },
+  title: { default: "SUNNIT", template: "%s | SUNNIT" },
 };
 
 export default async function RootLayout({
@@ -63,6 +29,7 @@ export default async function RootLayout({
   params: Promise<{ lang: string }>;
 }>) {
   const { lang } = await params;
+  if (!isSupportedLocale(lang)) notFound();
   const dict = await getDictionary(lang);
   const availableLocales = getAvailableLocales();
   const [blogPosts, projects, jobPosts] = await Promise.all([
@@ -128,6 +95,12 @@ eulabconsult@gmail.com
         <GsapProvider>
           <Header dict={dict} lang={lang} availableLocales={availableLocales} />
           <SpotlightSearch articles={articles} portfolioProjects={portfolioProjects} jobs={jobs} />
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd({
+            "@context": "https://schema.org", "@graph": [
+              { "@type": "Organization", "@id": `${siteOrigin}/#organization`, name: "SUNNIT", url: siteOrigin, logo: `${siteOrigin}/favicon.svg` },
+              { "@type": "WebSite", "@id": `${siteOrigin}/#website`, name: "SUNNIT", url: siteOrigin, publisher: { "@id": `${siteOrigin}/#organization` } },
+            ],
+          }) }} />
           <main>{children}</main>
           <Footer dict={dict} lang={lang} />
         </GsapProvider>

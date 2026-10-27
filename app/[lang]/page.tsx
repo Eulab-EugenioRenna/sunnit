@@ -1,3 +1,4 @@
+import { staticPageMetadata } from "@/lib/seo-pages";
 import Link from "next/link";
 import HeroDynamicCopy from "@/components/hero-dynamic-copy";
 import ContactMailtoForm from "@/components/contact-mailto-form";
@@ -12,6 +13,10 @@ import LogoMarquee from "@/components/logo-marquee";
 import TextLines from "@/components/text-lines";
 import { getAllBlogPosts, type BlogLang } from "@/lib/blog";
 import { getDictionary } from "@/lib/dictionaries";
+
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
+  return staticPageMetadata((await params).lang, "");
+}
 
 export default async function Home({
   params,
@@ -185,8 +190,6 @@ export default async function Home({
           <NewsSlider posts={posts as any} lang={lang} />
         </div>
       </section>
-
-
 
       <section id="contact" className="container cta-band home-anchor-section">
         <div>

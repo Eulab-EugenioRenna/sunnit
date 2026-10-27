@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { bodyField, imageFields, languageField, slugField } from "./shared";
+import { bodyField, seoFields, imageFields, languageField, slugField } from "./shared";
 
 export const portfolioProject = defineType({
   name: "portfolioProject",
@@ -21,6 +21,7 @@ export const portfolioProject = defineType({
     defineField({ name: "order", title: "Ordine", type: "number", initialValue: 999 }),
     ...imageFields,
     defineField({ name: "publishedAt", title: "Data", type: "datetime", validation: (rule) => rule.required() }),
+    ...seoFields,
     bodyField,
   ],
   preview: {

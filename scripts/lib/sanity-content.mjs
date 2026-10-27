@@ -82,6 +82,18 @@ function normalizeCountry(value) {
   return 'it';
 }
 
+function optionalSeoFields(data) {
+  return {
+    ...(typeof data.author === 'string' && data.author.trim() ? { author: data.author.trim() } : {}),
+    ...(typeof data.translationKey === 'string' && data.translationKey.trim() ? { translationKey: data.translationKey.trim() } : {}),
+    ...(data.contentUpdatedAt && Number.isFinite(Date.parse(data.contentUpdatedAt)) ? { contentUpdatedAt: new Date(data.contentUpdatedAt).toISOString() } : {}),
+    ...(data.seo && typeof data.seo === 'object' ? { seo: {
+      ...(typeof data.seo.title === 'string' ? { title: data.seo.title } : {}),
+      ...(typeof data.seo.description === 'string' ? { description: data.seo.description } : {}),
+    } } : {}),
+  };
+}
+
 export async function mdxFileToSanityDocument({ type, language, slug, filePath }) {
   const [source, stats] = await Promise.all([readFile(filePath, 'utf8'), stat(filePath)]);
   const parsed = matter(source);
@@ -95,6 +107,7 @@ export async function mdxFileToSanityDocument({ type, language, slug, filePath }
     language,
     excerpt: String(data.excerpt || ''),
     body: parsed.content.trim(),
+    ...optionalSeoFields(data),
   };
 
   if (type === 'blog') {
@@ -180,6 +193,7 @@ export function sanityDocumentToMdx(document) {
   const shared = {
     title: document.title || '',
     excerpt: document.excerpt || '',
+    ...optionalSeoFields(document),
   };
   let data;
 
@@ -213,12 +227,14 @@ export function sanityDocumentToMdx(document) {
 
 export function mdxToSanityFields(source) {
   const parsed = matter(source);
+  const data = parsed.data || {};
   const fields = {
     title: String(parsed.data.title || ''),
     excerpt: String(parsed.data.excerpt || ''),
     body: parsed.content.trim(),
+    ...optionalSeoFields(data),
   };
-  const missing = Object.entries(fields).filter(([, value]) => !value.trim()).map(([field]) => field);
+  const missing = Object.entries(fields).filter(([key, value]) => ['title', 'excerpt', 'body'].includes(key) && !value.trim()).map(([field]) => field);
   if (missing.length) {
     throw new Error(`Risposta Ollama non valida: campi mancanti (${missing.join(', ')})`);
   }

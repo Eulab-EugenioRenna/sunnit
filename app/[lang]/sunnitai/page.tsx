@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { staticPageMetadata } from "@/lib/seo-pages";
 import FAQ from "@/components/faq";
 import PageHero from "@/components/page-hero";
 import GsapReveal from "@/components/gsap-reveal";
@@ -6,10 +6,9 @@ import SectionTitle from "@/components/section-title";
 import TextLines from "@/components/text-lines";
 import { getDictionary } from "@/lib/dictionaries";
 
-export const metadata: Metadata = {
-  title: "SunnitAI",
-  description: "Soluzione AI per document intelligence e conoscenza aziendale."
-};
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
+  return staticPageMetadata((await params).lang, "sunnitai");
+}
 
 export default async function SunnitAIPage({
   params,

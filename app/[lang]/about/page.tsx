@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { staticPageMetadata } from "@/lib/seo-pages";
 import Link from "next/link";
 import PageHero from "@/components/page-hero";
 import GsapReveal from "@/components/gsap-reveal";
@@ -7,10 +7,9 @@ import AboutExpertiseBand from "@/components/about-expertise-band";
 import TextLines from "@/components/text-lines";
 import { getDictionary } from "@/lib/dictionaries";
 
-export const metadata: Metadata = {
-  title: "About Us",
-  description: "Chi siamo, metodo, team e storia SUNNIT."
-};
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
+  return staticPageMetadata((await params).lang, "about");
+}
 
 export default async function AboutPage({
   params,

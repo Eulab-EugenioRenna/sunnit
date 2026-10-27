@@ -1,3 +1,6 @@
+import { pageMetadata, pageUrl, jsonLd, siteOrigin, seoLocales } from "@/lib/seo";
+import { getContentLanguages } from "@/lib/sanity/content";
+import SeoBreadcrumbs from "@/components/seo-breadcrumbs";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -25,18 +28,11 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     return {};
   }
 
-  return {
-    title: post.title,
-    description: post.excerpt,
-    keywords: post.tags,
-    openGraph: {
-      title: post.title,
-      description: post.excerpt,
-      images: post.image ? [{ url: post.image }] : [],
-      locale: lang,
-      type: "article",
-    },
-  };
+  const translations = await getContentLanguages("blogPost", lang, slug);
+  const languages = Object.fromEntries(translations.filter(item => seoLocales.some(locale => locale === item.language)).map(item => [item.language, pageUrl(item.language, `blog/${item.slug}`)]));
+  const metadata = pageMetadata(lang, `blog/${slug}`, post.seo?.title || post.title, post.seo?.description || post.excerpt, languages, post.image);
+  return { ...metadata, openGraph: { ...metadata.openGraph, type: "article", publishedTime: post.createdAt, modifiedTime: post.contentUpdatedAt, authors: [post.author || "SUNNIT"] } };
+
 }
 
 async function getMdxContent(body: string) {
@@ -63,12 +59,20 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const currentIndex = posts.findIndex((item) => item.slug === post.slug);
   const previousPost = currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null;
   const nextPost = currentIndex > 0 ? posts[currentIndex - 1] : null;
-  const baseUrl = process.env.SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || "https://sunnit.it";
-  const shareUrl = new URL(`/${lang}/blog/${post.slug}`, baseUrl).toString();
+  const shareUrl = pageUrl(lang, `blog/${post.slug}`);
   const Content = await getMdxContent(post.body);
 
   return (
     <>
+      <SeoBreadcrumbs lang={lang} items={[{ name: "Blog", path: "blog" }, { name: post.title, path: `blog/${post.slug}` }]} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd({
+        "@context": "https://schema.org", "@type": "BlogPosting", headline: post.title, description: post.excerpt,
+        mainEntityOfPage: shareUrl, url: shareUrl, inLanguage: lang,
+        datePublished: post.createdAt, dateModified: post.contentUpdatedAt || post.createdAt,
+        ...(post.image ? { image: new URL(post.image, siteOrigin).href } : {}),
+        author: { "@type": post.author ? "Person" : "Organization", name: post.author || "SUNNIT" },
+        publisher: { "@id": `${siteOrigin}/#organization` },
+      }) }} />
       <PageHero title={post.title} crumb={lang === "en" ? "Blog" : "Blog"} text={post.excerpt} />
 
       <section className="container blog-layout blog-detail-layout">
@@ -80,10 +84,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <article className="blog-post-card">
             <header className="blog-post-header">
               <small>
-                {post.createdAtLabel} by SUNNIT
+                <time dateTime={post.createdAt}>{post.createdAtLabel}</time> / {post.author || "SUNNIT"}
                 {post.tags.length ? ` / ${post.tags.join(" / ")}` : ""}
               </small>
-              <h1>{post.title}</h1>
+              <h2>{post.title}</h2>
               <TextLines text={post.excerpt} />
             </header>
 

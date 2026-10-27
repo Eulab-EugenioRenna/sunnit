@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { staticPageMetadata } from "@/lib/seo-pages";
 import Link from "next/link";
 import ContactMailtoForm from "@/components/contact-mailto-form";
 import PageHero from "@/components/page-hero";
@@ -7,10 +7,9 @@ import { getDictionary } from "@/lib/dictionaries";
 import EuropeMap from "@/components/europe-map";
 import TextLines from "@/components/text-lines";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description: "Contatti e form richiesta consulenza SUNNIT."
-};
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
+  return staticPageMetadata((await params).lang, "contact");
+}
 
 export default async function ContactPage({
   params,

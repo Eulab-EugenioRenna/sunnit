@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { bodyField, imageFields, languageField, slugField } from "./shared";
+import { bodyField, seoFields, imageFields, languageField, slugField } from "./shared";
 
 export const blogPost = defineType({
   name: "blogPost",
@@ -13,6 +13,7 @@ export const blogPost = defineType({
     defineField({ name: "tags", title: "Tag", type: "array", of: [{ type: "string" }], options: { layout: "tags" } }),
     ...imageFields,
     defineField({ name: "publishedAt", title: "Data di pubblicazione", type: "datetime", validation: (rule) => rule.required() }),
+    ...seoFields,
     bodyField,
   ],
   preview: {

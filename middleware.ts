@@ -95,10 +95,7 @@ export async function middleware(request: NextRequest) {
       return;
     }
 
-    const segments = pathname.split('/').filter(Boolean);
-    segments[0] = domainLocale || defaultLocale;
-    request.nextUrl.pathname = `/${segments.join('/')}`;
-    return NextResponse.redirect(request.nextUrl);
+    return; // Unsupported language: layout returns 404, never Italian content at this URL.
   }
 
   // Redirect if there is no locale

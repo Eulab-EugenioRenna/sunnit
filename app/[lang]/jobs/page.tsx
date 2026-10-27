@@ -1,17 +1,11 @@
-import type { Metadata } from "next";
+import { staticPageMetadata } from "@/lib/seo-pages";
 import JobsBoard from "@/components/jobs-board";
 import PageHero from "@/components/page-hero";
 import { getDictionary } from "@/lib/dictionaries";
 import { getAllJobs, type JobLang } from "@/lib/jobs";
 
-export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
-  const { lang } = await params;
-  const dict = await getDictionary(lang);
-
-  return {
-    title: dict.jobs.hero.title,
-    description: dict.jobs.hero.text,
-  };
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
+  return staticPageMetadata((await params).lang, "jobs");
 }
 
 export default async function JobsPage({
@@ -32,7 +26,7 @@ export default async function JobsPage({
       <section className="container jobs-section">
         <div className="jobs-section__intro">
           <span>{dict.jobs.intro.eyebrow}</span>
-          <h1>{dict.jobs.intro.title}</h1>
+          <h2>{dict.jobs.intro.title}</h2>
           <p>{dict.jobs.intro.text}</p>
         </div>
         <JobsBoard jobs={jobs} copy={dict.jobs} lang={lang} initialJobSlug={job} />

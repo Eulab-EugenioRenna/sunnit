@@ -6,6 +6,9 @@ export type BlogLang = string;
 
 export type BlogPost = {
   title: string;
+  seo?: { title?: string; description?: string };
+  author?: string;
+  contentUpdatedAt?: string;
   excerpt: string;
   tags: string[];
   image: string;
@@ -30,6 +33,9 @@ function formatDate(value: string, lang: string) {
 function toBlogPost(item: Awaited<ReturnType<typeof getSanityContentList>>[number], lang: string): BlogPost {
   return {
     title: item.title,
+    seo: item.seo,
+    author: item.author,
+    contentUpdatedAt: item.contentUpdatedAt,
     excerpt: item.excerpt,
     tags: item.tags || [],
     image: item.image || "",

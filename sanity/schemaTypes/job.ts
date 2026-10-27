@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { bodyField, languageField, slugField } from "./shared";
+import { bodyField, seoFields, languageField, slugField } from "./shared";
 
 export const job = defineType({
   name: "job",
@@ -31,6 +31,7 @@ export const job = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({ name: "publishedAt", title: "Data", type: "datetime" }),
+    ...seoFields,
     bodyField,
   ],
   preview: {

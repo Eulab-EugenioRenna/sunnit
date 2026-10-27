@@ -111,3 +111,13 @@ Quando Resend accetta l'email con il CV al referente, viene inviata anche una co
 - Layout portato a piena larghezza: le sezioni usano quasi tutto il viewport con gutter minimo.
 - La hero Home ora usa una sola animazione sincronizzata (`components/hero-dynamic-copy.tsx`): parola grande di background, parola evidenziata e sottotitolo cambiano dallo stesso stato, senza marquee duplicato.
 - Card e bento tile hanno hover piu tattile, bordo attivo e shadow piu ampia.
+
+## SEO
+
+Il [report di implementazione](docs/REPORT-SEO-SUNNIT-2026-10-27.md) descrive modifiche, verifiche e attività da eseguire; il [piano SEO](docs/PIANO-SEO-SUNNIT.md) resta il riferimento di progetto.
+
+- `npm run test:seo`: pubblicazione, lingue, traduzioni, import dei campi SEO e resolver URL su fixture.
+- `npm run check:seo`: controlli HTTP contro una build avviata (default `http://localhost:3107`, configurabile con `SEO_CHECK_URL`). `SEO_REPORT_PATH` salva il registro JSON.
+- Un solo progetto Vercel serve tutti i domini. La matrice in `lib/i18n.ts` assegna IT a `sunnit.it`, ES a `sunnitspain.es` ed EN a `sunnit.eu` e `sunnit.co.uk`; il riferimento canonico EN è `sunnit.eu`. Canonical e hreflang dipendono dalla lingua, non dall'host della copia visitata. `SITE_URL` non sovrascrive questa matrice SEO. Le sitemap elencano solo le URL canoniche del rispettivo dominio; `.co.uk` ha sitemap vuota e robots indirizzato alla sitemap `.eu`. Non sono introdotti redirect tra domini.
+
+Gli schemi Sanity supportano campi facoltativi SEO, autore, revisione editoriale e `translationKey`. Associare la stessa chiave soltanto a traduzioni equivalenti dello stesso contenuto. Le query escludono bozze, date future e fallback automatici in italiano sulle URL di altre lingue.
