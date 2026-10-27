@@ -25,6 +25,12 @@ export default async function AboutPage({
       ? "Connected modular structures representing digital platforms"
       : "Strutture modulari connesse che rappresentano piattaforme digitali";
 
+  const methodImageAlt = lang === "es"
+    ? "Recorridos conectados que convergen en una estructura organizada"
+    : lang === "en"
+      ? "Connected pathways converging into an organized structure"
+      : "Percorsi connessi che convergono in una struttura organizzata";
+
   return (
     <>
       <PageHero title={dict.about.hero.title} crumb={dict.about.hero.crumb} />
@@ -36,7 +42,7 @@ export default async function AboutPage({
           <TextLines text={dict.about.intro.desc} />
           <Link href={`/${lang}/contact`} className="outline-btn">{dict.about.intro.cta}</Link>
         </GsapReveal>
-        <GsapReveal className="visual-card about-intro-image" delay={120} direction="left" scrub={true}>
+        <GsapReveal className="visual-card about-image" delay={120} direction="left" scrub={true}>
           <Image
             src="/images/about/digital-platforms.webp"
             alt={imageAlt}
@@ -98,7 +104,14 @@ export default async function AboutPage({
       </section>
 
       <section className="container split-panel">
-        <div className="visual-small" />
+        <div className="visual-small about-image">
+          <Image
+            src="/images/about/delivery-method.webp"
+            alt={methodImageAlt}
+            fill
+            sizes="(max-width: 900px) 100vw, 50vw"
+          />
+        </div>
         <div className="intro-copy">
           <p>{dict.about.whyUs.eyebrow}</p>
           <h2>{dict.about.whyUs.title}</h2>
