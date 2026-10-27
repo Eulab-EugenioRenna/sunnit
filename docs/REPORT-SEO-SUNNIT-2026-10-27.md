@@ -1,75 +1,41 @@
-# SUNNIT - Aggiornamento SEO
+# SUNNIT - Report attività SEO
 
-**Report attività - 27 ottobre 2026**
+**Aggiornamento del 27 ottobre 2026**
 
-Ho lavorato sulla struttura SEO del sito SUNNIT per rendere le pagine più chiare ai motori di ricerca e valorizzare meglio servizi, progetti e contenuti nelle tre lingue.
+Ho riportato di seguito le richieste del piano SEO, gli interventi che ho realizzato e le attività ancora da completare. Ho pubblicato gli aggiornamenti e aggiunto **sunnit.it a Google Search Console**.
 
-Gli interventi sono stati preparati e controllati nell'ambiente di lavoro. La pubblicazione in produzione e le attività sui pannelli esterni restano da eseguire, come indicato di seguito.
+## 1. Interventi sul sito
 
-## 1. Cosa ho fatto sul sito
-
-**Ho sistemato le risorse che aiutano Google a trovare le pagine.** Ho preparato una mappa delle pagine pubbliche e le indicazioni per la scansione del sito. In questo modo i motori di ricerca possono individuare servizi, articoli e progetti attraverso un elenco utilizzabile.
-
-**Ho rivisto titoli e descrizioni.** Le pagine principali hanno ora titoli e descrizioni dedicati in italiano, inglese e spagnolo. Ho curato anche le informazioni mostrate nelle anteprime dei link condivisi. Per l'offerta AI ho reso più esplicito il collegamento con le esigenze delle aziende.
-
-**Ho migliorato la gestione delle lingue.** Ho corretto il comportamento che poteva mostrare contenuti italiani sotto indirizzi di altre lingue. Quando un contenuto non è disponibile nella lingua richiesta, non viene più presentato come se fosse una traduzione. Ho sistemato anche la risposta agli indirizzi inesistenti.
-
-**Ho dato più spazio ai servizi.** Ho aggiunto pagine dedicate a software su misura, sviluppo web, dati e analytics, cloud e DevOps, utilizzando i contenuti già presenti. Ogni servizio ha un indirizzo proprio e un collegamento dalla pagina generale, così è più semplice raggiungerlo e condividerlo.
-
-**Ho reso i progetti più accessibili.** I progetti del portfolio hanno ora una pagina dedicata, con contenuti leggibili senza dover aprire una finestra interattiva. Ho mantenuto le modalità di consultazione già presenti nel sito.
-
-**Ho valorizzato l'ecosistema SUNNIT.** Ho aggiunto una presentazione testuale delle competenze e dei progetti già disponibili, affiancandola alla mappa interattiva. Le informazioni essenziali sono quindi accessibili anche senza selezionare i singoli elementi.
-
-**Ho aggiunto informazioni utili per interpretare i contenuti.** Ho predisposto le indicazioni che aiutano i motori di ricerca a riconoscere azienda, sito, articoli e percorsi di navigazione. Ho anche preparato la gestione di autori, date di revisione e descrizioni personalizzate, da completare nella revisione editoriale.
-
-Non ho modificato i destinatari delle candidature né eseguito importazioni o riscritture dei contenuti nel gestionale editoriale.
-
-## 2. Come ho gestito domini e lingue
-
-Ho allineato il lavoro alla configurazione di produzione: **un unico progetto Vercel serve tutti i domini** e il dominio visitato determina la lingua iniziale del sito.
-
-| Dominio | Lingua iniziale | Riferimento per i motori di ricerca |
+| Cosa veniva chiesto | Cosa ho fatto | Cosa manca da fare |
 | --- | --- | --- |
-| sunnit.it | Italiano | sunnit.it |
-| sunnitspain.es | Spagnolo | sunnitspain.es |
-| sunnit.eu | Inglese | sunnit.eu |
-| sunnit.co.uk | Inglese | sunnit.eu |
+| Aiutare Google a trovare le pagine del sito. | Ho preparato le mappe delle pagine pubbliche e le indicazioni per la scansione, separate per dominio e lingua. | Verificare l'invio delle mappe in Search Console e monitorare le pagine rilevate. |
+| Migliorare titoli e descrizioni delle pagine. | Ho inserito titoli e descrizioni dedicati alle pagine principali, in italiano, inglese e spagnolo. | Valutare nel tempo quali pagine ricevono visite e affinare i testi in base ai risultati. |
+| Curare l'anteprima dei link condivisi. | Ho aggiornato le informazioni che accompagnano le pagine quando vengono condivise. | Controllare la resa delle anteprime nei canali utilizzati dall'azienda. |
+| Gestire correttamente le lingue. | Ho evitato che i contenuti italiani vengano mostrati come traduzioni quando manca la versione richiesta. Ho corretto anche la gestione degli indirizzi inesistenti. | Revisionare qualità e completezza delle traduzioni con i referenti aziendali. |
+| Rendere più visibili i singoli servizi. | Ho aggiunto pagine dedicate a software su misura, sviluppo web, dati e analytics, cloud e DevOps, collegate alla pagina generale dei servizi. | Arricchire i testi con esempi, esigenze dei clienti e informazioni commerciali confermate. |
+| Dare un indirizzo proprio ai progetti del portfolio. | Ho creato pagine dedicate ai progetti, mantenendo le modalità interattive di consultazione già presenti. | Completare i casi con ruolo di SUNNIT e risultati documentabili, dove disponibili. |
+| Rendere leggibili le competenze dell'ecosistema. | Ho affiancato alla mappa interattiva una presentazione testuale di competenze e progetti. | Mantenere aggiornate le informazioni con i responsabili dei diversi ambiti. |
 
-Per l'inglese ho adottato **sunnit.eu come riferimento principale**, come concordato. Il dominio sunnit.co.uk continua ad aprire il sito in inglese.
+## 2. Pubblicazione, domini e Search Console
 
-Ho impostato le informazioni SEO in modo che ogni lingua rimandi al proprio dominio di riferimento. Questo vale anche quando la stessa pagina viene aperta da un altro dominio collegato al progetto. Per esempio, una pagina spagnola aperta su sunnit.it indica come riferimento la corrispondente pagina su sunnitspain.es.
+| Cosa veniva chiesto | Cosa ho fatto | Cosa manca da fare |
+| --- | --- | --- |
+| Pubblicare gli aggiornamenti. | Ho pubblicato gli interventi sul progetto Vercel condiviso dai quattro domini. | Verificare che anche l'ultima correzione degli articoli sia inclusa nella versione online. |
+| Collegare ciascun dominio alla lingua corretta. | Ho mantenuto italiano su sunnit.it, spagnolo su sunnitspain.es e inglese su sunnit.eu e sunnit.co.uk. | Completare il controllo della navigazione da computer e smartphone. |
+| Evitare riferimenti diversi per le stesse pagine. | Ho impostato sunnit.it come riferimento italiano, sunnitspain.es come riferimento spagnolo e sunnit.eu come riferimento inglese. sunnit.co.uk continua ad aprire il sito in inglese. | Controllare nel tempo che Google riconosca i domini di riferimento scelti. |
+| Registrare il sito in Google Search Console. | Ho aggiunto sunnit.it a Google Search Console. | Verificare l'invio della sitemap italiana. Aggiungere o verificare anche sunnit.eu e sunnitspain.es e le rispettive sitemap. |
+| Controllare le impostazioni esterne del sito. | Ho verificato online l'apertura dei quattro domini e il corretto indirizzamento iniziale alle lingue. | Controllare nei pannelli Vercel e domini le versioni www/non-www, i certificati e la protezione delle anteprime dall'indicizzazione. |
+| Verificare il sito dopo la pubblicazione. | Ho controllato online 84 pagine. Nel controllo iniziale 76 rispondevano correttamente; ho preparato una correzione per otto articoli inglesi e spagnoli. | Gli otto articoli restituiscono ancora 404 al ricontrollo: verificare la build pubblicata e ripetere il controllo dopo il rilascio della correzione. |
 
-Ho separato anche le mappe delle pagine per dominio: italiano su sunnit.it, spagnolo su sunnitspain.es e inglese su sunnit.eu. Il dominio sunnit.co.uk rimanda alla mappa inglese di sunnit.eu, senza aggiungere un secondo elenco di pagine inglesi duplicate.
+## 3. Contenuti, contatti e attività successive
 
-Ho mantenuto il funzionamento del sito condiviso: questi interventi non introducono spostamenti automatici da un dominio all'altro.
+| Cosa veniva chiesto | Cosa ho fatto | Cosa manca da fare |
+| --- | --- | --- |
+| Fornire informazioni più chiare su azienda e articoli. | Ho aggiunto indicazioni che aiutano i motori di ricerca a riconoscere SUNNIT, il sito, gli articoli e i percorsi di navigazione. | Completare autore, date di revisione e informazioni aziendali solo con dati confermati. |
+| Gestire correttamente i contenuti pubblicati. | Ho escluso bozze e contenuti con data futura e preparato la gestione delle informazioni SEO nel sistema editoriale. | Verificare online i tempi di aggiornamento dopo pubblicazione, modifica o rimozione di un contenuto. |
+| Misurare i contatti dal sito. | Ho predisposto un segnale che distingue l'apertura del programma email dai contatti effettivamente ricevuti. | Se richiesto, completare l'invio dei messaggi direttamente dal sito e la conferma di ricezione. |
+| Configurare misurazione e consenso. | Ho mantenuto separata l'apertura dell'email dalla ricezione di una richiesta, senza trasmettere i dati del modulo agli strumenti di misurazione. | Definire e configurare analytics, consenso e obiettivi commerciali nei servizi esterni. |
+| Migliorare velocità ed esperienza di navigazione. | Ho verificato la preparazione della versione pubblicabile e la presenza dei contenuti essenziali nelle pagine. | Misurare la velocità online, soprattutto da smartphone, e valutare interventi su immagini, video e animazioni. |
+| Sviluppare visibilità e contenuti nel tempo. | Ho organizzato le pagine dei servizi e valorizzato i contenuti già disponibili, mantenendo distinto il percorso di Astrea. | Pianificare approfondimenti e casi verificati; rivedere ogni mese ricerche, visite e contatti qualificati. |
 
-**Da eseguire su domini e impostazioni esterne**
-
-- Pubblicare gli aggiornamenti sul progetto Vercel di produzione.
-- Verificare nel pannello Vercel che tutti i domini, comprese le eventuali versioni con www, siano collegati correttamente e abbiano certificati HTTPS validi.
-- Controllare le eventuali regole già presenti per www e non-www, evitando passaggi inutili o comportamenti incoerenti.
-- Verificare le proprietà in Google Search Console e inviare le mappe delle pagine dei tre domini di riferimento. Valutare la stessa configurazione su Bing Webmaster Tools.
-- Controllare che gli ambienti di anteprima non vengano indicizzati.
-
-Non ho modificato DNS, impostazioni Vercel, certificati o account dei servizi esterni.
-
-## 3. Verifiche fatte e attività da completare
-
-**Cosa ho controllato**
-
-Ho verificato la preparazione della versione pubblicabile del sito e il funzionamento delle principali regole SEO. Ho controllato gli indirizzi delle pagine, le lingue dichiarate, i riferimenti ai domini corretti e le risposte agli indirizzi inesistenti.
-
-Ho controllato 84 pagine tra pagine principali, servizi, articoli e progetti, verificando anche le mappe separate e il comportamento dei quattro domini. Queste verifiche riguardano l'ambiente di lavoro: non attestano ancora la pubblicazione o l'indicizzazione su Google.
-
-**Cosa resta da fare**
-
-- **Pubblicazione e controllo online.** Dopo il rilascio bisogna verificare che le modifiche siano effettivamente presenti sui domini pubblici e controllare la navigazione da computer e smartphone.
-- **Revisione dei contenuti.** Vanno rivisti testi dei servizi, traduzioni e casi di progetto con i referenti aziendali. Autori, date di revisione e risultati dei progetti devono essere completati solo con informazioni confermate.
-- **Monitoraggio su Google.** Dopo l'invio delle mappe bisogna osservare quali pagine vengono rilevate e indicizzate, quali ricerche portano visite e quali servizi iniziano a ricevere maggiore attenzione.
-- **Velocità del sito.** Resta da misurare il comportamento delle pagine online, soprattutto su smartphone, per individuare eventuali interventi su video, immagini e animazioni.
-- **Contatti e misurazione.** Ho predisposto un segnale che distingue l'apertura del programma email. Il modulo attuale non conferma la ricezione della richiesta: se serve misurare le richieste ricevute, va completato con un invio gestito dal sito e un processo di presa in carico.
-- **Analytics e consenso.** Strumenti di misurazione, impostazioni del consenso e obiettivi commerciali vanno definiti e configurati nei servizi esterni. Aperture email, richieste ricevute e contatti qualificati devono essere conteggiati separatamente.
-- **Aggiornamenti editoriali.** Resta da controllare online quanto rapidamente si aggiornano pagine e mappe dopo una pubblicazione, una modifica o una rimozione.
-- **Sviluppo continuativo.** Propongo di proseguire con approfondimenti e casi verificati sui servizi prioritari, accompagnati da una revisione mensile di visite, ricerche e opportunità commerciali.
-
-Il lavoro fatto prepara una base più ordinata per la visibilità di SUNNIT. I risultati andranno valutati dopo la pubblicazione e un periodo di osservazione: le modifiche tecniche, da sole, non garantiscono posizioni o nuovi contatti.
+**Nota sui risultati:** l'inserimento in Search Console è stato completato per sunnit.it. La presenza delle pagine su Google e i risultati delle ricerche restano da monitorare: l'inserimento del sito non equivale all'indicizzazione di tutte le pagine.

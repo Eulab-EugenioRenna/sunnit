@@ -1,0 +1,1793 @@
+{
+  "checkedAt": "2026-10-27T13:40:55.359Z",
+  "results": [
+    {
+      "host": "sunnit.it",
+      "lang": "it",
+      "entries": [
+        {
+          "url": "https://sunnit.it/",
+          "status": 307,
+          "type": "text/plain",
+          "location": "/it",
+          "cache": null
+        },
+        {
+          "url": "https://sunnit.it/robots.txt",
+          "status": 200,
+          "type": "text/plain",
+          "location": null,
+          "cache": "MISS",
+          "robots": "User-Agent: *\nAllow: /\nDisallow: /api/\nDisallow: /studio/\n\nSitemap: https://sunnit.it/sitemap.xml\n"
+        },
+        {
+          "url": "https://sunnit.it/sitemap.xml",
+          "status": 200,
+          "type": "application/xml",
+          "location": null,
+          "cache": "MISS",
+          "sitemapUrls": [
+            "https://sunnit.it/it",
+            "https://sunnit.it/it/services",
+            "https://sunnit.it/it/sunnitai",
+            "https://sunnit.it/it/about",
+            "https://sunnit.it/it/contact",
+            "https://sunnit.it/it/jobs",
+            "https://sunnit.it/it/blog",
+            "https://sunnit.it/it/ecosystem",
+            "https://sunnit.it/it/services/software-su-misura",
+            "https://sunnit.it/it/services/web",
+            "https://sunnit.it/it/services/data-analytics",
+            "https://sunnit.it/it/services/cloud",
+            "https://sunnit.it/it/services/devops",
+            "https://sunnit.it/it/blog/astrea-l-intelligenza-artificiale-che-semplifica-il-lavoro-dei-professionisti",
+            "https://sunnit.it/it/blog/tennis-open-sunnit-srl-quindici-giorni-di-grande-tennis-allo-sporting-club-san-severo-ecco-i-risultati",
+            "https://sunnit.it/it/blog/chatgpt-diventa-consulente-finanziario-e-si-collega-ai-conti-bancari",
+            "https://sunnit.it/it/blog/open-sunnit-srl-arriva-il-grande-tennis-allo-sporting-club-san-severo",
+            "https://sunnit.it/it/portfolio/furness-insurance-services",
+            "https://sunnit.it/it/portfolio/athenai-labs",
+            "https://sunnit.it/it/portfolio/contract-cost-care",
+            "https://sunnit.it/it/portfolio/world4all",
+            "https://sunnit.it/it/portfolio/aruba",
+            "https://sunnit.it/it/portfolio/cdp",
+            "https://sunnit.it/it/portfolio/eni-bepower",
+            "https://sunnit.it/it/portfolio/generali",
+            "https://sunnit.it/it/portfolio/infocert",
+            "https://sunnit.it/it/portfolio/italpaghe",
+            "https://sunnit.it/it/portfolio/lottomatica"
+          ]
+        },
+        {
+          "url": "https://sunnit.it/it",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "location": null,
+          "cache": "MISS",
+          "canonical": "https://sunnit.it/it",
+          "lang": "it",
+          "title": "Software, cloud e intelligenza artificiale per aziende"
+        },
+        {
+          "url": "https://sunnit.it/it/contact",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "location": null,
+          "cache": "MISS",
+          "canonical": "https://sunnit.it/it/contact",
+          "lang": "it",
+          "title": "Contatti e consulenza tecnologica | SUNNIT"
+        },
+        {
+          "url": "https://sunnit.it/zz",
+          "status": 404,
+          "type": "text/html; charset=utf-8",
+          "location": null,
+          "cache": "MISS",
+          "title": "SUNNIT"
+        },
+        {
+          "url": "https://sunnit.it/it/services/cloud",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "location": null,
+          "cache": "MISS",
+          "canonical": "https://sunnit.it/it/services/cloud",
+          "lang": "it",
+          "title": "Cloud Consulting | SUNNIT"
+        }
+      ]
+    },
+    {
+      "host": "sunnitspain.es",
+      "lang": "es",
+      "entries": [
+        {
+          "url": "https://sunnitspain.es/",
+          "status": 307,
+          "type": "text/plain",
+          "location": "/es",
+          "cache": null
+        },
+        {
+          "url": "https://sunnitspain.es/robots.txt",
+          "status": 200,
+          "type": "text/plain",
+          "location": null,
+          "cache": "MISS",
+          "robots": "User-Agent: *\nAllow: /\nDisallow: /api/\nDisallow: /studio/\n\nSitemap: https://sunnitspain.es/sitemap.xml\n"
+        },
+        {
+          "url": "https://sunnitspain.es/sitemap.xml",
+          "status": 200,
+          "type": "application/xml",
+          "location": null,
+          "cache": "MISS",
+          "sitemapUrls": [
+            "https://sunnitspain.es/es",
+            "https://sunnitspain.es/es/services",
+            "https://sunnitspain.es/es/sunnitai",
+            "https://sunnitspain.es/es/about",
+            "https://sunnitspain.es/es/contact",
+            "https://sunnitspain.es/es/jobs",
+            "https://sunnitspain.es/es/blog",
+            "https://sunnitspain.es/es/ecosystem",
+            "https://sunnitspain.es/es/services/software-su-misura",
+            "https://sunnitspain.es/es/services/web",
+            "https://sunnitspain.es/es/services/data-analytics",
+            "https://sunnitspain.es/es/services/cloud",
+            "https://sunnitspain.es/es/services/devops",
+            "https://sunnitspain.es/es/blog/astrea-l-intelligenza-artificiale-che-semplifica-il-lavoro-dei-professionisti",
+            "https://sunnitspain.es/es/blog/tennis-open-sunnit-srl-quindici-giorni-di-grande-tennis-allo-sporting-club-san-severo-ecco-i-risultati",
+            "https://sunnitspain.es/es/blog/chatgpt-diventa-consulente-finanziario-e-si-collega-ai-conti-bancari",
+            "https://sunnitspain.es/es/blog/open-sunnit-srl-arriva-il-grande-tennis-allo-sporting-club-san-severo",
+            "https://sunnitspain.es/es/portfolio/furness-insurance-services",
+            "https://sunnitspain.es/es/portfolio/athenai-labs",
+            "https://sunnitspain.es/es/portfolio/contract-cost-care",
+            "https://sunnitspain.es/es/portfolio/world4all",
+            "https://sunnitspain.es/es/portfolio/aruba",
+            "https://sunnitspain.es/es/portfolio/cdp",
+            "https://sunnitspain.es/es/portfolio/eni-bepower",
+            "https://sunnitspain.es/es/portfolio/generali",
+            "https://sunnitspain.es/es/portfolio/infocert",
+            "https://sunnitspain.es/es/portfolio/italpaghe",
+            "https://sunnitspain.es/es/portfolio/lottomatica"
+          ]
+        },
+        {
+          "url": "https://sunnitspain.es/es",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "location": null,
+          "cache": "MISS",
+          "canonical": "https://sunnitspain.es/es",
+          "lang": "es",
+          "title": "Software, cloud e inteligencia artificial para empresas"
+        },
+        {
+          "url": "https://sunnitspain.es/es/contact",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "location": null,
+          "cache": "MISS",
+          "canonical": "https://sunnitspain.es/es/contact",
+          "lang": "es",
+          "title": "Contacto y consultoría tecnológica | SUNNIT"
+        },
+        {
+          "url": "https://sunnitspain.es/zz",
+          "status": 404,
+          "type": "text/html; charset=utf-8",
+          "location": null,
+          "cache": "MISS",
+          "title": "SUNNIT"
+        },
+        {
+          "url": "https://sunnitspain.es/es/services/cloud",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "location": null,
+          "cache": "MISS",
+          "canonical": "https://sunnitspain.es/es/services/cloud",
+          "lang": "es",
+          "title": "Consultoría cloud | SUNNIT"
+        }
+      ]
+    },
+    {
+      "host": "sunnit.eu",
+      "lang": "en",
+      "entries": [
+        {
+          "url": "https://sunnit.eu/",
+          "status": 307,
+          "type": "text/plain",
+          "location": "/en",
+          "cache": null
+        },
+        {
+          "url": "https://sunnit.eu/robots.txt",
+          "status": 200,
+          "type": "text/plain",
+          "location": null,
+          "cache": "MISS",
+          "robots": "User-Agent: *\nAllow: /\nDisallow: /api/\nDisallow: /studio/\n\nSitemap: https://sunnit.eu/sitemap.xml\n"
+        },
+        {
+          "url": "https://sunnit.eu/sitemap.xml",
+          "status": 200,
+          "type": "application/xml",
+          "location": null,
+          "cache": "MISS",
+          "sitemapUrls": [
+            "https://sunnit.eu/en",
+            "https://sunnit.eu/en/services",
+            "https://sunnit.eu/en/sunnitai",
+            "https://sunnit.eu/en/about",
+            "https://sunnit.eu/en/contact",
+            "https://sunnit.eu/en/jobs",
+            "https://sunnit.eu/en/blog",
+            "https://sunnit.eu/en/ecosystem",
+            "https://sunnit.eu/en/services/software-su-misura",
+            "https://sunnit.eu/en/services/web",
+            "https://sunnit.eu/en/services/data-analytics",
+            "https://sunnit.eu/en/services/cloud",
+            "https://sunnit.eu/en/services/devops",
+            "https://sunnit.eu/en/blog/astrea-l-intelligenza-artificiale-che-semplifica-il-lavoro-dei-professionisti",
+            "https://sunnit.eu/en/blog/tennis-open-sunnit-srl-quindici-giorni-di-grande-tennis-allo-sporting-club-san-severo-ecco-i-risultati",
+            "https://sunnit.eu/en/blog/chatgpt-diventa-consulente-finanziario-e-si-collega-ai-conti-bancari",
+            "https://sunnit.eu/en/blog/open-sunnit-srl-arriva-il-grande-tennis-allo-sporting-club-san-severo",
+            "https://sunnit.eu/en/portfolio/furness-insurance-services",
+            "https://sunnit.eu/en/portfolio/athenai-labs",
+            "https://sunnit.eu/en/portfolio/contract-cost-care",
+            "https://sunnit.eu/en/portfolio/world4all",
+            "https://sunnit.eu/en/portfolio/aruba",
+            "https://sunnit.eu/en/portfolio/cdp",
+            "https://sunnit.eu/en/portfolio/eni-bepower",
+            "https://sunnit.eu/en/portfolio/generali",
+            "https://sunnit.eu/en/portfolio/infocert",
+            "https://sunnit.eu/en/portfolio/italpaghe",
+            "https://sunnit.eu/en/portfolio/lottomatica"
+          ]
+        },
+        {
+          "url": "https://sunnit.eu/en",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "location": null,
+          "cache": "MISS",
+          "canonical": "https://sunnit.eu/en",
+          "lang": "en",
+          "title": "Software, cloud and artificial intelligence for businesses"
+        },
+        {
+          "url": "https://sunnit.eu/en/contact",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "location": null,
+          "cache": "MISS",
+          "canonical": "https://sunnit.eu/en/contact",
+          "lang": "en",
+          "title": "Contact and technology consulting | SUNNIT"
+        },
+        {
+          "url": "https://sunnit.eu/zz",
+          "status": 404,
+          "type": "text/html; charset=utf-8",
+          "location": null,
+          "cache": "MISS",
+          "title": "SUNNIT"
+        },
+        {
+          "url": "https://sunnit.eu/en/services/cloud",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "location": null,
+          "cache": "MISS",
+          "canonical": "https://sunnit.eu/en/services/cloud",
+          "lang": "en",
+          "title": "Cloud Consulting | SUNNIT"
+        }
+      ]
+    },
+    {
+      "host": "sunnit.co.uk",
+      "lang": "en",
+      "entries": [
+        {
+          "url": "https://sunnit.co.uk/",
+          "status": 307,
+          "type": "text/plain",
+          "location": "/en",
+          "cache": null
+        },
+        {
+          "url": "https://sunnit.co.uk/robots.txt",
+          "status": 200,
+          "type": "text/plain",
+          "location": null,
+          "cache": "MISS",
+          "robots": "User-Agent: *\nAllow: /\nDisallow: /api/\nDisallow: /studio/\n\nSitemap: https://sunnit.eu/sitemap.xml\n"
+        },
+        {
+          "url": "https://sunnit.co.uk/sitemap.xml",
+          "status": 200,
+          "type": "application/xml",
+          "location": null,
+          "cache": "MISS",
+          "sitemapUrls": []
+        },
+        {
+          "url": "https://sunnit.co.uk/en",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "location": null,
+          "cache": "MISS",
+          "canonical": "https://sunnit.eu/en",
+          "lang": "en",
+          "title": "Software, cloud and artificial intelligence for businesses"
+        },
+        {
+          "url": "https://sunnit.co.uk/en/contact",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "location": null,
+          "cache": "MISS",
+          "canonical": "https://sunnit.eu/en/contact",
+          "lang": "en",
+          "title": "Contact and technology consulting | SUNNIT"
+        },
+        {
+          "url": "https://sunnit.co.uk/zz",
+          "status": 404,
+          "type": "text/html; charset=utf-8",
+          "location": null,
+          "cache": "MISS",
+          "title": "SUNNIT"
+        },
+        {
+          "url": "https://sunnit.co.uk/en/services/cloud",
+          "status": 200,
+          "type": "text/html; charset=utf-8",
+          "location": null,
+          "cache": "MISS",
+          "canonical": "https://sunnit.eu/en/services/cloud",
+          "lang": "en",
+          "title": "Cloud Consulting | SUNNIT"
+        }
+      ]
+    }
+  ],
+  "pageChecks": [
+    {
+      "url": "https://sunnit.it/it",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/services",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/services"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/services"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/services"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/sunnitai",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/sunnitai"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/sunnitai"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/sunnitai"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/about",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/about"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/about"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/about"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/contact",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/contact"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/contact"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/contact"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/jobs",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/jobs"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/jobs"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/jobs"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/blog",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/blog"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/blog"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/blog"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/ecosystem",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/ecosystem"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/ecosystem"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/ecosystem"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/services/software-su-misura",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/services/software-su-misura"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/services/software-su-misura"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/services/software-su-misura"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/services/web",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/services/web"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/services/web"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/services/web"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/services/data-analytics",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/services/data-analytics"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/services/data-analytics"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/services/data-analytics"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/services/cloud",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/services/cloud"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/services/cloud"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/services/cloud"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/services/devops",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/services/devops"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/services/devops"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/services/devops"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/blog/astrea-l-intelligenza-artificiale-che-semplifica-il-lavoro-dei-professionisti",
+      "status": 200,
+      "jsonLdCount": 3,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/blog/astrea-l-intelligenza-artificiale-che-semplifica-il-lavoro-dei-professionisti"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/blog/tennis-open-sunnit-srl-quindici-giorni-di-grande-tennis-allo-sporting-club-san-severo-ecco-i-risultati",
+      "status": 200,
+      "jsonLdCount": 3,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/blog/tennis-open-sunnit-srl-quindici-giorni-di-grande-tennis-allo-sporting-club-san-severo-ecco-i-risultati"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/blog/chatgpt-diventa-consulente-finanziario-e-si-collega-ai-conti-bancari",
+      "status": 200,
+      "jsonLdCount": 3,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/blog/chatgpt-diventa-consulente-finanziario-e-si-collega-ai-conti-bancari"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/blog/open-sunnit-srl-arriva-il-grande-tennis-allo-sporting-club-san-severo",
+      "status": 200,
+      "jsonLdCount": 3,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/blog/open-sunnit-srl-arriva-il-grande-tennis-allo-sporting-club-san-severo"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/portfolio/furness-insurance-services",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/portfolio/furness-insurance-services"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/portfolio/athenai-labs",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/portfolio/athenai-labs"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/portfolio/contract-cost-care",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/portfolio/contract-cost-care"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/portfolio/world4all",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/portfolio/world4all"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/portfolio/aruba",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/portfolio/aruba"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/portfolio/cdp",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/portfolio/cdp"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/portfolio/eni-bepower",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/portfolio/eni-bepower"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/portfolio/generali",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/portfolio/generali"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/portfolio/infocert",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/portfolio/infocert"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/portfolio/italpaghe",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/portfolio/italpaghe"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.it/it/portfolio/lottomatica",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/portfolio/lottomatica"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/services",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/services"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/services"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/services"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/sunnitai",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/sunnitai"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/sunnitai"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/sunnitai"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/about",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/about"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/about"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/about"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/contact",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/contact"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/contact"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/contact"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/jobs",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/jobs"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/jobs"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/jobs"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/blog",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/blog"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/blog"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/blog"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/ecosystem",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/ecosystem"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/ecosystem"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/ecosystem"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/services/software-su-misura",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/services/software-su-misura"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/services/software-su-misura"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/services/software-su-misura"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/services/web",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/services/web"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/services/web"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/services/web"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/services/data-analytics",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/services/data-analytics"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/services/data-analytics"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/services/data-analytics"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/services/cloud",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/services/cloud"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/services/cloud"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/services/cloud"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/services/devops",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/services/devops"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/services/devops"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/services/devops"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/blog/astrea-l-intelligenza-artificiale-che-semplifica-il-lavoro-dei-professionisti",
+      "status": 404,
+      "jsonLdCount": 0,
+      "alternatives": [],
+      "errors": [
+        "HTTP 404",
+        "canonical",
+        "og:url",
+        "html lang",
+        "description",
+        "noindex",
+        "missing JSON-LD",
+        "H1"
+      ]
+    },
+    {
+      "url": "https://sunnitspain.es/es/blog/tennis-open-sunnit-srl-quindici-giorni-di-grande-tennis-allo-sporting-club-san-severo-ecco-i-risultati",
+      "status": 404,
+      "jsonLdCount": 0,
+      "alternatives": [],
+      "errors": [
+        "HTTP 404",
+        "canonical",
+        "og:url",
+        "html lang",
+        "description",
+        "noindex",
+        "missing JSON-LD",
+        "H1"
+      ]
+    },
+    {
+      "url": "https://sunnitspain.es/es/blog/chatgpt-diventa-consulente-finanziario-e-si-collega-ai-conti-bancari",
+      "status": 404,
+      "jsonLdCount": 0,
+      "alternatives": [],
+      "errors": [
+        "HTTP 404",
+        "canonical",
+        "og:url",
+        "html lang",
+        "description",
+        "noindex",
+        "missing JSON-LD",
+        "H1"
+      ]
+    },
+    {
+      "url": "https://sunnitspain.es/es/blog/open-sunnit-srl-arriva-il-grande-tennis-allo-sporting-club-san-severo",
+      "status": 404,
+      "jsonLdCount": 0,
+      "alternatives": [],
+      "errors": [
+        "HTTP 404",
+        "canonical",
+        "og:url",
+        "html lang",
+        "description",
+        "noindex",
+        "missing JSON-LD",
+        "H1"
+      ]
+    },
+    {
+      "url": "https://sunnitspain.es/es/portfolio/furness-insurance-services",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/portfolio/furness-insurance-services"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/portfolio/athenai-labs",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/portfolio/athenai-labs"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/portfolio/contract-cost-care",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/portfolio/contract-cost-care"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/portfolio/world4all",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/portfolio/world4all"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/portfolio/aruba",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/portfolio/aruba"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/portfolio/cdp",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/portfolio/cdp"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/portfolio/eni-bepower",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/portfolio/eni-bepower"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/portfolio/generali",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/portfolio/generali"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/portfolio/infocert",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/portfolio/infocert"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/portfolio/italpaghe",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/portfolio/italpaghe"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnitspain.es/es/portfolio/lottomatica",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/portfolio/lottomatica"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/services",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/services"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/services"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/services"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/sunnitai",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/sunnitai"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/sunnitai"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/sunnitai"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/about",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/about"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/about"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/about"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/contact",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/contact"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/contact"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/contact"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/jobs",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/jobs"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/jobs"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/jobs"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/blog",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/blog"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/blog"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/blog"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/ecosystem",
+      "status": 200,
+      "jsonLdCount": 1,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/ecosystem"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/ecosystem"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/ecosystem"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/services/software-su-misura",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/services/software-su-misura"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/services/software-su-misura"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/services/software-su-misura"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/services/web",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/services/web"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/services/web"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/services/web"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/services/data-analytics",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/services/data-analytics"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/services/data-analytics"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/services/data-analytics"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/services/cloud",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/services/cloud"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/services/cloud"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/services/cloud"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/services/devops",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "it",
+          "url": "https://sunnit.it/it/services/devops"
+        },
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/services/devops"
+        },
+        {
+          "lang": "es",
+          "url": "https://sunnitspain.es/es/services/devops"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/blog/astrea-l-intelligenza-artificiale-che-semplifica-il-lavoro-dei-professionisti",
+      "status": 404,
+      "jsonLdCount": 0,
+      "alternatives": [],
+      "errors": [
+        "HTTP 404",
+        "canonical",
+        "og:url",
+        "html lang",
+        "description",
+        "noindex",
+        "missing JSON-LD",
+        "H1"
+      ]
+    },
+    {
+      "url": "https://sunnit.eu/en/blog/tennis-open-sunnit-srl-quindici-giorni-di-grande-tennis-allo-sporting-club-san-severo-ecco-i-risultati",
+      "status": 404,
+      "jsonLdCount": 0,
+      "alternatives": [],
+      "errors": [
+        "HTTP 404",
+        "canonical",
+        "og:url",
+        "html lang",
+        "description",
+        "noindex",
+        "missing JSON-LD",
+        "H1"
+      ]
+    },
+    {
+      "url": "https://sunnit.eu/en/blog/chatgpt-diventa-consulente-finanziario-e-si-collega-ai-conti-bancari",
+      "status": 404,
+      "jsonLdCount": 0,
+      "alternatives": [],
+      "errors": [
+        "HTTP 404",
+        "canonical",
+        "og:url",
+        "html lang",
+        "description",
+        "noindex",
+        "missing JSON-LD",
+        "H1"
+      ]
+    },
+    {
+      "url": "https://sunnit.eu/en/blog/open-sunnit-srl-arriva-il-grande-tennis-allo-sporting-club-san-severo",
+      "status": 404,
+      "jsonLdCount": 0,
+      "alternatives": [],
+      "errors": [
+        "HTTP 404",
+        "canonical",
+        "og:url",
+        "html lang",
+        "description",
+        "noindex",
+        "missing JSON-LD",
+        "H1"
+      ]
+    },
+    {
+      "url": "https://sunnit.eu/en/portfolio/furness-insurance-services",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/portfolio/furness-insurance-services"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/portfolio/athenai-labs",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/portfolio/athenai-labs"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/portfolio/contract-cost-care",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/portfolio/contract-cost-care"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/portfolio/world4all",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/portfolio/world4all"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/portfolio/aruba",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/portfolio/aruba"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/portfolio/cdp",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/portfolio/cdp"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/portfolio/eni-bepower",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/portfolio/eni-bepower"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/portfolio/generali",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/portfolio/generali"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/portfolio/infocert",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/portfolio/infocert"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/portfolio/italpaghe",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/portfolio/italpaghe"
+        }
+      ],
+      "errors": []
+    },
+    {
+      "url": "https://sunnit.eu/en/portfolio/lottomatica",
+      "status": 200,
+      "jsonLdCount": 2,
+      "alternatives": [
+        {
+          "lang": "en",
+          "url": "https://sunnit.eu/en/portfolio/lottomatica"
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "crossDomainChecks": [
+    {
+      "url": "https://sunnit.it/it/contact",
+      "status": 200,
+      "canonical": "https://sunnit.it/it/contact",
+      "ok": true
+    },
+    {
+      "url": "https://sunnit.it/es/contact",
+      "status": 200,
+      "canonical": "https://sunnitspain.es/es/contact",
+      "ok": true
+    },
+    {
+      "url": "https://sunnit.it/en/contact",
+      "status": 200,
+      "canonical": "https://sunnit.eu/en/contact",
+      "ok": true
+    },
+    {
+      "url": "https://sunnitspain.es/it/contact",
+      "status": 200,
+      "canonical": "https://sunnit.it/it/contact",
+      "ok": true
+    },
+    {
+      "url": "https://sunnitspain.es/es/contact",
+      "status": 200,
+      "canonical": "https://sunnitspain.es/es/contact",
+      "ok": true
+    },
+    {
+      "url": "https://sunnitspain.es/en/contact",
+      "status": 200,
+      "canonical": "https://sunnit.eu/en/contact",
+      "ok": true
+    },
+    {
+      "url": "https://sunnit.eu/it/contact",
+      "status": 200,
+      "canonical": "https://sunnit.it/it/contact",
+      "ok": true
+    },
+    {
+      "url": "https://sunnit.eu/es/contact",
+      "status": 200,
+      "canonical": "https://sunnitspain.es/es/contact",
+      "ok": true
+    },
+    {
+      "url": "https://sunnit.eu/en/contact",
+      "status": 200,
+      "canonical": "https://sunnit.eu/en/contact",
+      "ok": true
+    },
+    {
+      "url": "https://sunnit.co.uk/it/contact",
+      "status": 200,
+      "canonical": "https://sunnit.it/it/contact",
+      "ok": true
+    },
+    {
+      "url": "https://sunnit.co.uk/es/contact",
+      "status": 200,
+      "canonical": "https://sunnitspain.es/es/contact",
+      "ok": true
+    },
+    {
+      "url": "https://sunnit.co.uk/en/contact",
+      "status": 200,
+      "canonical": "https://sunnit.eu/en/contact",
+      "ok": true
+    }
+  ],
+  "limitations": [
+    "No Vercel dashboard status accessed",
+    "No browser visual/interactive verification",
+    "No indexing or performance verification"
+  ]
+}

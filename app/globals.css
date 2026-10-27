@@ -1650,6 +1650,14 @@ main {
   box-shadow: 0 0 0 18px rgba(216, 91, 71, 0.14);
 }
 
+.about-intro-image::before {
+  content: none;
+}
+
+.about-intro-image img {
+  object-fit: cover;
+}
+
 .expertise-band {
   margin-top: 44px;
   display: grid;

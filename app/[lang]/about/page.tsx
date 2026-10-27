@@ -1,5 +1,6 @@
 import { staticPageMetadata } from "@/lib/seo-pages";
 import Link from "next/link";
+import Image from "next/image";
 import PageHero from "@/components/page-hero";
 import GsapReveal from "@/components/gsap-reveal";
 import SectionTitle from "@/components/section-title";
@@ -18,6 +19,11 @@ export default async function AboutPage({
 }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
+  const imageAlt = lang === "es"
+    ? "Estructuras modulares conectadas que representan plataformas digitales"
+    : lang === "en"
+      ? "Connected modular structures representing digital platforms"
+      : "Strutture modulari connesse che rappresentano piattaforme digitali";
 
   return (
     <>
@@ -30,7 +36,15 @@ export default async function AboutPage({
           <TextLines text={dict.about.intro.desc} />
           <Link href={`/${lang}/contact`} className="outline-btn">{dict.about.intro.cta}</Link>
         </GsapReveal>
-        <GsapReveal className="visual-card" delay={120} direction="left" scrub={true} />
+        <GsapReveal className="visual-card about-intro-image" delay={120} direction="left" scrub={true}>
+          <Image
+            src="/images/about/digital-platforms.webp"
+            alt={imageAlt}
+            fill
+            sizes="(max-width: 900px) 100vw, 52vw"
+            priority
+          />
+        </GsapReveal>
       </section>
 
       <AboutExpertiseBand
@@ -40,12 +54,14 @@ export default async function AboutPage({
         logos={dict.about.expertiseBand.logos}
       />
 
+      {/* Presentation section hidden until the video is ready.
       <GsapReveal className="container visual-wide" scrub={true} distance={20}>
         <div>
           <h2>{dict.about.visualWide.title}</h2>
           <TextLines text={dict.about.visualWide.desc} />
         </div>
       </GsapReveal>
+      */}
 
       <section className="container">
         <SectionTitle eyebrow={dict.about.story.eyebrow} title={dict.about.story.title} align="center" />
